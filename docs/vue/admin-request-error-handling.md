@@ -1124,6 +1124,7 @@ flowchart TD
 | 做 Vue Admin 文件任务闭环 | [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export) |
 | 做 Vue Admin 工作台看板 | [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) |
 | 做 Vue Admin 审批流闭环 | [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow) |
+| 做 Vue Admin 消息通知闭环 | [Vue Admin 消息通知、站内信、实时提醒与已读闭环实战](/vue/admin-notification-center) |
 | 做导入导出 | [数据导入导出项目案例](/projects/import-export-case) |
 | 看真实 Vue 问题 | [Vue 真实项目问题库](/projects/issues-vue) |
 
@@ -1139,7 +1140,7 @@ flowchart TD
 
 请求与错误处理闭环完成后，Vue Admin 的基础工程能力已经比较完整。下一步可以继续补两个方向：
 
-- 业务模块：审批流、文件中心、数据看板、导入导出。Vue Admin 主线建议先看 [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export)、[Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) 和 [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow)。
+- 业务模块：审批流、文件中心、数据看板、导入导出、消息通知。Vue Admin 主线建议先看 [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export)、[Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics)、[Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow) 和 [Vue Admin 消息通知、站内信、实时提醒与已读闭环实战](/vue/admin-notification-center)。
 - 问题库：进入 [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request)，把 401/403、并发请求、重复提交、导出失败、数据权限裁剪这些问题拆成可复制的排障案例。
 
-如果你要继续按项目交付推进，建议下一页先看 [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export)、[Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) 和 [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow)，再看 [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request)、[数据导入导出项目案例](/projects/import-export-case)、[数据看板项目案例](/projects/analytics-dashboard-case) 和 [审批流项目案例](/projects/approval-workflow-case)。
+如果你要继续按项目交付推进，建议下一页先看 [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export)、[Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics)、[Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow) 和 [Vue Admin 消息通知、站内信、实时提醒与已读闭环实战](/vue/admin-notification-center)，再看 [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request)、[数据导入导出项目案例](/projects/import-export-case)、[数据看板项目案例](/projects/analytics-dashboard-case)、[审批流项目案例](/projects/approval-workflow-case) 和 [消息通知项目案例](/projects/notification-center-case)。

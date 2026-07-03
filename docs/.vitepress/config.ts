@@ -414,6 +414,7 @@ export default defineConfig({
             { text: 'Vue Admin 文件导入导出', link: '/vue/admin-file-import-export' },
             { text: 'Vue Admin 工作台看板', link: '/vue/admin-dashboard-analytics' },
             { text: 'Vue Admin 审批流闭环', link: '/vue/admin-approval-workflow' },
+            { text: 'Vue Admin 消息通知闭环', link: '/vue/admin-notification-center' },
             { text: 'Vue Admin 权限路由闭环', link: '/vue/admin-permission-route-flow' },
             { text: 'Vue Admin 用户模块实现', link: '/vue/admin-user-module' },
             { text: 'Vue Admin 角色权限实现', link: '/vue/admin-permission-module' },

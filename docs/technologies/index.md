@@ -74,6 +74,7 @@ Vue Admin 实战
 | 细化文件上传导入导出 | [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export) |
 | 细化工作台数据看板 | [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) |
 | 细化审批流状态机 | [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow) |
+| 细化消息通知闭环 | [Vue Admin 消息通知、站内信、实时提醒与已读闭环实战](/vue/admin-notification-center) |
 | 细化用户管理模块 | [Vue Admin 用户模块实现手册](/vue/admin-user-module) |
 | 细化角色权限模块 | [Vue Admin 角色权限模块实现手册](/vue/admin-permission-module) |
 | 细化菜单动态路由模块 | [Vue Admin 菜单与动态路由实现手册](/vue/admin-menu-route-module) |
@@ -96,6 +97,7 @@ Vue Admin 实战
 | 做好文件上传导入导出 | [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export) |
 | 做好工作台统计图表 | [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) |
 | 做好审批流待办状态机 | [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow) |
+| 做好消息通知未读提醒 | [Vue Admin 消息通知、站内信、实时提醒与已读闭环实战](/vue/admin-notification-center) |
 | 做 Vue Admin 权限路由闭环 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) |
 | 查 Vue 项目问题 | [Vue 真实项目问题](/projects/issues-vue) |
 | 查 Vue Admin 请求权限问题 | [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request) |
@@ -117,7 +119,7 @@ Vue Admin 实战
 | 做文件中心 | [文件中心项目案例](/projects/file-center-case) |
 | 做数据看板 | [数据看板项目案例](/projects/analytics-dashboard-case) |
 | 做多租户权限 | [多租户权限项目案例](/projects/multi-tenant-permission-case) |
-| 做消息通知 | [消息通知项目案例](/projects/notification-center-case) |
+| 做消息通知 | [Vue Admin 消息通知、站内信、实时提醒与已读闭环实战](/vue/admin-notification-center)、[消息通知项目案例](/projects/notification-center-case) |
 | 做导入导出 | [数据导入导出项目案例](/projects/import-export-case) |
 | 做支付订单 | [支付订单项目案例](/projects/payment-order-case) |
 | 做会员订阅 | [会员订阅项目案例](/projects/subscription-billing-case) |

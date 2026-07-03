@@ -763,6 +763,7 @@ flowchart TD
 | 先做好详情状态和操作记录 | [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit) |
 | 处理组织、岗位和审批候选人 | [Vue Admin 组织架构与数据权限实现手册](/vue/admin-organization-data-permission) |
 | 把待办放进工作台 | [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) |
+| 把审批待办变成站内信和实时提醒 | [Vue Admin 消息通知、站内信、实时提醒与已读闭环实战](/vue/admin-notification-center) |
 | 处理按钮和接口权限 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) |
 | 处理请求错误和版本冲突 | [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling) |
 | 做完整审批项目 | [审批流项目案例](/projects/approval-workflow-case) |
@@ -770,6 +771,6 @@ flowchart TD
 
 ## 下一步学习
 
-如果你已经完成审批流闭环，继续看 [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling)，把 409 版本冲突、403 无权限、422 表单错误、traceId 和重试策略统一起来。
+如果你已经完成审批流闭环，继续看 [Vue Admin 消息通知、站内信、实时提醒与已读闭环实战](/vue/admin-notification-center)，把审批待办、审批结果、催办提醒、工作台入口、站内信和未读数串起来。然后再看 [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling)，把 409 版本冲突、403 无权限、422 表单错误、traceId 和重试策略统一起来。
 
 如果你要进一步做可配置流程，继续看 [工作流配置器项目案例](/projects/workflow-builder-case)，再回到 [Vue Admin 专项练习](/roadmap/vue-admin-practice) 把审批流拆成可验收任务。
