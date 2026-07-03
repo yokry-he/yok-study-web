@@ -101,6 +101,7 @@ Vue Admin 实战
 | 做 Vue Admin 权限路由闭环 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) |
 | 查 Vue 项目问题 | [Vue 真实项目问题](/projects/issues-vue) |
 | 查 Vue Admin 请求权限问题 | [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request) |
+| 查 Vue Admin 消息通知问题 | [Vue Admin 消息通知、未读数与实时提醒问题排查专题](/projects/issues-vue-admin-notification) |
 | 入门 React | [React 学习导览](/react/introduction) |
 | 做 React 管理台 | [React 管理台从零到项目](/react/project-admin) |
 | 学 Nuxt / Next | [Nuxt / Next 元框架学习导览](/meta-frameworks/introduction) |
@@ -119,7 +120,7 @@ Vue Admin 实战
 | 做文件中心 | [文件中心项目案例](/projects/file-center-case) |
 | 做数据看板 | [数据看板项目案例](/projects/analytics-dashboard-case) |
 | 做多租户权限 | [多租户权限项目案例](/projects/multi-tenant-permission-case) |
-| 做消息通知 | [Vue Admin 消息通知、站内信、实时提醒与已读闭环实战](/vue/admin-notification-center)、[消息通知项目案例](/projects/notification-center-case) |
+| 做消息通知 | [Vue Admin 消息通知、站内信、实时提醒与已读闭环实战](/vue/admin-notification-center)、[Vue Admin 消息通知排障](/projects/issues-vue-admin-notification)、[消息通知项目案例](/projects/notification-center-case) |
 | 做导入导出 | [数据导入导出项目案例](/projects/import-export-case) |
 | 做支付订单 | [支付订单项目案例](/projects/payment-order-case) |
 | 做会员订阅 | [会员订阅项目案例](/projects/subscription-billing-case) |

@@ -27,6 +27,7 @@
 | 项目排障方法 | 不知道问题在哪一层、缺少复现证据、修复后不知道如何回归和沉淀 | [项目排障方法论](/projects/debugging-playbook) |
 | Vue 项目专项 | 动态菜单刷新丢失、动态路由 404、Pinia 解构失去响应式、弹窗污染列表、KeepAlive 缓存、权限按钮错位 | [Vue 真实项目问题](/projects/issues-vue) |
 | Vue Admin 请求权限 | 401/403、旧请求覆盖、重复提交、数据范围裁剪、导出不一致、trace id 丢失 | [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request) |
+| Vue Admin 消息通知 | 未读数不准、重复通知、切换账号污染、实时连接重连、通知跳转 404/403、全部已读回退 | [Vue Admin 消息通知、未读数与实时提醒问题排查专题](/projects/issues-vue-admin-notification) |
 | 前端页面与状态 | 搜索旧结果、弹窗污染列表、动态路由丢失、React 重复请求、组件库升级错位、列表卡顿 | [前端页面与状态问题](/projects/issues-frontend) |
 | TypeScript 类型边界 | DTO 泄漏到页面、表单和提交参数混用、权限码拼错、RouteMeta 未声明、Store 类型污染、typecheck 缺失 | [TypeScript 类型边界问题](/projects/issues-typescript) |
 | 后端接口与服务 | 参数接收失败、重复提交、接口偶发慢、错误码不清晰、权限半更新、401/403 混乱 | [后端接口与服务问题](/projects/issues-backend) |
@@ -66,7 +67,7 @@
 | 文件中心 | 上传链路、对象存储、临时签名 URL、文件权限、无主文件清理 | [文件中心项目案例](/projects/file-center-case) |
 | 数据看板 | 指标口径、图表请求、缓存策略、权限过滤、数据不一致排查 | [数据看板项目案例](/projects/analytics-dashboard-case) |
 | 多租户权限 | 租户上下文、成员角色、数据隔离、缓存隔离、跨租户审计 | [多租户权限项目案例](/projects/multi-tenant-permission-case) |
-| 消息通知 | 站内信、消息模板、接收人计算、未读数量、发送重试 | [消息通知项目案例](/projects/notification-center-case) |
+| 消息通知 | 站内信、消息模板、接收人计算、未读数量、发送重试、实时提醒排障 | [消息通知项目案例](/projects/notification-center-case)、[Vue Admin 消息通知排障](/projects/issues-vue-admin-notification) |
 | 数据导入导出 | 模板下载、字段校验、错误行、异步任务、权限范围导出 | [数据导入导出项目案例](/projects/import-export-case) |
 | 支付订单 | 订单状态机、支付回调、幂等、退款、对账、金额精度 | [支付订单项目案例](/projects/payment-order-case) |
 | 会员订阅 | 套餐权益、试用期、续费、到期降级、权益校验 | [会员订阅项目案例](/projects/subscription-billing-case) |

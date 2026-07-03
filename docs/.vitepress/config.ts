@@ -699,6 +699,7 @@ export default defineConfig({
             { text: '项目排障方法论', link: '/projects/debugging-playbook' },
             { text: 'Vue 项目专项', link: '/projects/issues-vue' },
             { text: 'Vue Admin 请求权限排障', link: '/projects/issues-vue-admin-request' },
+            { text: 'Vue Admin 消息通知排障', link: '/projects/issues-vue-admin-notification' },
             { text: '前端页面与状态', link: '/projects/issues-frontend' },
             { text: 'TypeScript 类型边界', link: '/projects/issues-typescript' },
             { text: '后端接口与服务', link: '/projects/issues-backend' },

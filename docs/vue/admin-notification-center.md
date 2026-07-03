@@ -1389,6 +1389,7 @@ flowchart TD
 | 把通知放进工作台 | [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) |
 | 处理请求错误和登录态 | [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling) |
 | 处理权限路由和跳转 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) |
+| 排查未读数、重复通知和实时连接问题 | [Vue Admin 消息通知、未读数与实时提醒问题排查专题](/projects/issues-vue-admin-notification) |
 | 做通用项目案例 | [消息通知项目案例](/projects/notification-center-case) |
 | 做专项练习 | [Vue Admin 专项练习](/roadmap/vue-admin-practice) |
 
@@ -1396,4 +1397,4 @@ flowchart TD
 
 如果你刚完成审批流，建议继续把审批待办、审批结果和催办提醒接入本页的消息通知闭环。这样你的 Vue Admin 就不只是“能处理流程”，而是能在工作台、铃铛、站内信和业务详情之间形成完整体验。
 
-如果你已经完成消息通知闭环，继续看 [Vue Admin 用户模块实现手册](/vue/admin-user-module)、[Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) 和 [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request)，把基础后台模块、权限恢复和真实问题排查继续补齐。
+如果你已经完成消息通知闭环，继续看 [Vue Admin 消息通知、未读数与实时提醒问题排查专题](/projects/issues-vue-admin-notification)、[Vue Admin 用户模块实现手册](/vue/admin-user-module)、[Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) 和 [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request)，把通知排障、基础后台模块、权限恢复和真实问题排查继续补齐。

@@ -13,11 +13,14 @@
 - `watch`、`onMounted` 导致重复请求。
 - KeepAlive 页面缓存导致数据不刷新。
 - 权限按钮显示错位。
+- Vue Admin 消息铃铛、未读数和实时提醒不一致。
 - 列表切换条件后显示旧数据。
 - 组件拆分后 props 和 emits 变乱。
 - 构建时才发现 Vue 类型错误。
 
 每个问题都按“现象、影响范围、根因、解决方案、预防方式”组织，方便你在项目里直接对照排查。
+
+如果问题已经明确属于 Vue Admin 的通知中心，例如未读数不准、重复提醒、SSE/WebSocket 重连、切换账号后旧消息残留，直接进入 [Vue Admin 消息通知、未读数与实时提醒问题排查专题](/projects/issues-vue-admin-notification)。
 
 ## 排查总流程
 
