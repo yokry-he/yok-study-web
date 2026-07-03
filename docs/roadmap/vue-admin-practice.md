@@ -666,6 +666,163 @@ flowchart TD
 | 构建 | 生产构建通过 |
 | 文档 | README、学习记录、问题复盘完整 |
 
+## 进阶专项：3 天完成消息通知闭环
+
+完成用户管理、权限、请求和错误处理后，可以用 3 天把 Vue Admin 里的消息通知中心补成一个可验收模块。它适合放在审批流、工作台和文件导入导出之后练习，因为通知中心会把这些业务事件串起来。
+
+### 专项目标
+
+做出一个可运行的消息通知模块：
+
+```text
+src/
+  features/
+    notifications/
+      api/
+      components/
+      composables/
+      model/
+      pages/
+```
+
+最终至少包含：
+
+| 能力 | 必须完成 |
+| --- | --- |
+| 顶部铃铛 | 展示未读数，点击打开最近消息 |
+| 消息中心 | 支持关键词、类型、已读状态、分页 |
+| 已读动作 | 单条已读、批量已读、全部已读 |
+| 实时刷新 | 先用轮询，进阶可接 SSE 或 WebSocket |
+| 跳转业务 | 通知能跳审批详情、任务详情或业务详情 |
+| 登录态清理 | 退出和切换账号时清空通知状态 |
+| 问题复盘 | 记录至少 2 个通知问题和修复证据 |
+
+### 专项总图
+
+```mermaid
+flowchart TD
+  A["第 1 天<br/>模型、接口、铃铛"] --> B["第 2 天<br/>消息中心和已读动作"]
+  B --> C["第 3 天<br/>实时刷新、跳转和排障复盘"]
+  C --> D["验收清单"]
+  D --> E{"是否通过"}
+  E -->|否| F["查通知问题库并修正"]
+  F --> C
+  E -->|是| G["写 README 和 TROUBLESHOOTING"]
+```
+
+### 准备文档
+
+- [Vue Admin 消息通知、站内信、实时提醒与已读闭环实战](/vue/admin-notification-center)
+- [Vue Admin 消息通知、未读数与实时提醒问题排查专题](/projects/issues-vue-admin-notification)
+- [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics)
+- [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow)
+- [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling)
+
+### 第 1 天：模型、接口和顶部铃铛
+
+目标：先建立通知模块骨架，不急着做复杂实时通信。
+
+任务：
+
+1. 创建 `features/notifications` 目录。
+2. 定义 `NotificationDTO`、`UnreadCountDTO`、`NotificationListQuery`。
+3. 创建 `notificationApi.ts`，封装未读数、最近消息、列表接口。
+4. 创建 `useUnreadCount`，管理未读数量、加载状态和重置动作。
+5. 创建 `NotificationBell.vue`，显示未读数和最近 5 条消息。
+6. 在后台 Layout 中接入铃铛。
+
+验收标准：
+
+- 刷新后台后会加载未读数。
+- 打开铃铛下拉时才加载最近消息。
+- 未读数大于 99 时显示 `99+`。
+- 退出登录时能清空未读数。
+- 铃铛组件不直接写接口地址。
+
+### 第 2 天：消息中心、筛选和已读动作
+
+目标：把下拉提醒升级成完整站内信页面。
+
+任务：
+
+1. 增加 `/notifications` 路由。
+2. 创建 `NotificationCenterPage.vue`。
+3. 创建 `useNotificationList` 管理查询、分页、loading、error。
+4. 支持关键词、类型、已读状态筛选。
+5. 支持单条已读、批量已读、全部已读。
+6. 已读成功后刷新列表和未读数。
+
+数据流：
+
+```mermaid
+flowchart LR
+  A["筛选条件"] --> B["useNotificationList"]
+  B --> C["notificationApi"]
+  C --> D["后端或 mock API"]
+  D --> E["通知列表"]
+  E --> F["单条 / 批量 / 全部已读"]
+  F --> G["刷新未读数"]
+```
+
+验收标准：
+
+- 搜索后分页回到第一页。
+- 列表失败有 error 状态和重试入口。
+- 单条已读不会导致未读数变负数。
+- 批量已读期间按钮不可重复点击。
+- 全部已读后重新从服务端取未读数。
+
+### 第 3 天：实时刷新、业务跳转和问题复盘
+
+目标：处理真实项目里最容易出问题的边界。
+
+任务：
+
+1. 先实现 30 秒轮询未读数。
+2. 页面重新可见时刷新未读数。
+3. 进阶：如果后端支持 SSE 或 WebSocket，封装 `useNotificationRealtime`。
+4. 点击审批待办通知时跳转审批详情。
+5. 无权限、路由不存在、业务记录已删除时给出明确提示。
+6. 模拟并复盘两个问题：未读数不一致、重复通知、切换账号污染、实时连接重连任选两个。
+
+实时补偿流程：
+
+```mermaid
+sequenceDiagram
+  participant U as 用户
+  participant L as 后台 Layout
+  participant R as 轮询或实时连接
+  participant A as 通知 API
+
+  U->>L: 登录后台
+  L->>A: 获取未读数
+  L->>R: 启动轮询或实时连接
+  R-->>L: 新消息或连接恢复
+  L->>A: 刷新未读数和最近消息
+  U->>L: 退出登录
+  L->>R: 停止轮询或断开连接
+  L->>L: 清空通知状态
+```
+
+验收标准：
+
+- 不会启动多个重复定时器。
+- 断线或页面重新可见后会刷新未读数。
+- 切换账号后不会显示旧账号未读数。
+- 重复事件不会重复弹窗。
+- 通知跳转失败时不是空白页。
+- `TROUBLESHOOTING.md` 至少记录 2 个通知问题。
+
+### 专项交付清单
+
+| 交付物 | 要求 |
+| --- | --- |
+| README | 写清通知模块目录、接口、启动方式和模拟数据 |
+| LEARNING_NOTES | 记录每天完成内容和卡点 |
+| TROUBLESHOOTING | 记录通知问题复盘 |
+| 截图或录屏 | 铃铛、消息中心、已读动作、错误状态 |
+| 验收结果 | 对照本专项验收标准逐项打勾 |
+
 ## 7 天压缩版
 
 如果你没有 14 天，可以用压缩版：
@@ -691,6 +848,8 @@ flowchart TD
 | 动态菜单刷新丢失 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) | 增加刷新恢复流程 |
 | 类型越写越乱 | [TypeScript 类型边界问题库](/projects/issues-typescript) | 分离 DTO 和 Payload |
 | 请求重复 | [Vue 真实项目问题库](/projects/issues-vue) | 明确唯一加载入口 |
+| 消息未读数不准 | [Vue Admin 消息通知排障](/projects/issues-vue-admin-notification) | 对齐未读数、列表和工作台口径 |
+| 实时连接反复重连 | [Vue Admin 消息通知排障](/projects/issues-vue-admin-notification) | 区分鉴权失败和网络断线 |
 | 构建失败 | [前端工程化问题库](/engineering/troubleshooting) | 先跑 typecheck |
 
 ## 下一步学习
@@ -705,6 +864,8 @@ flowchart TD
 - [Vue Admin 菜单与动态路由实现手册](/vue/admin-menu-route-module)
 - [Vue Admin 组织架构与数据权限实现手册](/vue/admin-organization-data-permission)
 - [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling)
+- [Vue Admin 消息通知、站内信、实时提醒与已读闭环实战](/vue/admin-notification-center)
+- [Vue Admin 消息通知、未读数与实时提醒问题排查专题](/projects/issues-vue-admin-notification)
 - [项目排障方法论](/projects/debugging-playbook)
 - [Vue 真实项目问题库](/projects/issues-vue)
 - [项目里程碑](/roadmap/project-milestones)

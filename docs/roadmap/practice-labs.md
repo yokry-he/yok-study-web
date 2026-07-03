@@ -296,7 +296,79 @@ flowchart TD
 - 增加操作日志。
 - 增加单元测试或组件测试。
 
-## 练习 5：数据库权限模型
+## 练习 5：Vue Admin 消息通知中心
+
+### 目标
+
+用 Vue 3 + TypeScript 做一个消息通知中心，串联顶部铃铛、站内信列表、未读数、已读未读、实时刷新、业务跳转和问题复盘。
+
+这个练习适合在完成 [Vue Admin 用户管理](#练习-4vue-admin-用户管理) 后进行。它比用户管理更接近真实业务，因为通知中心会跨审批流、工作台、文件任务、登录态和权限系统。
+
+### 准备文档
+
+- [Vue Admin 专项练习手册](/roadmap/vue-admin-practice)
+- [Vue Admin 消息通知、站内信、实时提醒与已读闭环实战](/vue/admin-notification-center)
+- [Vue Admin 消息通知、未读数与实时提醒问题排查专题](/projects/issues-vue-admin-notification)
+- [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow)
+- [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics)
+
+### 模块关系图
+
+```mermaid
+flowchart TD
+  A["AppLayout"] --> B["NotificationBell"]
+  B --> C["RecentNotificationList"]
+  B --> D["useUnreadCount"]
+  E["NotificationCenterPage"] --> F["NotificationFilter"]
+  E --> G["NotificationList"]
+  E --> H["useNotificationList"]
+  H --> I["notificationApi"]
+  D --> I
+  I --> J["mock API 或后端 API"]
+```
+
+### 任务步骤
+
+1. 创建 `features/notifications` 目录。
+2. 定义 `NotificationDTO`、`UnreadCountDTO`、`NotificationListQuery`。
+3. 封装 `notificationApi`，至少包含未读数、最近消息、列表、已读接口。
+4. 创建 `useUnreadCount`，支持加载、刷新、重置。
+5. 创建顶部 `NotificationBell`，展示未读数和最近消息。
+6. 创建 `/notifications` 页面，支持筛选、分页、单条已读、批量已读。
+7. 接入轮询或 SSE，断线后刷新未读数。
+8. 点击审批待办通知时跳转审批详情页。
+9. 退出登录和切换账号时清理通知状态。
+10. 写一份通知问题复盘。
+
+### 验收标准
+
+- 铃铛未读数来自接口或 mock API，不是写死。
+- 消息中心列表支持 loading、empty、error。
+- 单条已读、批量已读、全部已读都会刷新服务端未读数。
+- 轮询不会重复启动多个定时器。
+- 退出登录后不再请求未读数接口。
+- 通知跳转无权限时有明确提示。
+- 390px 宽度下铃铛下拉和消息列表不横向溢出。
+- `TROUBLESHOOTING.md` 至少记录一个未读数不一致或重复通知问题。
+
+### 常见错误
+
+| 错误 | 现象 | 修正方式 |
+| --- | --- | --- |
+| 铃铛和列表各自维护未读数 | 数字对不上 | 抽出 `useUnreadCount` |
+| 已读后本地直接 `count--` | 并发时未读数错乱 | 已读成功后重新拉服务端数量 |
+| 每个页面都启动轮询 | 请求越来越多 | 只在 Layout 启动一次 |
+| 切换账号不清通知状态 | 看到上一个账号消息 | logout 时 reset 通知上下文 |
+| 点击通知直接 push | 404 或 403 空白 | 跳转前检查路由和权限 |
+
+### 进阶挑战
+
+- 增加 SSE 或 WebSocket 实时提醒。
+- 增加通知偏好设置。
+- 增加多标签页已读同步。
+- 把通知问题复盘补进 [Vue Admin 消息通知排障](/projects/issues-vue-admin-notification) 的模板。
+
+## 练习 6：数据库权限模型
 
 ### 目标
 
@@ -348,7 +420,7 @@ flowchart TD
 - 增加软删除策略。
 - 设计多租户字段和索引。
 
-## 练习 6：项目上线和回滚
+## 练习 7：项目上线和回滚
 
 ### 目标
 
@@ -415,7 +487,7 @@ flowchart TD
 - 增加错误告警。
 - 增加数据库备份和恢复演练。
 
-## 练习 7：真实问题复盘
+## 练习 8：真实问题复盘
 
 ### 目标
 
@@ -502,4 +574,4 @@ flowchart TD
 
 ## 下一步学习
 
-如果你还没有选路线，先看 [学习路线总览](/roadmap/introduction)。如果你已经完成了前 4 个练习，继续进入 [项目里程碑](/roadmap/project-milestones)，把练习成果组合成一个可展示项目。
+如果你还没有选路线，先看 [学习路线总览](/roadmap/introduction)。如果你已经完成了前 5 个练习，继续进入 [项目里程碑](/roadmap/project-milestones)，把练习成果组合成一个可展示项目。

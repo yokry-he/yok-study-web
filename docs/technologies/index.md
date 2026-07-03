@@ -67,6 +67,7 @@ Vue Admin 实战
 | 先看懂技术之间如何连接 | [图解学习地图](/roadmap/visual-learning-map) |
 | 做阶段练习 | [学习路径练习包](/roadmap/practice-labs) |
 | 做 Vue Admin 练习 | [Vue Admin 专项练习](/roadmap/vue-admin-practice) |
+| 做 Vue Admin 消息通知练习 | [学习路径练习包](/roadmap/practice-labs)、[Vue Admin 专项练习](/roadmap/vue-admin-practice) |
 | 系统完成 Vue Admin 项目 | [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map) |
 | 细化列表搜索分页表格 | [Vue Admin 列表、搜索、分页与表格闭环实战](/vue/admin-list-search-table) |
 | 细化表单新增编辑校验 | [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud) |

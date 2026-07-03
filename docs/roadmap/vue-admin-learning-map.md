@@ -106,7 +106,7 @@ flowchart TD
 | 11. 用户模块闭环 | 完成列表、表单、分页、权限按钮和文件任务入口 | [Vue Admin 用户模块实现手册](/vue/admin-user-module) | 用户管理模块 |
 | 12. 权限路由闭环 | 串起登录态、菜单、动态路由、按钮和接口权限 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) | 权限恢复和无权限处理 |
 | 13. 核心后台模块 | 拆角色、菜单、组织、数据权限和请求错误 | 角色权限、菜单动态路由、组织数据权限、请求错误处理 | 可扩展后台基建 |
-| 14. 专项练习 | 用 14 天计划把模块做扎实 | [Vue Admin 专项练习](/roadmap/vue-admin-practice) | README、练习记录、问题复盘 |
+| 14. 专项练习 | 用 14 天计划和消息通知专项把模块做扎实 | [Vue Admin 专项练习](/roadmap/vue-admin-practice)、[学习路径练习包](/roadmap/practice-labs) | README、练习记录、问题复盘 |
 | 15. 排障训练 | 学会按证据定位问题 | [Vue 真实项目问题库](/projects/issues-vue)、[Vue Admin 请求权限排障](/projects/issues-vue-admin-request)、[Vue Admin 消息通知排障](/projects/issues-vue-admin-notification) | TROUBLESHOOTING.md |
 | 16. 交付验收 | 判断项目是否能作为作品或模板 | [项目里程碑](/roadmap/project-milestones)、[项目交付检查清单](/projects/delivery-checklist) | 交付检查结果 |
 
@@ -614,6 +614,7 @@ flowchart TD
 | 工作台指标和图表总是不一致 | [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) |
 | 审批按钮、待办和驳回规则混乱 | [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow) |
 | 消息铃铛、未读数和实时提醒混乱 | [Vue Admin 消息通知、未读数与实时提醒问题排查专题](/projects/issues-vue-admin-notification) |
+| 想练习消息通知中心 | [Vue Admin 专项练习](/roadmap/vue-admin-practice)、[学习路径练习包](/roadmap/practice-labs) |
 | 已有静态页面 | [Vue Admin 用户模块实现手册](/vue/admin-user-module) |
 | 用户模块做完 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) |
 | 权限链路混乱 | [Vue Admin 菜单与动态路由实现手册](/vue/admin-menu-route-module) |
