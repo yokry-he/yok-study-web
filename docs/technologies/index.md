@@ -72,6 +72,7 @@ Vue Admin 实战
 | 细化表单新增编辑校验 | [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud) |
 | 细化详情状态操作记录 | [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit) |
 | 细化文件上传导入导出 | [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export) |
+| 细化工作台数据看板 | [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) |
 | 细化用户管理模块 | [Vue Admin 用户模块实现手册](/vue/admin-user-module) |
 | 细化角色权限模块 | [Vue Admin 角色权限模块实现手册](/vue/admin-permission-module) |
 | 细化菜单动态路由模块 | [Vue Admin 菜单与动态路由实现手册](/vue/admin-menu-route-module) |
@@ -92,6 +93,7 @@ Vue Admin 实战
 | 做好表单新增编辑校验 | [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud) |
 | 做好详情状态操作记录 | [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit) |
 | 做好文件上传导入导出 | [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export) |
+| 做好工作台统计图表 | [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) |
 | 做 Vue Admin 权限路由闭环 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) |
 | 查 Vue 项目问题 | [Vue 真实项目问题](/projects/issues-vue) |
 | 查 Vue Admin 请求权限问题 | [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request) |

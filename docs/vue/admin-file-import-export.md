@@ -1102,6 +1102,7 @@ Access-Control-Expose-Headers: Content-Disposition, X-Trace-Id
 | 先做好列表搜索分页 | [Vue Admin 列表、搜索、分页与表格闭环实战](/vue/admin-list-search-table) |
 | 先做好表单附件入口 | [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud) |
 | 先做好详情附件和操作记录 | [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit) |
+| 做工作台指标、待办和任务统计 | [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) |
 | 理解请求错误处理 | [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling) |
 | 做完整文件中心 | [文件中心项目案例](/projects/file-center-case) |
 | 做完整导入导出项目 | [数据导入导出项目案例](/projects/import-export-case) |
@@ -1109,6 +1110,8 @@ Access-Control-Expose-Headers: Content-Disposition, X-Trace-Id
 
 ## 下一步学习
 
-如果你已经完成文件上传、下载、导入导出闭环，继续看 [Vue Admin 用户模块实现手册](/vue/admin-user-module)，把列表、表单、详情、文件任务和权限按钮串成完整业务模块。
+如果你已经完成文件上传、下载、导入导出闭环，继续看 [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics)，把导入任务、导出任务、异常告警和待办入口放进后台首页。
+
+如果你已经完成工作台看板闭环，继续看 [Vue Admin 用户模块实现手册](/vue/admin-user-module)，把列表、表单、详情、文件任务和权限按钮串成完整业务模块。
 
 如果你已经完成用户模块，继续看 [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow)，把页面权限、按钮权限、接口权限、数据范围和刷新恢复补完整。

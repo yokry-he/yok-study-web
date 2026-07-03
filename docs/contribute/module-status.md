@@ -19,7 +19,7 @@
 
 | 模块 | 文档数 | 状态 | 当前覆盖 | 下一步 |
 | --- | ---: | --- | --- | --- |
-| Vue | 31 | stable | 图解核心概念、Vue 3 核心、路由、状态、表单、请求、权限、从零到项目落地实战手册、图解 Vue Admin 项目架构、Vue Admin Mock 到真实接口联调实战、Vue Admin 列表搜索表格闭环实战、Vue Admin 表单新增编辑闭环实战、Vue Admin 详情状态操作记录闭环实战、Vue Admin 文件导入导出闭环实战、Vue Admin 权限路由闭环实战、Vue Admin 用户模块实现手册、Vue Admin 角色权限模块实现手册、Vue Admin 菜单与动态路由实现手册、Vue Admin 组织架构与数据权限实现手册、Vue Admin 请求封装与错误处理闭环手册、性能、测试、Vue 真实项目问题库 | 补更多复杂业务案例 |
+| Vue | 32 | stable | 图解核心概念、Vue 3 核心、路由、状态、表单、请求、权限、从零到项目落地实战手册、图解 Vue Admin 项目架构、Vue Admin Mock 到真实接口联调实战、Vue Admin 列表搜索表格闭环实战、Vue Admin 表单新增编辑闭环实战、Vue Admin 详情状态操作记录闭环实战、Vue Admin 文件导入导出闭环实战、Vue Admin 工作台数据看板闭环实战、Vue Admin 权限路由闭环实战、Vue Admin 用户模块实现手册、Vue Admin 角色权限模块实现手册、Vue Admin 菜单与动态路由实现手册、Vue Admin 组织架构与数据权限实现手册、Vue Admin 请求封装与错误处理闭环手册、性能、测试、Vue 真实项目问题库 | 补更多复杂业务案例 |
 | React | 15 | stable | 图解核心概念、JSX、Hooks、Effect、表单、请求、状态、性能、测试、最佳实践、React 管理台项目 | 补 Next.js 或服务端渲染 |
 | Nuxt / Next 元框架 | 10 | stable | 导览、Nuxt、Next、路由布局、数据获取、部署缓存、服务端鉴权、SEO、国际化、内容站案例、问题库 | 补边缘渲染、图片优化、CMS 接入、多租户门户案例 |
 | 数据库 | 14 | stable | 图解核心概念、MySQL、PostgreSQL、Redis、权限系统数据层落地、建模、索引、事务、迁移、ORM、备份恢复、安全审计、问题库 | 补分库分表、读写分离、RLS、多租户权限和云数据库案例 |
