@@ -676,6 +676,7 @@ stateDiagram-v2
 | --- | --- |
 | 先做好列表页 | [Vue Admin 列表、搜索、分页与表格闭环实战](/vue/admin-list-search-table) |
 | 先做好新增编辑 | [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud) |
+| 处理附件、导入导出和异步任务 | [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export) |
 | 做完整用户模块 | [Vue Admin 用户模块实现手册](/vue/admin-user-module) |
 | 处理权限按钮 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) |
 | 做角色授权记录 | [Vue Admin 角色权限模块实现手册](/vue/admin-permission-module) |
@@ -684,5 +685,6 @@ stateDiagram-v2
 
 ## 下一步学习
 
-详情页、状态流转和操作记录闭环完成后，继续看 [Vue Admin 用户模块实现手册](/vue/admin-user-module)，把列表、表单、详情、状态、操作记录和权限按钮串成完整模块。  
+详情页、状态流转和操作记录闭环完成后，继续看 [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export)，把附件、模板导入、异步导出、任务轮询和审计记录补完整。  
+如果你已经掌握文件任务闭环，继续看 [Vue Admin 用户模块实现手册](/vue/admin-user-module)，把列表、表单、详情、状态、文件任务、操作记录和权限按钮串成完整模块。  
 如果你已经完成用户模块，继续看 [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow)，把页面权限、按钮权限、接口权限和刷新恢复补完整。

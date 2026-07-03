@@ -735,6 +735,7 @@ flowchart LR
 | --- | --- |
 | 先做好列表页 | [Vue Admin 列表、搜索、分页与表格闭环实战](/vue/admin-list-search-table) |
 | 做详情、状态流转和操作记录 | [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit) |
+| 给表单加附件上传 | [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export) |
 | 做完整用户模块 | [Vue Admin 用户模块实现手册](/vue/admin-user-module) |
 | 处理后端字段错误 | [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling) |
 | 排查表单类型问题 | [TypeScript 类型边界问题](/projects/issues-typescript) |
@@ -744,5 +745,6 @@ flowchart LR
 ## 下一步学习
 
 表单弹窗闭环完成后，继续看 [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit)，把详情、状态流转、操作按钮和时间线补完整。  
-如果你已经掌握详情闭环，继续看 [Vue Admin 用户模块实现手册](/vue/admin-user-module)，把列表、搜索、分页、表单、新增、编辑、启停和权限按钮连成完整 CRUD。  
+如果你已经掌握详情闭环，继续看 [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export)，把表单附件、模板导入和异步导出补完整。  
+如果你已经掌握文件任务闭环，继续看 [Vue Admin 用户模块实现手册](/vue/admin-user-module)，把列表、搜索、分页、表单、新增、编辑、启停和权限按钮连成完整 CRUD。  
 如果你已经能完成用户模块，继续看 [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow)，把按钮权限、接口权限和刷新恢复补完整。

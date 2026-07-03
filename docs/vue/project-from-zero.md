@@ -1135,6 +1135,7 @@ flowchart TD
 - [Vue Admin 列表、搜索、分页与表格闭环实战](/vue/admin-list-search-table)
 - [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud)
 - [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit)
+- [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export)
 - [Vue Admin 角色权限模块实现手册](/vue/admin-permission-module)
 - [Vue Admin 菜单与动态路由实现手册](/vue/admin-menu-route-module)
 - [Vue Admin 组织架构与数据权限实现手册](/vue/admin-organization-data-permission)

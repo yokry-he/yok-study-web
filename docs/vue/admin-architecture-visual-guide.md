@@ -535,13 +535,14 @@ flowchart TD
   C --> D["列表搜索表格闭环"]
   D --> E["表单新增编辑闭环"]
   E --> F["详情状态记录闭环"]
-  F --> G["Vue Admin 用户模块"]
-  G --> H["Vue Admin 权限路由闭环"]
-  H --> I["菜单动态路由"]
-  H --> J["角色权限"]
-  H --> K["组织数据权限"]
-  H --> L["请求错误处理"]
-  L --> M["请求权限排障专题"]
+  F --> G["文件导入导出闭环"]
+  G --> H["Vue Admin 用户模块"]
+  H --> I["Vue Admin 权限路由闭环"]
+  I --> J["菜单动态路由"]
+  I --> K["角色权限"]
+  I --> L["组织数据权限"]
+  I --> M["请求错误处理"]
+  M --> N["请求权限排障专题"]
 ```
 
 对应入口：
@@ -553,6 +554,7 @@ flowchart TD
 | 想做好列表、搜索、分页和表格 | [Vue Admin 列表、搜索、分页与表格闭环实战](/vue/admin-list-search-table) |
 | 想做好新增、编辑和表单校验 | [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud) |
 | 想做好详情、状态流转和操作记录 | [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit) |
+| 想做好上传、下载、导入导出和异步任务 | [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export) |
 | 想做用户列表 | [Vue Admin 用户模块实现手册](/vue/admin-user-module) |
 | 想理解权限恢复 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) |
 | 想做动态菜单 | [Vue Admin 菜单与动态路由实现手册](/vue/admin-menu-route-module) |
@@ -587,7 +589,8 @@ flowchart TD
 如果你已经能接真实接口，继续看 [Vue Admin 列表、搜索、分页与表格闭环实战](/vue/admin-list-search-table)。  
 如果你已经掌握列表页闭环，继续看 [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud)。  
 如果你已经掌握表单新增编辑闭环，继续看 [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit)。  
-如果你已经掌握详情状态记录闭环，继续看 [Vue Admin 用户模块实现手册](/vue/admin-user-module)。  
+如果你已经掌握详情状态记录闭环，继续看 [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export)。  
+如果你已经掌握文件任务闭环，继续看 [Vue Admin 用户模块实现手册](/vue/admin-user-module)。  
 如果你已经完成用户模块，继续看 [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow)。  
 如果你想按完整路线推进，回到 [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map)。  
 如果你正在排查问题，进入 [项目排障方法论](/projects/debugging-playbook) 和 [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request)。

@@ -29,6 +29,7 @@
   { title: 'Vue Admin 列表搜索表格', description: '把搜索条件、QueryState、分页、表格列、批量选择、行操作、导出和空态错误态串成列表页闭环。', link: '/vue/admin-list-search-table', level: '实战' },
   { title: 'Vue Admin 表单新增编辑', description: '把新增、编辑、复制、FormState、Payload、422 回填、关闭确认和防重复提交串成表单闭环。', link: '/vue/admin-form-modal-crud', level: '实战' },
   { title: 'Vue Admin 详情状态记录', description: '把详情页、状态流转、操作按钮、时间线、审计日志、隐藏路由和列表同步串成闭环。', link: '/vue/admin-detail-status-audit', level: '实战' },
+  { title: 'Vue Admin 文件导入导出', description: '把文件上传、下载、模板导入、异步导出任务、进度轮询、权限审计和错误处理串成闭环。', link: '/vue/admin-file-import-export', level: '实战' },
   { title: 'Vue Admin 权限路由闭环', description: '把登录态、用户信息、菜单、动态路由、按钮权限、接口权限和刷新恢复串成完整链路。', link: '/vue/admin-permission-route-flow', level: '实战' },
   { title: 'Vue Admin 用户模块', description: '用用户管理模块学习列表、搜索、弹窗、DTO、权限按钮和刷新恢复。', link: '/vue/admin-user-module', level: '实战' },
   { title: 'Vue Admin 角色权限', description: '把角色、权限树、按钮权限、API 权限和数据范围串成一条链路。', link: '/vue/admin-permission-module', level: '实战' },
@@ -55,5 +56,5 @@
 | 入门 | 快速开始、模板语法、响应式基础 |
 | 组件 | 组件设计、组合式 API、生命周期 |
 | 项目 | 路由与页面、Pinia、表单处理、请求封装、权限与菜单、从零到项目落地 |
-| Vue Admin 实战 | 图解项目架构、Mock 到真实接口联调、列表搜索表格闭环、表单新增编辑闭环、详情状态记录闭环、权限路由闭环、用户模块、角色权限模块、菜单与动态路由模块、组织架构与数据权限模块、请求与错误处理模块 |
+| Vue Admin 实战 | 图解项目架构、Mock 到真实接口联调、列表搜索表格闭环、表单新增编辑闭环、详情状态记录闭环、文件导入导出闭环、权限路由闭环、用户模块、角色权限模块、菜单与动态路由模块、组织架构与数据权限模块、请求与错误处理模块 |
 | 进阶 | 内置组件、性能优化、测试策略、最佳实践、常见问题、Vue 真实项目问题库 |

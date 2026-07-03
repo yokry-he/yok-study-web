@@ -705,6 +705,7 @@ function createUserForm(row: UserRowViewModel): UserFormState {
 | --- | --- |
 | 先把 mock 切真实接口 | [Vue Admin Mock 到真实接口联调实战](/vue/admin-mock-to-api) |
 | 做新增、编辑和表单校验 | [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud) |
+| 做导出任务和批量文件下载 | [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export) |
 | 做完整用户模块 | [Vue Admin 用户模块实现手册](/vue/admin-user-module) |
 | 处理请求错误 | [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling) |
 | 排查请求和权限问题 | [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request) |
@@ -714,5 +715,6 @@ function createUserForm(row: UserRowViewModel): UserFormState {
 ## 下一步学习
 
 列表、搜索、分页和表格闭环完成后，继续看 [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud)，把新增、编辑、复制、校验和提交状态做稳。  
-如果你已经掌握表单闭环，继续看 [Vue Admin 用户模块实现手册](/vue/admin-user-module)，把这套模式落到完整用户管理模块上。  
+如果你已经掌握表单闭环，继续看 [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export)，把列表导出、选中导出和异步任务做稳。  
+如果你已经掌握文件任务闭环，继续看 [Vue Admin 用户模块实现手册](/vue/admin-user-module)，把这套模式落到完整用户管理模块上。  
 如果你已经有真实接口，继续看 [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling)，把列表页的错误状态、traceId、重复提交和导出任务补完整。

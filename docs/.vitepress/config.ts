@@ -411,6 +411,7 @@ export default defineConfig({
             { text: 'Vue Admin 列表搜索表格', link: '/vue/admin-list-search-table' },
             { text: 'Vue Admin 表单新增编辑', link: '/vue/admin-form-modal-crud' },
             { text: 'Vue Admin 详情状态记录', link: '/vue/admin-detail-status-audit' },
+            { text: 'Vue Admin 文件导入导出', link: '/vue/admin-file-import-export' },
             { text: 'Vue Admin 权限路由闭环', link: '/vue/admin-permission-route-flow' },
             { text: 'Vue Admin 用户模块实现', link: '/vue/admin-user-module' },
             { text: 'Vue Admin 角色权限实现', link: '/vue/admin-permission-module' },

@@ -2,7 +2,7 @@
 
 ## 这个页面解决什么
 
-Vue Admin 相关文档已经覆盖了 Vue 基础、从零到项目、Mock 到真实接口联调、权限路由闭环、用户模块、角色权限、菜单动态路由、组织数据权限、请求错误处理、专项练习和问题库。内容足够深以后，新的问题会出现：**读者不知道先看哪一篇、什么时候动手、每一阶段做到什么程度才算过关。**
+Vue Admin 相关文档已经覆盖了 Vue 基础、从零到项目、Mock 到真实接口联调、列表表单详情闭环、文件上传导入导出、权限路由闭环、用户模块、角色权限、菜单动态路由、组织数据权限、请求错误处理、专项练习和问题库。内容足够深以后，新的问题会出现：**读者不知道先看哪一篇、什么时候动手、每一阶段做到什么程度才算过关。**
 
 这一页不是新的知识点，而是 Vue Admin 学习路线的“导航层”。它把现有文档组织成一条能执行、能检查、能复盘的路径：
 
@@ -63,20 +63,22 @@ flowchart TD
   F --> G["列表搜索表格闭环"]
   G --> H["表单新增编辑闭环"]
   H --> I["详情状态记录闭环"]
-  I --> J["Vue Admin 实战"]
-  J --> K["Vue Admin 用户模块"]
-  K --> L["权限路由闭环"]
-  L --> M["角色权限模块"]
-  L --> N["菜单动态路由模块"]
-  L --> O["组织与数据权限模块"]
-  L --> P["请求错误处理"]
-  M --> Q["Vue Admin 专项练习"]
-  N --> Q
-  O --> Q
+  I --> J["文件导入导出闭环"]
+  J --> K["Vue Admin 实战"]
+  K --> L["Vue Admin 用户模块"]
+  L --> M["权限路由闭环"]
+  M --> N["角色权限模块"]
+  M --> O["菜单动态路由模块"]
+  M --> P["组织与数据权限模块"]
+  M --> Q["请求错误处理"]
   P --> Q
-  Q --> R["Vue 真实项目问题库"]
-  R --> S["请求权限排障专题"]
-  S --> T["项目交付检查清单"]
+  N --> R["Vue Admin 专项练习"]
+  O --> R
+  P --> R
+  Q --> R
+  R --> S["Vue 真实项目问题库"]
+  S --> T["请求权限排障专题"]
+  T --> U["项目交付检查清单"]
 ```
 
 路线不要求一次读完所有文档。更好的方式是每一阶段只打开当前需要的 3 到 5 篇，做完产出后再进入下一阶段。
@@ -92,12 +94,13 @@ flowchart TD
 | 4. 列表搜索表格闭环 | 掌握后台最常见页面形态，处理搜索、分页、表格、批量选择和导出 | [Vue Admin 列表、搜索、分页与表格闭环实战](/vue/admin-list-search-table) | 可复用列表页模式 |
 | 5. 表单新增编辑闭环 | 掌握新增、编辑、复制、校验、422 回填、关闭确认和防重复提交 | [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud) | 可复用表单弹窗模式 |
 | 6. 详情状态记录闭环 | 掌握详情页、状态流转、操作按钮、时间线和审计日志 | [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit) | 可复用详情页模式 |
-| 7. 用户模块闭环 | 完成列表、表单、分页、权限按钮 | [Vue Admin 用户模块实现手册](/vue/admin-user-module) | 用户管理模块 |
-| 8. 权限路由闭环 | 串起登录态、菜单、动态路由、按钮和接口权限 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) | 权限恢复和无权限处理 |
-| 9. 核心后台模块 | 拆角色、菜单、组织、数据权限和请求错误 | 角色权限、菜单动态路由、组织数据权限、请求错误处理 | 可扩展后台基建 |
-| 10. 专项练习 | 用 14 天计划把模块做扎实 | [Vue Admin 专项练习](/roadmap/vue-admin-practice) | README、练习记录、问题复盘 |
-| 11. 排障训练 | 学会按证据定位问题 | [Vue 真实项目问题库](/projects/issues-vue)、[Vue Admin 请求权限排障](/projects/issues-vue-admin-request) | TROUBLESHOOTING.md |
-| 12. 交付验收 | 判断项目是否能作为作品或模板 | [项目里程碑](/roadmap/project-milestones)、[项目交付检查清单](/projects/delivery-checklist) | 交付检查结果 |
+| 7. 文件导入导出闭环 | 掌握上传、下载、模板导入、异步导出、进度、权限审计和错误处理 | [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export) | 可复用文件任务模式 |
+| 8. 用户模块闭环 | 完成列表、表单、分页、权限按钮和文件任务入口 | [Vue Admin 用户模块实现手册](/vue/admin-user-module) | 用户管理模块 |
+| 9. 权限路由闭环 | 串起登录态、菜单、动态路由、按钮和接口权限 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) | 权限恢复和无权限处理 |
+| 10. 核心后台模块 | 拆角色、菜单、组织、数据权限和请求错误 | 角色权限、菜单动态路由、组织数据权限、请求错误处理 | 可扩展后台基建 |
+| 11. 专项练习 | 用 14 天计划把模块做扎实 | [Vue Admin 专项练习](/roadmap/vue-admin-practice) | README、练习记录、问题复盘 |
+| 12. 排障训练 | 学会按证据定位问题 | [Vue 真实项目问题库](/projects/issues-vue)、[Vue Admin 请求权限排障](/projects/issues-vue-admin-request) | TROUBLESHOOTING.md |
+| 13. 交付验收 | 判断项目是否能作为作品或模板 | [项目里程碑](/roadmap/project-milestones)、[项目交付检查清单](/projects/delivery-checklist) | 交付检查结果 |
 
 ## 阶段 0：先学会使用文档站
 
@@ -203,6 +206,7 @@ flowchart LR
 - [Vue Admin 列表、搜索、分页与表格闭环实战](/vue/admin-list-search-table)
 - [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud)
 - [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit)
+- [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export)
 - [Vue Admin 实战](/projects/vue-admin)
 - [项目阶段任务](/projects/project-stage-tasks)
 
@@ -595,6 +599,7 @@ flowchart TD
 | 列表页搜索分页经常写乱 | [Vue Admin 列表、搜索、分页与表格闭环实战](/vue/admin-list-search-table) |
 | 新增编辑弹窗经常污染数据 | [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud) |
 | 详情页状态和操作记录混乱 | [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit) |
+| 上传下载导入导出总是出问题 | [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export) |
 | 已有静态页面 | [Vue Admin 用户模块实现手册](/vue/admin-user-module) |
 | 用户模块做完 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) |
 | 权限链路混乱 | [Vue Admin 菜单与动态路由实现手册](/vue/admin-menu-route-module) |
@@ -635,6 +640,7 @@ vue-admin-learning/
 如果你已经能稳定联调真实接口，继续进入 [Vue Admin 列表、搜索、分页与表格闭环实战](/vue/admin-list-search-table)，把最常见页面形态做扎实。  
 如果你已经掌握列表页闭环，继续进入 [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud)，把新增、编辑和提交状态做扎实。  
 如果你已经掌握表单闭环，继续进入 [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit)，把详情、状态和审计记录做扎实。  
-如果你已经掌握详情闭环，直接进入 [Vue Admin 用户模块实现手册](/vue/admin-user-module)。  
+如果你已经掌握详情闭环，继续进入 [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export)，把附件、模板导入、异步导出和任务轮询补完整。  
+如果你已经掌握文件任务闭环，直接进入 [Vue Admin 用户模块实现手册](/vue/admin-user-module)。  
 如果你已经有用户模块，继续补 [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) 和 [Vue Admin 专项练习](/roadmap/vue-admin-practice)。  
 如果你正在排错，直接进入 [项目排障方法论](/projects/debugging-playbook) 和 [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request)。
