@@ -203,7 +203,8 @@ export default defineConfig({
             { text: '内存管理', link: '/javascript/memory-management' },
             { text: '模块化与工程实践', link: '/javascript/modules' },
             { text: '项目落地实践', link: '/javascript/project-practice' },
-            { text: '任务看板从零到项目', link: '/javascript/task-board-project' }
+            { text: '任务看板从零到项目', link: '/javascript/task-board-project' },
+            { text: 'JavaScript 真实项目问题库', link: '/projects/issues-javascript' }
           ]
         }
       ],
@@ -701,6 +702,7 @@ export default defineConfig({
             { text: 'Vue 项目专项', link: '/projects/issues-vue' },
             { text: 'Vue Admin 请求权限排障', link: '/projects/issues-vue-admin-request' },
             { text: 'Vue Admin 消息通知排障', link: '/projects/issues-vue-admin-notification' },
+            { text: 'JavaScript 专项', link: '/projects/issues-javascript' },
             { text: '前端页面与状态', link: '/projects/issues-frontend' },
             { text: 'TypeScript 类型边界', link: '/projects/issues-typescript' },
             { text: '后端接口与服务', link: '/projects/issues-backend' },

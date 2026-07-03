@@ -51,6 +51,8 @@ DOM 事件
 项目落地实践
 ↓
 任务看板从零到项目
+↓
+JavaScript 真实项目问题库
 ```
 
 ## 章节地图
@@ -72,6 +74,7 @@ DOM 事件
 | [模块化与工程实践](/javascript/modules) | ESM、目录职责、导入路径和副作用 |
 | [项目落地实践](/javascript/project-practice) | 把接口转换、列表筛选、表单复制、异步请求、事件清理和权限判断放进真实页面 |
 | [任务看板从零到项目](/javascript/task-board-project) | 用原生 JavaScript 串联状态、DOM、事件委托、localStorage、异步加载、错误处理和模块拆分 |
+| [JavaScript 真实项目问题库](/projects/issues-javascript) | 排查数字精度、日期时区、异步循环、旧请求覆盖、事件监听泄漏、深拷贝、数组变异、本地缓存和动态正则问题 |
 
 ## 实际项目建议
 
@@ -128,4 +131,4 @@ JavaScript 会自动垃圾回收，但事件监听、定时器、全局缓存、
 
 ## 下一步学习
 
-第一次进入 JavaScript 模块，建议先看 [图解 JavaScript 核心概念](/javascript/visual-guide)，再学习 [JavaScript 基础](/javascript/fundamentals)。学完 DOM、异步和模块化后，继续做 [任务看板从零到项目](/javascript/task-board-project)，再进入 [Vue 从零到项目落地](/vue/project-from-zero)。
+第一次进入 JavaScript 模块，建议先看 [图解 JavaScript 核心概念](/javascript/visual-guide)，再学习 [JavaScript 基础](/javascript/fundamentals)。学完 DOM、异步和模块化后，继续做 [任务看板从零到项目](/javascript/task-board-project)，再用 [JavaScript 真实项目问题库](/projects/issues-javascript) 做排错复盘，最后进入 [Vue 从零到项目落地](/vue/project-from-zero)。
