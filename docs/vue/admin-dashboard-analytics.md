@@ -968,12 +968,13 @@ function getTrendType(metricKey: string, trend: 'up' | 'down' | 'flat') {
 | 处理请求错误和区块状态 | [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling) |
 | 处理数据范围 | [Vue Admin 组织架构与数据权限实现手册](/vue/admin-organization-data-permission) |
 | 处理权限刷新和缓存 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) |
+| 做审批待办和流程入口 | [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow) |
 | 做完整数据看板项目 | [数据看板项目案例](/projects/analytics-dashboard-case) |
 | 做智能 BI 看板 | [智能报表与 BI 分析项目案例](/projects/smart-bi-dashboard-case) |
 | 排查真实 Vue 问题 | [Vue 真实项目问题库](/projects/issues-vue) |
 
 ## 下一步学习
 
-如果你已经完成工作台、统计卡片和图表看板闭环，继续看 [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow)，把工作台区块权限、菜单权限、按钮权限和接口权限统一起来。
+如果你已经完成工作台、统计卡片和图表看板闭环，继续看 [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow)，把工作台待办、审批详情、处理动作和任务刷新串起来。
 
 如果你的工作台已经和权限打通，继续看 [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling)，把区块级 loading、empty、error、traceId、重试和刷新策略做成团队规范。

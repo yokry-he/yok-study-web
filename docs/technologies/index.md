@@ -73,6 +73,7 @@ Vue Admin 实战
 | 细化详情状态操作记录 | [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit) |
 | 细化文件上传导入导出 | [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export) |
 | 细化工作台数据看板 | [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) |
+| 细化审批流状态机 | [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow) |
 | 细化用户管理模块 | [Vue Admin 用户模块实现手册](/vue/admin-user-module) |
 | 细化角色权限模块 | [Vue Admin 角色权限模块实现手册](/vue/admin-permission-module) |
 | 细化菜单动态路由模块 | [Vue Admin 菜单与动态路由实现手册](/vue/admin-menu-route-module) |
@@ -94,6 +95,7 @@ Vue Admin 实战
 | 做好详情状态操作记录 | [Vue Admin 详情页、状态流转与操作记录闭环实战](/vue/admin-detail-status-audit) |
 | 做好文件上传导入导出 | [Vue Admin 文件上传、下载、导入导出与异步任务闭环实战](/vue/admin-file-import-export) |
 | 做好工作台统计图表 | [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) |
+| 做好审批流待办状态机 | [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow) |
 | 做 Vue Admin 权限路由闭环 | [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow) |
 | 查 Vue 项目问题 | [Vue 真实项目问题](/projects/issues-vue) |
 | 查 Vue Admin 请求权限问题 | [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request) |
@@ -111,7 +113,7 @@ Vue Admin 实战
 | 做后台项目 | [Vue Admin 实战](/projects/vue-admin) |
 | 做权限运营 | [权限运营项目案例](/projects/permission-operation-case) |
 | 做组织模块 | [组织架构项目案例](/projects/organization-case) |
-| 做审批模块 | [审批流项目案例](/projects/approval-workflow-case) |
+| 做审批模块 | [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow)、[审批流项目案例](/projects/approval-workflow-case) |
 | 做文件中心 | [文件中心项目案例](/projects/file-center-case) |
 | 做数据看板 | [数据看板项目案例](/projects/analytics-dashboard-case) |
 | 做多租户权限 | [多租户权限项目案例](/projects/multi-tenant-permission-case) |

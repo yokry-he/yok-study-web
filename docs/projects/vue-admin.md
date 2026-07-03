@@ -278,6 +278,7 @@ async function handleRemove(id: number) {
 
 - 登录后能进入工作台。
 - 工作台指标、待办和图表有清晰口径，且受当前账号数据权限控制。
+- 审批流待办、同意、驳回、转办、撤回和审批记录有完整状态机。
 - 刷新页面后用户信息和菜单能恢复。
 - 无权限页面不能进入。
 - 无权限按钮不展示或不可用。
@@ -287,4 +288,4 @@ async function handleRemove(id: number) {
 
 ## 下一步
 
-如果要细化工作台，继续看 [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics)。遇到真实问题后，把处理过程沉淀到 [真实项目问题库](/projects/real-world-issues)。
+如果要细化工作台，继续看 [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics)。如果要细化流程型业务，继续看 [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow)。遇到真实问题后，把处理过程沉淀到 [真实项目问题库](/projects/real-world-issues)。

@@ -1224,6 +1224,7 @@ flowchart TD
 | 先做菜单和动态路由 | [Vue Admin 菜单与动态路由实现手册](/vue/admin-menu-route-module) |
 | 统一请求和错误处理 | [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling) |
 | 做工作台统计和图表看板 | [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics) |
+| 做审批候选人和待办流转 | [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow) |
 | 看业务项目案例 | [组织架构项目案例](/projects/organization-case) |
 | 做数据权限审计 | [数据权限审计项目案例](/projects/data-permission-audit-case) |
 | 排查线上问题 | [项目排障方法论](/projects/debugging-playbook) |
@@ -1240,4 +1241,4 @@ flowchart TD
 
 完成组织架构和数据权限后，Vue Admin 的后台基础链路已经比较完整：用户、角色、权限、菜单、动态路由、组织、数据范围都串起来了。
 
-下一步建议继续看 [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling)，把 401、403、数据范围裁剪、导出失败、重复提交、空状态和审计提示做成统一规范。然后看 [Vue Admin 工作台、统计卡片、图表看板与数据刷新闭环实战](/vue/admin-dashboard-analytics)，确保图表、列表、导出和详情都使用同一套数据范围。
+下一步建议继续看 [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling)，把 401、403、数据范围裁剪、导出失败、重复提交、空状态和审计提示做成统一规范。然后看 [Vue Admin 审批流、状态机、待办与审计闭环实战](/vue/admin-approval-workflow)，把部门负责人、直属上级、岗位和角色候选人接进审批流。
