@@ -406,6 +406,7 @@ export default defineConfig({
             { text: '测试策略', link: '/vue/testing' },
             { text: '最佳实践', link: '/vue/best-practices' },
             { text: '从零到项目落地', link: '/vue/project-from-zero' },
+            { text: 'Vue Admin 阅读索引', link: '/vue/admin-reading-guide' },
             { text: '图解 Vue Admin 架构', link: '/vue/admin-architecture-visual-guide' },
             { text: 'Vue Admin Mock 到真实接口', link: '/vue/admin-mock-to-api' },
             { text: 'Vue Admin 列表搜索表格', link: '/vue/admin-list-search-table' },

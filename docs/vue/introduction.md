@@ -23,6 +23,7 @@
   { title: 'Pinia 状态管理', description: '管理登录态、用户信息、菜单和跨页面状态。', link: '/vue/pinia', level: '项目' },
   { title: '表单处理', description: '覆盖默认值、编辑回显、校验、转换和防重复提交。', link: '/vue/forms', level: '项目' },
   { title: 'Vue Admin 学习地图', description: '按阶段串起从零到项目、用户模块、权限路由、问题库和交付验收。', link: '/roadmap/vue-admin-learning-map', level: '路线' },
+  { title: 'Vue Admin 阅读索引', description: '按任务选择下一篇文档，把实现手册、练习包、问题库和交付清单连成一条可执行路径。', link: '/vue/admin-reading-guide', level: '索引' },
   { title: '图解 Vue Admin 架构', description: '用图理解后台项目分层、目录、数据流、权限流、请求流、表单流和交付链路。', link: '/vue/admin-architecture-visual-guide', level: '图解' },
   { title: '从零到项目落地', description: '用后台管理系统串联目录、路由、请求、列表、表单、权限和验收清单。', link: '/vue/project-from-zero', level: '实战' },
   { title: 'Vue Admin Mock 到真实接口', description: '把本地 mock、环境变量、Vite proxy、DTO 转换、分页参数、401/403 和 traceId 联调串成闭环。', link: '/vue/admin-mock-to-api', level: '实战' },
@@ -59,5 +60,5 @@
 | 入门 | 快速开始、模板语法、响应式基础 |
 | 组件 | 组件设计、组合式 API、生命周期 |
 | 项目 | 路由与页面、Pinia、表单处理、请求封装、权限与菜单、从零到项目落地 |
-| Vue Admin 实战 | 图解项目架构、Mock 到真实接口联调、列表搜索表格闭环、表单新增编辑闭环、详情状态记录闭环、文件导入导出闭环、工作台数据看板闭环、审批流状态机闭环、消息通知闭环、权限路由闭环、用户模块、角色权限模块、菜单与动态路由模块、组织架构与数据权限模块、请求与错误处理模块 |
+| Vue Admin 实战 | 阅读索引、图解项目架构、Mock 到真实接口联调、列表搜索表格闭环、表单新增编辑闭环、详情状态记录闭环、文件导入导出闭环、工作台数据看板闭环、审批流状态机闭环、消息通知闭环、权限路由闭环、用户模块、角色权限模块、菜单与动态路由模块、组织架构与数据权限模块、请求与错误处理模块 |
 | 进阶 | 内置组件、性能优化、测试策略、最佳实践、常见问题、Vue 真实项目问题库 |

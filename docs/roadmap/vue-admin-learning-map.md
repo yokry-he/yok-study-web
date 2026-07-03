@@ -16,6 +16,8 @@ Vue Admin 相关文档已经覆盖了 Vue 基础、从零到项目、Mock 到真
 
 如果你已经打开很多文档但不知道下一步读哪篇，从这里开始。
 
+如果你想按当前任务快速选择“下一篇实现手册、问题库或练习包”，可以配合 [Vue Admin 阅读顺序与实战索引](/vue/admin-reading-guide) 使用。
+
 ## 适合谁看
 
 - 想系统做一个 Vue Admin 项目，但容易在文档之间来回跳的人。
@@ -94,7 +96,7 @@ flowchart TD
 | --- | --- | --- | --- |
 | 0. 会用本站 | 知道怎么读、怎么练、怎么查问题 | [阅读顺序与使用方法](/roadmap/reading-guide)、[学习路线总览](/roadmap/introduction) | 一份个人学习计划 |
 | 1. Vue 基础成型 | 理解组件、路由、状态、请求和权限基础 | [Vue 学习导览](/vue/introduction)、[Vue 前端工程师路线](/roadmap/vue-frontend) | 基础笔记和小页面 |
-| 2. 最小后台项目 | 搭出 Vue Admin 骨架和用户管理入口 | [图解 Vue Admin 项目架构](/vue/admin-architecture-visual-guide)、[Vue 从零到项目落地](/vue/project-from-zero)、[Vue Admin 实战](/projects/vue-admin) | 可运行 Vue Admin demo |
+| 2. 最小后台项目 | 搭出 Vue Admin 骨架和用户管理入口 | [Vue Admin 阅读索引](/vue/admin-reading-guide)、[图解 Vue Admin 项目架构](/vue/admin-architecture-visual-guide)、[Vue 从零到项目落地](/vue/project-from-zero)、[Vue Admin 实战](/projects/vue-admin) | 可运行 Vue Admin demo |
 | 3. Mock 到真实接口 | 从假数据切到真实 API，补环境、代理、DTO、分页和错误分类 | [Vue Admin Mock 到真实接口联调实战](/vue/admin-mock-to-api) | 可复现的接口联调证据 |
 | 4. 列表搜索表格闭环 | 掌握后台最常见页面形态，处理搜索、分页、表格、批量选择和导出 | [Vue Admin 列表、搜索、分页与表格闭环实战](/vue/admin-list-search-table) | 可复用列表页模式 |
 | 5. 表单新增编辑闭环 | 掌握新增、编辑、复制、校验、422 回填、关闭确认和防重复提交 | [Vue Admin 表单弹窗、新增编辑与校验闭环实战](/vue/admin-form-modal-crud) | 可复用表单弹窗模式 |

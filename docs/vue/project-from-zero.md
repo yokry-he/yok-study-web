@@ -18,7 +18,7 @@
 - TypeScript 基础。
 - Vite 基础。
 
-如果你还没有这些基础，先看 [Vue 前端工程师路线](/roadmap/vue-frontend)，再回到这篇。如果你已经能看懂 Vue 基础，但不清楚后台项目分层，先看 [图解 Vue Admin 项目架构](/vue/admin-architecture-visual-guide)。
+如果你还没有这些基础，先看 [Vue 前端工程师路线](/roadmap/vue-frontend)，再回到这篇。如果你已经能看懂 Vue 基础，但不清楚后台项目分层，先看 [图解 Vue Admin 项目架构](/vue/admin-architecture-visual-guide)。如果你已经打开很多 Vue Admin 专题但不知道下一篇应该看什么，先看 [Vue Admin 阅读顺序与实战索引](/vue/admin-reading-guide)。
 
 ## 项目目标
 
@@ -41,7 +41,7 @@
 - 退出登录。
 - 构建验收。
 
-这个项目足够小，但覆盖了大多数 Vue 中后台项目的核心能力。完成本页的最小项目后，建议继续看 [图解 Vue Admin 项目架构](/vue/admin-architecture-visual-guide)、[Vue Admin Mock 到真实接口联调实战](/vue/admin-mock-to-api) 和 [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow)，把目录分层、联调边界、登录、菜单、路由、按钮权限、接口权限和数据权限串成真实项目闭环。
+这个项目足够小，但覆盖了大多数 Vue 中后台项目的核心能力。完成本页的最小项目后，建议继续看 [Vue Admin 阅读顺序与实战索引](/vue/admin-reading-guide)、[图解 Vue Admin 项目架构](/vue/admin-architecture-visual-guide)、[Vue Admin Mock 到真实接口联调实战](/vue/admin-mock-to-api) 和 [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow)，把目录分层、联调边界、登录、菜单、路由、按钮权限、接口权限和数据权限串成真实项目闭环。
 
 ## 总体架构图
 

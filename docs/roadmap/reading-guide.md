@@ -65,6 +65,7 @@ Vue 从零到项目落地
 | 想按任务推进 | [阶段任务清单](/roadmap/phase-tasks) | 每阶段完成一个产出 |
 | 想动手练习 | [学习路径练习包](/roadmap/practice-labs) | 选择一个练习并记录问题 |
 | 想系统完成 Vue Admin | [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map) | 按阶段完成用户、权限、菜单、请求和问题复盘 |
+| Vue Admin 文档太多不知道下一篇看什么 | [Vue Admin 阅读顺序与实战索引](/vue/admin-reading-guide) | 按当前任务选择实现手册、问题库和交付检查 |
 | 想做完整项目 | [项目里程碑](/roadmap/project-milestones) | 对照验收清单补功能 |
 | 概念看不懂 | 各模块“图解核心概念” | 先看图，再看代码 |
 | 项目出问题但不知道从哪查 | [项目排障方法论](/projects/debugging-playbook) | 先定位问题层级，再收集证据 |
