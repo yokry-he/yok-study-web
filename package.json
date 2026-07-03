@@ -1,0 +1,20 @@
+{
+  "name": "vue-learning-docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev docs --host 127.0.0.1 --port 6173",
+    "docs:check": "node scripts/check-docs.mjs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs --host 127.0.0.1 --port 6173"
+  },
+  "overrides": {
+    "vite": "6.4.3"
+  },
+  "devDependencies": {
+    "mermaid": "^11.16.0",
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.0"
+  }
+}
