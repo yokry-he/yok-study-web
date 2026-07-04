@@ -240,6 +240,7 @@ export default defineConfig({
             { text: 'CSS 可访问性', link: '/css/accessibility' },
             { text: '设计 Token 与主题', link: '/css/design-tokens' },
             { text: '项目样式架构', link: '/css/architecture' },
+            { text: 'CSS 真实项目问题库', link: '/projects/issues-css' },
             { text: '常见问题', link: '/css/troubleshooting' }
           ]
         }
@@ -703,6 +704,7 @@ export default defineConfig({
             { text: 'Vue Admin 请求权限排障', link: '/projects/issues-vue-admin-request' },
             { text: 'Vue Admin 消息通知排障', link: '/projects/issues-vue-admin-notification' },
             { text: 'JavaScript 专项', link: '/projects/issues-javascript' },
+            { text: 'CSS 专项', link: '/projects/issues-css' },
             { text: '前端页面与状态', link: '/projects/issues-frontend' },
             { text: 'TypeScript 类型边界', link: '/projects/issues-typescript' },
             { text: '后端接口与服务', link: '/projects/issues-backend' },
