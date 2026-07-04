@@ -361,6 +361,7 @@ export default defineConfig({
             { text: '错误处理、日志与配置', link: '/go/errors-logging-config' },
             { text: '并发：goroutine、channel、select', link: '/go/concurrency' },
             { text: 'Context、HTTP 服务与中间件', link: '/go/context-http' },
+            { text: 'Go HTTP API 从零到项目', link: '/go/http-api-project-from-zero' },
             { text: '数据库、事务与仓储层', link: '/go/database-transaction' },
             { text: '测试、Benchmark 与 Fuzzing', link: '/go/testing' },
             { text: '项目结构、构建与部署', link: '/go/project-deployment' },

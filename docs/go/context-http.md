@@ -115,4 +115,4 @@ handler
 
 ## 下一步学习
 
-继续学习 [数据库、事务与仓储层](/go/database-transaction)。
+如果你还没有做过完整后端项目，继续进入 [Go HTTP API 从零到项目落地](/go/http-api-project-from-zero)，把 HTTP、middleware、context、数据库、测试和部署串成一个可运行 API。已经有项目经验后，再学习 [数据库、事务与仓储层](/go/database-transaction)。
