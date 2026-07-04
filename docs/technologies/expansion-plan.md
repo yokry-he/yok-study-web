@@ -238,6 +238,7 @@ go/
 - error 包装、日志、配置来源和启动校验。
 - goroutine、channel、select、WaitGroup、数据竞争和并发控制。
 - context、HTTP handler、中间件、请求超时和优雅关闭。
+- gRPC、Protobuf、服务间通信、metadata、错误码、流式调用和联调排障。
 - database/sql、事务、连接池、rows 关闭和仓储层。
 - 单元测试、表格测试、benchmark、fuzzing 和 race 检查。
 - 项目结构、构建、Docker、部署检查和版本信息。
@@ -246,7 +247,6 @@ go/
 
 后续继续扩展：
 
-- gRPC、Protobuf 和服务间通信。
 - 云原生组件、Kubernetes Operator 和控制器模式。
 - CLI 工具、后台任务和任务队列。
 - 更多高并发接口、网关和基础设施案例。
@@ -407,6 +407,6 @@ ai-engineering/
 继续完善顺序建议：
 
 1. 继续补从零到项目章节和复杂案例，例如 React 管理台、Node 权限 API、AI 文档问答、工程化组件库项目。
-2. 继续为 stable 模块补深入专题，例如 Java Spring Security、Go gRPC、Node 缓存队列、数据库分库分表、DevOps GitOps 和 AI eval 自动化。
+2. 继续为 stable 模块补深入专题，例如 Go 微服务治理、Node 缓存队列、数据库分库分表、DevOps GitOps 和 AI eval 自动化。
 3. 为实战项目继续补更多完整项目章节，例如销售风险指标治理预算执行复盘、渠道策略标准灾备演练、生产安全整改推荐模型治理、售后知识认证服务商复评和更多行业项目案例。
 4. 按读者反馈继续补充速查手册的浏览器命令、包管理器、云平台命令和团队协作命令。

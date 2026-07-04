@@ -23,7 +23,7 @@
   { title: 'Nuxt / Next 元框架', description: '稳定框架生态模块，覆盖 SSR、文件路由、数据获取、部署缓存、服务端鉴权、SEO、国际化、内容站案例和问题排查。', link: '/meta-frameworks/introduction', level: '框架生态' },
   { title: 'Node.js', description: '后端 JavaScript 稳定模块，覆盖图解入门、运行时、包管理、HTTP API、鉴权会话、数据库集成、错误日志、测试、安全、部署和权限 API 项目。', link: '/node/introduction', level: '后端' },
   { title: 'Java', description: '企业后端语言模块，覆盖图解入门、JDK、面向对象、集合泛型、异常日志、并发虚拟线程、JVM、Spring Boot、从零到项目、Spring Security 权限认证、事务、测试和排错。', link: '/java/introduction', level: '后端' },
-  { title: 'Go', description: '云原生后端语言模块，覆盖图解入门、Go Modules、类型函数、接口组合、错误处理、并发、Context、HTTP、从零到项目、数据库、测试、部署和性能诊断。', link: '/go/introduction', level: '后端' },
+  { title: 'Go', description: '云原生后端语言模块，覆盖图解入门、Go Modules、类型函数、接口组合、错误处理、并发、Context、HTTP、从零到项目、gRPC 服务间通信、数据库、测试、部署和性能诊断。', link: '/go/introduction', level: '后端' },
   { title: '数据库', description: '稳定数据模块，覆盖图解入门、MySQL、PostgreSQL、Redis、权限系统数据层落地、建模、索引、事务、迁移、ORM、备份恢复、安全审计、脱敏和排错。', link: '/database/introduction', level: '数据' },
   { title: 'AI 工程', description: '稳定 AI 工程模块，覆盖图解入门、LLM API、提示词、结构化输出、函数调用、多模态、RAG、MCP、Agent、文档问答项目、评测、上线治理和问题排查。', link: '/ai-engineering/introduction', level: 'AI' },
   { title: '前端工程化', description: '稳定工程模块，覆盖图解入门、从零到项目落地、Vite、规范、环境、依赖、测试、Monorepo、组件库工程、构建部署、包体积、模块联邦、工程性能和真实项目问题库。', link: '/engineering/introduction', level: '工程' },
@@ -123,6 +123,7 @@ Vue Admin 实战
 | 做 Java 权限认证模块 | [Spring Security 权限认证项目](/java/spring-security-permission) |
 | 学 Go 后端 | [Go 学习导览](/go/introduction) |
 | 做 Go HTTP API | [Go HTTP API 从零到项目落地](/go/http-api-project-from-zero) |
+| 做 Go gRPC 服务通信 | [Go gRPC 与服务间通信项目](/go/grpc-service-communication) |
 | 学数据库 | [数据库学习导览](/database/introduction) |
 | 入门 AI 工程 | [AI 工程学习导览](/ai-engineering/introduction) |
 | 做 AI 文档问答 | [AI 文档问答从零到项目](/ai-engineering/doc-qa-project) |
