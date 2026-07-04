@@ -14,7 +14,7 @@
 - 让每个任务都有可检查的产出。
 - 把常见错误提前暴露出来，减少无效试错。
 
-练习推进顺序建议如下。如果你的目标是后台管理系统，建议先把 [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map) 作为总路线，再按本页挑选练习。完成基础练习后，可以进入 [前端综合实战练习](/roadmap/frontend-capstone-lab)，用一个 Vue Admin 工作台把 CSS、浏览器、工程化、Vue、权限、问题库和交付验收串起来。
+练习推进顺序建议如下。如果你的目标是后台管理系统，建议先把 [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map) 作为总路线，再按本页挑选练习。完成基础练习后，可以进入 [前端综合实战练习](/roadmap/frontend-capstone-lab)，用一个 Vue Admin 工作台把 CSS、浏览器、工程化、Vue、权限、问题库和交付验收串起来。如果你的目标是全栈交付，完成数据库权限模型后继续做后端 API 综合练习，把 Java、Go 或 Node API 接到前端项目里。
 
 ```mermaid
 flowchart TD
@@ -57,6 +57,8 @@ CHANGELOG.md           每次练习完成了什么
 - 工程化检查、发布清单和问题复盘是否能支撑真实交付。
 
 这个综合练习更像项目验收，不是单点知识训练。如果你在综合练习里卡住，再回到本页选择对应的小练习补短板。
+
+如果你已经完成前端综合练习，并且想进入全栈方向，继续完成本页后半段的数据库权限模型、后端 API 综合项目、上线回滚和真实问题复盘。不要只做前端 mock，至少选择 Java、Go 或 Node 中的一条后端路线，把接口、数据库、错误响应、部署和联调问题走完。
 
 ## 练习 1：可维护静态页面
 
@@ -623,6 +625,205 @@ flowchart TD
 - 增加软删除策略。
 - 设计多租户字段和索引。
 
+## 练习 6.5：后端 API 综合项目
+
+### 目标
+
+选择 Java、Go 或 Node.js 中的一条后端路线，做一个能被前端页面真实调用的用户与任务 API。这个练习的重点不是比较语言优劣，而是训练后端项目共同能力：接口契约、分层、数据库迁移、事务、错误响应、日志、测试、联调和部署。
+
+完成后，你应该能把一个 Vue Admin 或 React 管理台页面从 mock 数据切到真实接口，并能解释每个接口、每张表、每个错误码和每条发布检查项。
+
+### 准备文档
+
+- [Node 后端工程师路线](/roadmap/node-backend)
+- [Node 权限 API 从零到项目](/node/permission-api-project)
+- [Java 学习导览](/java/introduction)
+- [Spring Boot 从零到项目落地](/java/spring-boot-project-from-zero)
+- [Go 学习导览](/go/introduction)
+- [Go HTTP API 从零到项目落地](/go/http-api-project-from-zero)
+- [数据库项目落地实践](/database/project-practice)
+- [前后端联调排查](/projects/integration-debugging)
+- [后端接口与服务问题](/projects/issues-backend)
+- [部署、缓存与 DevOps 问题](/projects/issues-deployment)
+
+### 语言选择
+
+| 选择 | 适合你现在的情况 | 必做项目页 |
+| --- | --- | --- |
+| Node.js | 已经熟悉 JavaScript/TypeScript，想快速理解 API、鉴权、数据库和部署 | [Node 权限 API 从零到项目](/node/permission-api-project) |
+| Java | 想进入企业后端、Spring Boot、事务、测试和长期维护项目 | [Spring Boot 从零到项目落地](/java/spring-boot-project-from-zero) |
+| Go | 想做云原生服务、轻量 API、网关、工具服务和高并发基础 | [Go HTTP API 从零到项目落地](/go/http-api-project-from-zero) |
+
+如果你是第一次做后端，建议只选一条路线。不要同一周同时写 Node、Java 和 Go，否则容易把语言差异误认为后端能力。
+
+### 后端能力闭环图
+
+```mermaid
+flowchart TD
+  A["前端页面"] --> B["API 契约"]
+  B --> C["Handler / Controller"]
+  C --> D["参数校验"]
+  D --> E["Service 业务规则"]
+  E --> F["Repository / Mapper"]
+  F --> G[("Database")]
+  E --> H["Transaction"]
+  C --> I["统一错误响应"]
+  C --> J["traceId / request log"]
+  E --> K["测试"]
+  G --> L["迁移和种子数据"]
+  K --> M["构建和部署"]
+  M --> N["联调和问题复盘"]
+```
+
+这张图要表达一个原则：后端项目不是“写几个接口”。接口只是入口，真正要掌握的是数据、事务、错误、日志、测试和交付证据。
+
+### 最终项目结构
+
+无论选择哪种语言，建议保留这些交付文件：
+
+```text
+backend-api/
+  README.md
+  API_CONTRACT.md
+  DATABASE_NOTES.md
+  TROUBLESHOOTING.md
+  RELEASE_CHECKLIST.md
+  src/ 或 internal/
+  migrations/
+  tests/
+```
+
+| 文件 | 必须说明 |
+| --- | --- |
+| `README.md` | 技术栈、启动方式、环境变量、目录结构、常用命令 |
+| `API_CONTRACT.md` | 接口路径、请求参数、响应结构、错误码、分页格式 |
+| `DATABASE_NOTES.md` | 表、字段、约束、索引、迁移原因、回滚策略 |
+| `TROUBLESHOOTING.md` | 联调、启动、数据库、事务、部署问题复盘 |
+| `RELEASE_CHECKLIST.md` | 测试、构建、迁移、部署、验证、回滚 |
+
+### 必做接口
+
+| 模块 | 接口 | 验收 |
+| --- | --- | --- |
+| 健康检查 | `GET /health` | 能区分应用存活和依赖异常 |
+| 用户列表 | `GET /api/users` | 支持分页、关键字、状态筛选 |
+| 用户新增 | `POST /api/users` | 校验用户名、邮箱、重复数据 |
+| 用户编辑 | `PUT /api/users/{id}` | 不允许修改不存在用户 |
+| 用户启停 | `PATCH /api/users/{id}/status` | 停用后前端能看到状态变化 |
+| 任务列表 | `GET /api/tasks` | 支持负责人、状态、截止时间筛选 |
+| 任务新增 | `POST /api/tasks` | 负责人必须存在且未停用 |
+| 任务完成 | `PATCH /api/tasks/{id}/status` | 完成操作写入操作日志或状态记录 |
+
+### 数据库要求
+
+至少设计：
+
+- `users`：用户基础信息。
+- `tasks`：任务基础信息。
+- `operation_logs`：关键操作记录。
+
+数据库文档必须写清：
+
+| 内容 | 要求 |
+| --- | --- |
+| 字段含义 | 每个字段说明业务含义和预期取值 |
+| 非空约束 | 说明为什么不能空 |
+| 唯一约束 | 说明防止哪类重复数据 |
+| 外键或逻辑关联 | 说明关联关系和删除策略 |
+| 索引 | 说明对应查询场景 |
+| 迁移原因 | 说明为什么新增或修改表结构 |
+| 回滚策略 | 说明是否可回滚、如何保护已有数据 |
+
+不要只提交一段 SQL。后端项目能不能维护，很大程度取决于后来的开发者能不能看懂表结构为什么这样设计。
+
+### 任务步骤
+
+1. 选择 Node、Java 或 Go 其中一条路线。
+2. 创建后端项目，并让 `/health` 能访问。
+3. 写 `README.md`，说明启动方式和环境变量。
+4. 设计 `users`、`tasks`、`operation_logs` 表。
+5. 写迁移脚本和 `DATABASE_NOTES.md`。
+6. 完成用户列表、新增、编辑、启停接口。
+7. 完成任务列表、新增、完成接口。
+8. 统一成功响应、错误响应、分页响应和错误码。
+9. 增加 request id 或 traceId，并在日志中记录。
+10. 给核心 Service 或 Handler 写测试。
+11. 把前端用户或任务页面从 mock 切到真实接口。
+12. 写一次联调问题复盘。
+13. 打包或构建后端，并写发布检查清单。
+
+### 联调流程图
+
+```mermaid
+sequenceDiagram
+  participant UI as Frontend
+  participant API as Backend API
+  participant S as Service
+  participant DB as Database
+  participant Log as Log
+
+  UI->>API: GET /api/users?page=1
+  API->>S: validate query
+  S->>DB: query users
+  DB-->>S: rows + total
+  S-->>API: page result
+  API->>Log: method path status traceId duration
+  API-->>UI: unified JSON
+```
+
+联调时必须对齐：
+
+- 前端请求路径和后端路由。
+- 分页字段命名，例如 `page`、`pageSize`、`total`。
+- 错误码和错误提示。
+- 401、403、404、409、422、500 的处理方式。
+- traceId 是否能从响应追到后端日志。
+
+### 验收标准
+
+- 后端项目可以从 README 独立启动。
+- 空数据库可以通过迁移脚本创建表结构。
+- 字段、约束、索引和迁移原因有文档说明。
+- 用户和任务接口能被前端页面真实调用。
+- 所有接口返回统一响应结构。
+- 参数错误、资源不存在、业务冲突和系统错误能区分。
+- 日志中能看到 traceId、路径、状态码和耗时。
+- 至少有 5 个关键测试用例。
+- 前端从 mock 切真实接口后，有联调记录。
+- 发布清单包含构建、迁移、健康检查和回滚。
+
+### 常见错误
+
+| 错误 | 现象 | 修正方式 |
+| --- | --- | --- |
+| 前后端各自定义分页字段 | 前端拿不到 total 或页码错乱 | 写 `API_CONTRACT.md`，统一分页结构 |
+| 后端直接返回数据库字段 | 前端依赖内部表结构 | 使用 DTO/ViewModel 或响应对象 |
+| 数据库字段没有注释 | 后续迁移没人敢改 | 写 `DATABASE_NOTES.md` 和迁移说明 |
+| 业务错误全返回 500 | 前端无法区分提示和系统故障 | 定义业务错误码和 HTTP 状态 |
+| 没有 traceId | 线上问题无法从前端追到后端日志 | 中间件统一生成并返回 traceId |
+| 事务包住外部调用 | 接口慢、锁等待、回滚复杂 | 事务只包数据库一致性操作 |
+| 只在本地测试 | 发布后配置或数据库失败 | 增加构建、迁移和健康检查 |
+
+### 故障注入
+
+| 故障 | 注入方式 | 目标 |
+| --- | --- | --- |
+| 分页字段不一致 | 后端返回 `records`，前端读取 `items` | 训练 API 契约意识 |
+| 任务负责人不存在 | 新增任务传不存在的 `ownerId` | 训练业务错误和 404/409 区分 |
+| 数据库唯一约束冲突 | 重复创建同邮箱用户 | 训练约束错误转换 |
+| traceId 缺失 | 删除响应头或响应字段 traceId | 训练前后端日志追踪 |
+| 迁移漏字段 | 删除 `status` 字段或默认值 | 训练启动和迁移检查 |
+| 部署配置错误 | 使用错误数据库地址 | 训练环境变量和健康检查 |
+
+### 进阶挑战
+
+- 增加登录和 JWT。
+- 增加角色和按钮权限。
+- 增加 Redis 缓存和缓存失效策略。
+- 增加 OpenAPI 文档。
+- 增加 Docker Compose 启动数据库和 API。
+- 增加 CI：测试、构建、镜像和部署检查。
+
 ## 练习 7：项目上线和回滚
 
 ### 目标
@@ -830,4 +1031,4 @@ flowchart TD
 
 ## 下一步学习
 
-如果你还没有选路线，先看 [学习路线总览](/roadmap/introduction)。如果你已经完成了前 5 个练习，继续进入 [项目里程碑](/roadmap/project-milestones)，把练习成果组合成一个可展示项目。
+如果你还没有选路线，先看 [学习路线总览](/roadmap/introduction)。如果你已经完成了前端、数据库和后端 API 练习，继续进入 [项目里程碑](/roadmap/project-milestones)，把练习成果组合成一个可展示项目。

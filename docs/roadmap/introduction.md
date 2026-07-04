@@ -60,7 +60,7 @@ AI 工程
   { title: '全栈工程师路线', description: '串联前端、后端语言、数据库、DevOps 和项目实战，目标是独立交付完整应用。', link: '/roadmap/fullstack', level: '全栈' },
   { title: 'AI 工程路线', description: '从 LLM API、提示词、RAG、Agent 到评测、成本、安全和上线治理。', link: '/roadmap/ai-engineering', level: 'AI' },
   { title: '阶段任务清单', description: '把学习路线拆成可执行任务、阶段产出、验收标准和常见卡点。', link: '/roadmap/phase-tasks', level: '任务' },
-  { title: '学习路径练习包', description: '用静态页面、JS 列表、TS 类型、Vue Admin、数据库、上线和复盘练习验证能力。', link: '/roadmap/practice-labs', level: '练习' },
+  { title: '学习路径练习包', description: '用静态页面、JS 列表、TS 类型、Vue Admin、数据库、后端 API、上线和复盘练习验证能力。', link: '/roadmap/practice-labs', level: '练习' },
   { title: '前端综合实战练习', description: '用一个 Vue Admin 工作台串联 CSS、浏览器、工程化、Vue、问题库和交付验收。', link: '/roadmap/frontend-capstone-lab', level: '综合' },
   { title: 'Vue Admin 学习地图', description: '把 Vue Admin 文档组织成从入门、项目、权限、问题库到交付验收的完整路线。', link: '/roadmap/vue-admin-learning-map', level: '地图' },
   { title: 'Vue Admin 专项练习', description: '用 14 天计划完成 Vue Admin 用户管理模块，覆盖路由、Pinia、请求、表单、权限、测试和复盘。', link: '/roadmap/vue-admin-practice', level: '练习' },

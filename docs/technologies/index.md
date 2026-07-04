@@ -67,6 +67,7 @@ Vue Admin 实战
 | 先看懂技术之间如何连接 | [图解学习地图](/roadmap/visual-learning-map) |
 | 做阶段练习 | [学习路径练习包](/roadmap/practice-labs) |
 | 做前端综合项目 | [前端综合实战练习](/roadmap/frontend-capstone-lab) |
+| 做后端 API 综合练习 | [学习路径练习包：后端 API 综合项目](/roadmap/practice-labs#练习-65后端-api-综合项目) |
 | 做 Vue Admin 练习 | [Vue Admin 专项练习](/roadmap/vue-admin-practice) |
 | 做 Vue Admin 消息通知练习 | [学习路径练习包](/roadmap/practice-labs)、[Vue Admin 专项练习](/roadmap/vue-admin-practice) |
 | 系统完成 Vue Admin 项目 | [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map) |
