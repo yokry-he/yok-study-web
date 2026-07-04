@@ -705,6 +705,7 @@ export default defineConfig({
           items: [
             { text: '问题库总览', link: '/projects/real-world-issues' },
             { text: '项目排障方法论', link: '/projects/debugging-playbook' },
+            { text: '前端项目排障图谱', link: '/projects/frontend-debugging-map' },
             { text: 'Vue 项目专项', link: '/projects/issues-vue' },
             { text: 'Vue Admin 请求权限排障', link: '/projects/issues-vue-admin-request' },
             { text: 'Vue Admin 消息通知排障', link: '/projects/issues-vue-admin-notification' },

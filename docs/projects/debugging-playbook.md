@@ -4,7 +4,7 @@
 
 真实项目排障最难的地方，通常不是不知道某个 API，而是不知道问题应该从哪一层开始查。
 
-这个页面提供一套通用排障方法：先从现象判断问题层级，再用证据缩小范围，最后把修复方案沉淀成问题库条目。它适合配合 [真实项目问题库](/projects/real-world-issues)、[Vue 真实项目问题](/projects/issues-vue)、[前端页面与状态问题](/projects/issues-frontend) 一起使用。
+这个页面提供一套通用排障方法：先从现象判断问题层级，再用证据缩小范围，最后把修复方案沉淀成问题库条目。它适合配合 [真实项目问题库](/projects/real-world-issues)、[前端项目排障图谱](/projects/frontend-debugging-map)、[Vue 真实项目问题](/projects/issues-vue)、[前端页面与状态问题](/projects/issues-frontend) 一起使用。
 
 读完后，你应该能回答：
 

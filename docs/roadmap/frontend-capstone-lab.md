@@ -71,6 +71,8 @@ vue-admin-capstone/
 | 工程化 | lint、type-check、test、build、preview、发布清单 |
 | 问题复盘 | 至少 8 条真实或模拟问题记录 |
 
+如果练习过程中不知道问题该归到哪一类，先进入 [前端项目排障图谱](/projects/frontend-debugging-map)，再根据现象分流到 Vue、请求权限、CSS、TypeScript、JavaScript、工程化或部署问题库。
+
 ## 综合能力地图
 
 ```mermaid

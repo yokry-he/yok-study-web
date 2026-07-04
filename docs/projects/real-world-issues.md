@@ -16,7 +16,7 @@
 
 它适合在项目开发、上线、排错时快速查阅。
 
-如果你还不确定问题属于前端、接口、状态、权限、缓存还是部署，先看 [项目排障方法论](/projects/debugging-playbook)。它会帮你从现象收集证据，再进入下面的具体分类。
+如果你还不确定问题属于前端、接口、状态、权限、缓存还是部署，先看 [项目排障方法论](/projects/debugging-playbook)。如果问题已经确定发生在前端项目里，但不知道该查 Vue、请求、CSS、TypeScript、浏览器还是工程化，进入 [前端项目排障图谱](/projects/frontend-debugging-map)。它会帮你从现象收集证据，再进入下面的具体分类。
 
 ## 分类入口
 
@@ -25,6 +25,7 @@
 | 分类 | 适合排查的问题 | 入口 |
 | --- | --- | --- |
 | 项目排障方法 | 不知道问题在哪一层、缺少复现证据、修复后不知道如何回归和沉淀 | [项目排障方法论](/projects/debugging-playbook) |
+| 前端项目排障图谱 | 白屏、数据旧值、权限错位、样式污染、构建缓存等前端综合问题如何分流到对应专题 | [前端项目排障图谱](/projects/frontend-debugging-map) |
 | Vue 项目专项 | 动态菜单刷新丢失、动态路由 404、Pinia 解构失去响应式、弹窗污染列表、KeepAlive 缓存、权限按钮错位 | [Vue 真实项目问题](/projects/issues-vue) |
 | Vue Admin 请求权限 | 401/403、旧请求覆盖、重复提交、数据范围裁剪、导出不一致、trace id 丢失 | [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request) |
 | Vue Admin 消息通知 | 未读数不准、重复通知、切换账号污染、实时连接重连、通知跳转 404/403、全部已读回退 | [Vue Admin 消息通知、未读数与实时提醒问题排查专题](/projects/issues-vue-admin-notification) |

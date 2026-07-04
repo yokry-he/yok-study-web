@@ -72,6 +72,7 @@ Vue 从零到项目落地
 | 想做完整项目 | [项目里程碑](/roadmap/project-milestones) | 对照验收清单补功能 |
 | 概念看不懂 | 各模块“图解核心概念” | 先看图，再看代码 |
 | 项目出问题但不知道从哪查 | [项目排障方法论](/projects/debugging-playbook) | 先定位问题层级，再收集证据 |
+| 前端项目出问题但不知道查哪个专题 | [前端项目排障图谱](/projects/frontend-debugging-map) | 按白屏、数据、状态、样式、权限、构建分流 |
 | 已知道问题分类 | [真实项目问题库](/projects/real-world-issues) | 按现象查根因 |
 | 忘记写法 | [速查手册总览](/cheatsheets/) | 快速回忆命令和 API |
 | 准备上线 | [项目交付检查清单](/projects/delivery-checklist) | 逐项验证 |

@@ -84,6 +84,7 @@ Vue Admin 实战
 | 细化组织数据权限模块 | [Vue Admin 组织架构与数据权限实现手册](/vue/admin-organization-data-permission) |
 | 细化请求错误处理模块 | [Vue Admin 请求封装与错误处理闭环手册](/vue/admin-request-error-handling) |
 | 不知道项目问题从哪查 | [项目排障方法论](/projects/debugging-playbook) |
+| 前端项目问题分流 | [前端项目排障图谱](/projects/frontend-debugging-map) |
 | 补 JavaScript | [JavaScript 基础](/javascript/fundamentals) |
 | 做 JS 任务看板 | [JavaScript 任务看板从零到项目](/javascript/task-board-project) |
 | 做 JS 排障练习 | [学习路径练习包](/roadmap/practice-labs)、[JavaScript 真实项目问题库](/projects/issues-javascript) |
