@@ -153,4 +153,4 @@ Controller 变得很长，测试困难，权限、事务、日志都混在一起
 
 ## 下一步学习
 
-继续学习 [数据库、事务与 ORM](/java/persistence-transaction)。
+如果你还没有做过完整后端项目，继续进入 [Spring Boot 从零到项目落地](/java/spring-boot-project-from-zero)，把 Controller、Service、Repository、数据库、事务、测试和部署串成一个可运行 API。已经有项目经验后，再学习 [数据库、事务与 ORM](/java/persistence-transaction)。

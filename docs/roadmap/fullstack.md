@@ -61,7 +61,7 @@ CI/CD 发布
 不要同时开太多技术。建议：
 
 1. 先完成前端页面和静态 mock。
-2. 再接 Node.js、Java 或 Go API。
+2. 再接 Node.js、Java 或 Go API；如果选择 Java，优先用 [Spring Boot 从零到项目落地](/java/spring-boot-project-from-zero) 做出用户角色 API。
 3. 再接数据库。
 4. 再补权限和日志。
 5. 再容器化和部署。
