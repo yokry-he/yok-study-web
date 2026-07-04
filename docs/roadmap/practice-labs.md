@@ -679,6 +679,58 @@ flowchart TD
 - 增加错误告警。
 - 增加数据库备份和恢复演练。
 
+## 练习 7.5：前端工程化交付项目
+
+### 目标
+
+把一个能运行的前端项目升级成能协作、能检查、能构建、能预览、能发布、能回滚的工程项目。这个练习重点不是业务页面，而是工程链路。
+
+### 准备文档
+
+- [前端工程化从零到项目落地](/engineering/project-from-zero)
+- [Vite 工程基础](/engineering/vite)
+- [代码规范](/engineering/eslint-prettier)
+- [环境配置](/engineering/env-config)
+- [测试策略](/engineering/testing)
+- [构建与部署](/engineering/build-deploy)
+- [工程化常见问题](/engineering/troubleshooting)
+
+### 工程交付图
+
+```mermaid
+flowchart TD
+  A["可运行项目"] --> B["统一脚本"]
+  B --> C["目录和 README"]
+  C --> D["环境配置"]
+  D --> E["ESLint / Prettier / TypeScript"]
+  E --> F["Vitest"]
+  F --> G["build / preview"]
+  G --> H["CI 质量门禁"]
+  H --> I["RELEASE_CHECKLIST.md"]
+  I --> J["模拟发布和回滚"]
+```
+
+### 必做任务
+
+| 任务 | 要求 | 产出 |
+| --- | --- | --- |
+| 统一脚本 | 至少有 `dev`、`lint`、`type-check`、`test`、`build`、`preview` | `package.json` |
+| 补 README | 写清技术栈、目录、启动、环境变量、提交前检查 | `README.md` |
+| 集中配置 | 环境变量只在 `src/config` 读取 | `appConfig.ts` |
+| 质量门禁 | ESLint、Prettier、TypeScript、Vitest 都能跑 | 命令输出记录 |
+| 构建预览 | 生产构建后用 preview 检查核心路由 | 预览截图或记录 |
+| 发布清单 | 写发布版本、检查项、回滚方案 | `RELEASE_CHECKLIST.md` |
+| 问题复盘 | 记录一次 CI 失败或构建失败的复现和修复 | `ENGINEERING_NOTES.md` |
+
+### 验收标准
+
+- 新人只看 README 就能启动项目。
+- 环境变量有 `.env.example`，且没有敏感信息。
+- 提交前检查命令明确。
+- CI 流程至少包含安装、格式检查、lint、类型检查、测试和构建。
+- `build` 后的产物能用 `preview` 打开。
+- 发布清单写清回滚方式，而不是只写“重新发布”。
+
 ## 练习 8：真实问题复盘
 
 ### 目标

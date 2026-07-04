@@ -591,6 +591,7 @@ flowchart TD
 
 | 能力 | 说明 | 文档 |
 | --- | --- | --- |
+| 工程化主线 | 脚本、目录、环境、规范、测试、CI、构建、发布和回滚 | [前端工程化从零到项目落地](/engineering/project-from-zero) |
 | Vite | 开发服务器、构建、别名、代理 | [Vite 工程配置](/engineering/vite) |
 | 环境变量 | 区分本地、测试、生产配置 | [环境配置](/engineering/env-config) |
 | 代码规范 | ESLint、Prettier、提交前检查 | [代码规范](/engineering/eslint-prettier) |

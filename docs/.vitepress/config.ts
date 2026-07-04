@@ -437,6 +437,7 @@ export default defineConfig({
           items: [
             { text: '工程化学习导览', link: '/engineering/introduction' },
             { text: '图解前端工程化核心概念', link: '/engineering/visual-guide' },
+            { text: '从零到项目落地', link: '/engineering/project-from-zero' },
             { text: 'Vite 工程基础', link: '/engineering/vite' },
             { text: '代码规范', link: '/engineering/eslint-prettier' },
             { text: '环境配置', link: '/engineering/env-config' },

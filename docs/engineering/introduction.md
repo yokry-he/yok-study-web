@@ -39,6 +39,8 @@ Vite 工程基础
 ↓
 图解前端工程化核心概念
 ↓
+前端工程化从零到项目落地
+↓
 代码规范
 ↓
 环境配置
@@ -63,6 +65,7 @@ Monorepo
 | 能力 | 解决的问题 | 对应文档 |
 | --- | --- | --- |
 | 工程化全局图 | 从开发、质量门禁、构建、部署到回滚的整体链路 | [图解前端工程化核心概念](/engineering/visual-guide) |
+| 从零到项目 | 把脚本、目录、环境、规范、测试、CI、构建、发布和回滚串成可交付项目 | [前端工程化从零到项目落地](/engineering/project-from-zero) |
 | 项目启动和构建 | 项目如何跑起来、如何输出生产产物 | [Vite 工程基础](/engineering/vite) |
 | 代码规范 | 多人协作时风格和低级错误如何控制 | [代码规范](/engineering/eslint-prettier) |
 | 环境配置 | 本地、测试、预发、生产如何隔离 | [环境配置](/engineering/env-config) |
@@ -183,4 +186,4 @@ README.md                 启动、构建、部署说明
 
 ## 下一步学习
 
-从 [图解前端工程化核心概念](/engineering/visual-guide) 开始，再学习 [Vite 工程基础](/engineering/vite)、[代码规范](/engineering/eslint-prettier)、[环境配置](/engineering/env-config)、[依赖管理](/engineering/package-management) 和 [测试策略](/engineering/testing)。
+从 [图解前端工程化核心概念](/engineering/visual-guide) 开始，再进入 [前端工程化从零到项目落地](/engineering/project-from-zero)，把 [Vite 工程基础](/engineering/vite)、[代码规范](/engineering/eslint-prettier)、[环境配置](/engineering/env-config)、[依赖管理](/engineering/package-management) 和 [测试策略](/engineering/testing) 串成项目流程。
