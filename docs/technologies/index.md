@@ -85,6 +85,7 @@ Vue Admin 实战
 | 不知道项目问题从哪查 | [项目排障方法论](/projects/debugging-playbook) |
 | 补 JavaScript | [JavaScript 基础](/javascript/fundamentals) |
 | 做 JS 任务看板 | [JavaScript 任务看板从零到项目](/javascript/task-board-project) |
+| 做 JS 排障练习 | [学习路径练习包](/roadmap/practice-labs)、[JavaScript 真实项目问题库](/projects/issues-javascript) |
 | 查 JavaScript 项目问题 | [JavaScript 真实项目问题库](/projects/issues-javascript) |
 | 补 CSS | [CSS 学习导览](/css/introduction) |
 | 补浏览器与网络 | [浏览器学习导览](/browser/introduction) |

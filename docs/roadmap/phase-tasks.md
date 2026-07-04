@@ -41,6 +41,7 @@
 - [前端基础](/frontend/html-css)
 - [CSS 学习导览](/css/introduction)
 - [JavaScript 基础](/javascript/fundamentals)
+- [JavaScript 真实项目问题库](/projects/issues-javascript)
 - [浏览器学习导览](/browser/introduction)
 
 任务：
@@ -49,7 +50,8 @@
 2. 写一个列表页，包含筛选栏和卡片或表格。
 3. 做移动端适配。
 4. 给按钮、链接、表单加上基础交互。
-5. 用浏览器 DevTools 检查布局、网络请求和控制台错误。
+5. 做一次 JavaScript 列表交互和排障加练。
+6. 用浏览器 DevTools 检查布局、网络请求、Storage 和控制台错误。
 
 验收：
 
@@ -57,6 +59,7 @@
 - 移动端没有横向溢出。
 - CSS 不依赖宽泛选择器。
 - 能解释一次点击事件如何触发 JS 逻辑。
+- 能复现并修复至少 2 个 JavaScript 常见问题。
 - 能说明浏览器如何加载 HTML、CSS、JS。
 
 常见卡点：

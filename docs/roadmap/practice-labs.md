@@ -112,6 +112,7 @@ CHANGELOG.md           每次练习完成了什么
 - [异步编程](/javascript/async)
 - [项目落地实践](/javascript/project-practice)
 - [任务看板从零到项目](/javascript/task-board-project)
+- [JavaScript 真实项目问题库](/projects/issues-javascript)
 
 ### 任务步骤
 
@@ -160,6 +161,94 @@ flowchart LR
 - 把筛选条件同步到 URL query。
 - 增加本地缓存上次筛选条件。
 - 用单元测试覆盖数据处理函数。
+
+### 加练：JavaScript 项目排障专项
+
+完成列表交互后，不要马上进入 TypeScript。先故意给项目注入一批真实问题，再按证据修复。这个加练的目标不是写更多功能，而是训练你在真实项目中定位 JavaScript 问题的能力。
+
+#### 加练准备
+
+- [JavaScript 真实项目问题库](/projects/issues-javascript)
+- [错误处理](/javascript/error-handling)
+- [事件循环](/javascript/event-loop)
+- [内存管理](/javascript/memory-management)
+- [项目排障方法论](/projects/debugging-playbook)
+
+#### 故障注入图
+
+```mermaid
+flowchart TD
+  A["可运行列表项目"] --> B["注入数字精度问题"]
+  A --> C["注入日期解析问题"]
+  A --> D["注入旧请求覆盖问题"]
+  A --> E["注入重复事件监听"]
+  A --> F["注入 localStorage 脏数据"]
+  B --> G["复现现象"]
+  C --> G
+  D --> G
+  E --> G
+  F --> G
+  G --> H["收集 Console / Network / Storage 证据"]
+  H --> I["对照 JavaScript 问题库定位根因"]
+  I --> J["修复代码"]
+  J --> K["写入 TROUBLESHOOTING.md"]
+```
+
+#### 必做任务
+
+| 任务 | 注入方式 | 修复方向 |
+| --- | --- | --- |
+| 金额精度 | 给列表增加订单金额合计，使用小数直接相加 | 改成分为单位或统一 decimal 计算策略 |
+| 日期差一天 | 用 `new Date('2026-07-01')` 格式化日期 | 区分 date-only 和 datetime |
+| 旧请求覆盖 | 搜索时随机延迟返回不同关键字结果 | 使用请求序号或 AbortController |
+| 重复监听 | 每次渲染后都重新绑定列表点击事件 | 改成初始化一次或事件委托 |
+| 本地缓存崩溃 | 手动把 localStorage 写成非法 JSON | 加安全读取、默认值和版本兜底 |
+| 动态正则异常 | 搜索关键字输入 `[`、`a+b`、`.` | 对用户输入做正则转义，或改用 includes |
+
+#### 证据记录模板
+
+在项目里新增 `TROUBLESHOOTING.md`：
+
+```md
+# JavaScript 排障记录
+
+## 问题现象
+
+## 复现步骤
+
+## 证据
+
+- Console：
+- Network：
+- Storage：
+- 相关代码：
+
+## 根因
+
+## 修复方式
+
+## 回归验证
+
+## 下次如何预防
+```
+
+#### 验收标准
+
+- 至少完成 4 个故障注入和修复。
+- 每个问题都能写出复现步骤和根因，而不是只写“已修复”。
+- 修复旧请求覆盖时，能说明为什么请求返回顺序不等于发起顺序。
+- 修复重复监听时，能证明点击一次只触发一次处理函数。
+- 修复 localStorage 脏数据时，页面启动不能白屏。
+- `TROUBLESHOOTING.md` 至少沉淀 4 条问题记录。
+
+#### 常见错误
+
+| 错误 | 后果 | 修正方式 |
+| --- | --- | --- |
+| 只改代码不写复现 | 下次遇到同类问题还会重新猜 | 每个问题先写复现步骤 |
+| 只看 Console 不看数据 | 容易忽略输入和中间转换 | 同时检查输入、转换、输出 |
+| 修复后不回归 | 旧问题可能变成新问题 | 对照验收标准重新操作一次 |
+| 把所有问题归为异步问题 | 根因判断粗糙 | 按数字、日期、异步、引用、生命周期分类 |
 
 ## 练习 3：TypeScript 类型边界
 
