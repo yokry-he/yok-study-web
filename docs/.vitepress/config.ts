@@ -449,6 +449,7 @@ export default defineConfig({
             { text: '包体积分析', link: '/engineering/bundle-analysis' },
             { text: '模块联邦与微前端', link: '/engineering/module-federation' },
             { text: '工程性能优化', link: '/engineering/performance-optimization' },
+            { text: '工程化真实项目问题库', link: '/projects/issues-engineering' },
             { text: '常见问题', link: '/engineering/troubleshooting' }
           ]
         }
@@ -710,6 +711,7 @@ export default defineConfig({
             { text: 'CSS 专项', link: '/projects/issues-css' },
             { text: '前端页面与状态', link: '/projects/issues-frontend' },
             { text: 'TypeScript 类型边界', link: '/projects/issues-typescript' },
+            { text: '前端工程化专项', link: '/projects/issues-engineering' },
             { text: '后端接口与服务', link: '/projects/issues-backend' },
             { text: '前后端联调排查', link: '/projects/integration-debugging' },
             { text: '数据库与缓存', link: '/projects/issues-database' },

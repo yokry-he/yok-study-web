@@ -77,6 +77,7 @@ Monorepo
 | 包体积分析 | 如何定位大依赖、拆包、懒加载和 chunk 警告 | [包体积分析](/engineering/bundle-analysis) |
 | 模块联邦 | 多团队、多应用如何做微前端和独立发布 | [模块联邦与微前端](/engineering/module-federation) |
 | 工程性能 | 安装、启动、HMR、类型检查、测试和 CI 如何提速 | [工程性能优化](/engineering/performance-optimization) |
+| 项目问题库 | 安装、环境、CI、构建、部署缓存、依赖升级、Monorepo 和回滚怎么排查 | [前端工程化真实项目问题库](/projects/issues-engineering) |
 | 排错 | 启动、构建、样式、依赖、部署问题怎么查 | [工程化常见问题](/engineering/troubleshooting) |
 
 ## 一个真实项目的工程化最低配置

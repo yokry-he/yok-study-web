@@ -694,6 +694,7 @@ flowchart TD
 - [测试策略](/engineering/testing)
 - [构建与部署](/engineering/build-deploy)
 - [工程化常见问题](/engineering/troubleshooting)
+- [前端工程化真实项目问题库](/projects/issues-engineering)
 
 ### 工程交付图
 
