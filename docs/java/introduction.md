@@ -34,9 +34,10 @@ flowchart TD
   G --> H[JVM 内存与 GC]
   H --> I[Spring Boot API]
   I --> J[Spring Boot 从零到项目]
-  J --> K[数据库、事务与 ORM]
-  K --> L[测试、打包与上线]
-  L --> M[真实项目问题排查]
+  J --> K[Spring Security 权限认证]
+  K --> L[数据库、事务与 ORM]
+  L --> M[测试、打包与上线]
+  M --> N[真实项目问题排查]
 ```
 
 ## Java 模块章节
@@ -53,6 +54,7 @@ flowchart TD
 | [JVM 内存、GC 与诊断](/java/jvm-memory-gc) | 如何理解堆、栈、类加载、GC 和常见线上诊断 |
 | [Spring Boot API 开发](/java/spring-boot-api) | 如何组织 Controller、Service、Repository 和配置 |
 | [Spring Boot 从零到项目落地](/java/spring-boot-project-from-zero) | 如何从 0 做一个用户角色后台 API，覆盖分层、数据库、事务、测试、配置、部署和排障 |
+| [Spring Security 权限认证项目](/java/spring-security-permission) | 如何实现登录、token、角色权限、接口保护、401/403、审计日志和前后端权限联调 |
 | [数据库、事务与 ORM](/java/persistence-transaction) | 如何使用 JPA/MyBatis、事务边界和连接池 |
 | [测试、打包与部署](/java/testing-deployment) | 如何写单元测试、接口测试、打包和运行 |
 | [常见问题](/java/troubleshooting) | 如何排查启动失败、依赖冲突、事务不生效和内存问题 |
@@ -83,7 +85,7 @@ flowchart LR
 - 接口测试。
 - Docker 部署。
 
-每学一章，都把知识放回这个项目里验证。Java 不是靠“看完语法”学会的，而是靠不断处理类型、异常、事务、依赖和运行时问题学会的。如果你已经能理解 Spring Boot 基础 API，直接进入 [Spring Boot 从零到项目落地](/java/spring-boot-project-from-zero)，做一个可运行、可测试、可联调的后台 API。
+每学一章，都把知识放回这个项目里验证。Java 不是靠“看完语法”学会的，而是靠不断处理类型、异常、事务、依赖和运行时问题学会的。如果你已经能理解 Spring Boot 基础 API，直接进入 [Spring Boot 从零到项目落地](/java/spring-boot-project-from-zero)，做一个可运行、可测试、可联调的后台 API；如果你已经完成用户角色 API，继续进入 [Spring Security 权限认证项目](/java/spring-security-permission)，补齐登录、token、角色权限、接口保护和审计日志。
 
 ## 当前版本选择
 
@@ -99,4 +101,4 @@ flowchart LR
 
 ## 下一步学习
 
-第一次进入 Java 模块，建议先看 [图解 Java 核心概念](/java/visual-guide)，再学习 [环境、JDK 与构建工具](/java/setup-tooling)。如果你已经掌握基础语法，继续进入 [Spring Boot 从零到项目落地](/java/spring-boot-project-from-zero)。
+第一次进入 Java 模块，建议先看 [图解 Java 核心概念](/java/visual-guide)，再学习 [环境、JDK 与构建工具](/java/setup-tooling)。如果你已经掌握基础语法，继续进入 [Spring Boot 从零到项目落地](/java/spring-boot-project-from-zero)。如果你正在做后台管理系统权限模块，继续进入 [Spring Security 权限认证项目](/java/spring-security-permission)。

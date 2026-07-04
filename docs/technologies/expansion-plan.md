@@ -178,6 +178,7 @@ java/
 ├─ concurrency-virtual-threads
 ├─ jvm-memory-gc
 ├─ spring-boot-api
+├─ spring-security-permission
 ├─ persistence-transaction
 ├─ testing-deployment
 └─ troubleshooting
@@ -194,13 +195,13 @@ java/
 - 平台线程、线程池、CompletableFuture 和虚拟线程。
 - JVM 内存、GC、线程 dump、heap dump 和类冲突排查。
 - Spring Boot API、分层架构、配置、参数校验和请求链路。
+- Spring Security 权限认证项目：登录、token、角色权限、接口保护、401/403、审计日志和前后端联调。
 - 数据库访问、事务、ORM、连接池和 N+1 查询。
 - 测试、打包、部署、健康检查和上线验证。
 - Java 速查和常见问题。
 
 后续继续扩展：
 
-- Spring Security 和权限体系。
 - 消息队列、异步任务和事件驱动。
 - 微服务治理、配置中心和注册发现。
 - 更多企业后台、支付、审批流和报表案例。

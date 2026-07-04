@@ -22,7 +22,7 @@
   { title: 'React', description: 'React 稳定模块，覆盖图解入门、JSX、组件、Hooks、Effect、表单、请求、状态、路由、性能、测试、管理台项目和常见问题。', link: '/react/introduction', level: '框架' },
   { title: 'Nuxt / Next 元框架', description: '稳定框架生态模块，覆盖 SSR、文件路由、数据获取、部署缓存、服务端鉴权、SEO、国际化、内容站案例和问题排查。', link: '/meta-frameworks/introduction', level: '框架生态' },
   { title: 'Node.js', description: '后端 JavaScript 稳定模块，覆盖图解入门、运行时、包管理、HTTP API、鉴权会话、数据库集成、错误日志、测试、安全、部署和权限 API 项目。', link: '/node/introduction', level: '后端' },
-  { title: 'Java', description: '企业后端语言模块，覆盖图解入门、JDK、面向对象、集合泛型、异常日志、并发虚拟线程、JVM、Spring Boot、从零到项目、事务、测试和排错。', link: '/java/introduction', level: '后端' },
+  { title: 'Java', description: '企业后端语言模块，覆盖图解入门、JDK、面向对象、集合泛型、异常日志、并发虚拟线程、JVM、Spring Boot、从零到项目、Spring Security 权限认证、事务、测试和排错。', link: '/java/introduction', level: '后端' },
   { title: 'Go', description: '云原生后端语言模块，覆盖图解入门、Go Modules、类型函数、接口组合、错误处理、并发、Context、HTTP、从零到项目、数据库、测试、部署和性能诊断。', link: '/go/introduction', level: '后端' },
   { title: '数据库', description: '稳定数据模块，覆盖图解入门、MySQL、PostgreSQL、Redis、权限系统数据层落地、建模、索引、事务、迁移、ORM、备份恢复、安全审计、脱敏和排错。', link: '/database/introduction', level: '数据' },
   { title: 'AI 工程', description: '稳定 AI 工程模块，覆盖图解入门、LLM API、提示词、结构化输出、函数调用、多模态、RAG、MCP、Agent、文档问答项目、评测、上线治理和问题排查。', link: '/ai-engineering/introduction', level: 'AI' },
@@ -120,6 +120,7 @@ Vue Admin 实战
 | 做权限 API | [Node 权限 API 从零到项目](/node/permission-api-project) |
 | 学 Java 后端 | [Java 学习导览](/java/introduction) |
 | 做 Java Spring Boot API | [Spring Boot 从零到项目落地](/java/spring-boot-project-from-zero) |
+| 做 Java 权限认证模块 | [Spring Security 权限认证项目](/java/spring-security-permission) |
 | 学 Go 后端 | [Go 学习导览](/go/introduction) |
 | 做 Go HTTP API | [Go HTTP API 从零到项目落地](/go/http-api-project-from-zero) |
 | 学数据库 | [数据库学习导览](/database/introduction) |

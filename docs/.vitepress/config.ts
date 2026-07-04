@@ -344,6 +344,7 @@ export default defineConfig({
             { text: 'JVM 内存、GC 与诊断', link: '/java/jvm-memory-gc' },
             { text: 'Spring Boot API 开发', link: '/java/spring-boot-api' },
             { text: 'Spring Boot 从零到项目', link: '/java/spring-boot-project-from-zero' },
+            { text: 'Spring Security 权限认证项目', link: '/java/spring-security-permission' },
             { text: '数据库、事务与 ORM', link: '/java/persistence-transaction' },
             { text: '测试、打包与部署', link: '/java/testing-deployment' },
             { text: '常见问题', link: '/java/troubleshooting' }
