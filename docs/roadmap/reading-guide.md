@@ -51,6 +51,8 @@ Vue 从零到项目落地
 ↓
 学习路径练习包
 ↓
+前端综合实战练习
+↓
 真实项目问题库
 ```
 
@@ -64,6 +66,7 @@ Vue 从零到项目落地
 | 想先建立整体技术模型 | [图解学习地图](/roadmap/visual-learning-map) | 按图解顺序串起模块 |
 | 想按任务推进 | [阶段任务清单](/roadmap/phase-tasks) | 每阶段完成一个产出 |
 | 想动手练习 | [学习路径练习包](/roadmap/practice-labs) | 选择一个练习并记录问题 |
+| 想做综合前端项目 | [前端综合实战练习](/roadmap/frontend-capstone-lab) | 按阶段完成可运行、可排错、可交付项目 |
 | 想系统完成 Vue Admin | [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map) | 按阶段完成用户、权限、菜单、请求和问题复盘 |
 | Vue Admin 文档太多不知道下一篇看什么 | [Vue Admin 阅读顺序与实战索引](/vue/admin-reading-guide) | 按当前任务选择实现手册、问题库和交付检查 |
 | 想做完整项目 | [项目里程碑](/roadmap/project-milestones) | 对照验收清单补功能 |
@@ -192,4 +195,4 @@ flowchart TD
 
 ## 下一步学习
 
-如果你是第一次使用本站，继续进入 [学习路线总览](/roadmap/introduction) 和 [图解学习地图](/roadmap/visual-learning-map)。如果你已经有明确目标，直接进入 [学习路径练习包](/roadmap/practice-labs)，从当前最薄弱的练习开始。
+如果你是第一次使用本站，继续进入 [学习路线总览](/roadmap/introduction) 和 [图解学习地图](/roadmap/visual-learning-map)。如果你已经有明确目标，直接进入 [学习路径练习包](/roadmap/practice-labs)，从当前最薄弱的练习开始；完成基础练习后，进入 [前端综合实战练习](/roadmap/frontend-capstone-lab) 做一次完整项目闭环。

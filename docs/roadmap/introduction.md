@@ -61,6 +61,7 @@ AI 工程
   { title: 'AI 工程路线', description: '从 LLM API、提示词、RAG、Agent 到评测、成本、安全和上线治理。', link: '/roadmap/ai-engineering', level: 'AI' },
   { title: '阶段任务清单', description: '把学习路线拆成可执行任务、阶段产出、验收标准和常见卡点。', link: '/roadmap/phase-tasks', level: '任务' },
   { title: '学习路径练习包', description: '用静态页面、JS 列表、TS 类型、Vue Admin、数据库、上线和复盘练习验证能力。', link: '/roadmap/practice-labs', level: '练习' },
+  { title: '前端综合实战练习', description: '用一个 Vue Admin 工作台串联 CSS、浏览器、工程化、Vue、问题库和交付验收。', link: '/roadmap/frontend-capstone-lab', level: '综合' },
   { title: 'Vue Admin 学习地图', description: '把 Vue Admin 文档组织成从入门、项目、权限、问题库到交付验收的完整路线。', link: '/roadmap/vue-admin-learning-map', level: '地图' },
   { title: 'Vue Admin 专项练习', description: '用 14 天计划完成 Vue Admin 用户管理模块，覆盖路由、Pinia、请求、表单、权限、测试和复盘。', link: '/roadmap/vue-admin-practice', level: '练习' },
   { title: '项目里程碑', description: '用静态页面、Vue Admin、Node API、全栈后台、内容站和 AI 助手验证能力。', link: '/roadmap/project-milestones', level: '项目' },
@@ -96,4 +97,4 @@ AI 工程
 
 ## 下一步学习
 
-如果你是第一次使用本站，先看 [阅读顺序与使用方法](/roadmap/reading-guide) 和 [图解学习地图](/roadmap/visual-learning-map)。如果你以 Vue 为主线，继续进入 [Vue 前端工程师路线](/roadmap/vue-frontend)。如果你目标是完成后台项目，进入 [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map)。如果你已经有前端基础，可以直接进入 [全栈工程师路线](/roadmap/fullstack)。如果你想按任务推进，进入 [阶段任务清单](/roadmap/phase-tasks) 和 [学习路径练习包](/roadmap/practice-labs)。
+如果你是第一次使用本站，先看 [阅读顺序与使用方法](/roadmap/reading-guide) 和 [图解学习地图](/roadmap/visual-learning-map)。如果你以 Vue 为主线，继续进入 [Vue 前端工程师路线](/roadmap/vue-frontend)。如果你目标是完成后台项目，进入 [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map)。如果你已经有前端基础，可以直接进入 [全栈工程师路线](/roadmap/fullstack)。如果你想按任务推进，进入 [阶段任务清单](/roadmap/phase-tasks) 和 [学习路径练习包](/roadmap/practice-labs)；完成基础练习后，用 [前端综合实战练习](/roadmap/frontend-capstone-lab) 把 CSS、浏览器、工程化、Vue 和问题库串成一个可交付项目。

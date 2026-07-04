@@ -48,6 +48,7 @@ flowchart TD
   { title: '路由与状态', description: '使用 Vue Router 组织页面，用 Pinia 管理登录态、用户信息和跨页面状态。', link: '/vue/router', badge: '项目' },
   { title: '请求与权限', description: '封装请求、处理错误、组织登录态、动态路由、菜单权限和按钮权限。', link: '/vue/request', badge: '业务' },
   { title: '工程化', description: '使用 Vite、环境变量、代码规范、构建部署、测试和项目目录约定。', link: '/engineering/vite', badge: '交付' },
+  { title: '综合实战', description: '用一个 Vue Admin 工作台串联 CSS、浏览器、工程化、Vue、问题库和交付验收。', link: '/roadmap/frontend-capstone-lab', badge: '综合' },
   { title: '项目实战', description: '通过 Vue Admin 学习地图完成一个可扩展的后台管理项目。', link: '/roadmap/vue-admin-learning-map', badge: '实战' },
   { title: '问题复盘', description: '用真实项目问题库复盘重复请求、权限半更新、表单污染和类型边界问题。', link: '/projects/real-world-issues', badge: '排错' }
 ]" />

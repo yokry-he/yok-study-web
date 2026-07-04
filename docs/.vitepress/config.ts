@@ -142,6 +142,7 @@ export default defineConfig({
             { text: 'AI 工程路线', link: '/roadmap/ai-engineering' },
             { text: '阶段任务清单', link: '/roadmap/phase-tasks' },
             { text: '学习路径练习包', link: '/roadmap/practice-labs' },
+            { text: '前端综合实战练习', link: '/roadmap/frontend-capstone-lab' },
             { text: 'Vue Admin 学习地图', link: '/roadmap/vue-admin-learning-map' },
             { text: 'Vue Admin 专项练习', link: '/roadmap/vue-admin-practice' },
             { text: '项目里程碑', link: '/roadmap/project-milestones' },
