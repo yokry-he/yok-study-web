@@ -63,6 +63,7 @@ Vue Admin 实战
 | 目标 | 入口 |
 | --- | --- |
 | 学会使用本站 | [阅读顺序与使用方法](/roadmap/reading-guide) |
+| 建立学习、笔记和复盘闭环 | [学习工作流与笔记模板](/roadmap/study-workflow) |
 | 选择学习路线 | [学习路线总览](/roadmap/introduction) |
 | 先看懂技术之间如何连接 | [图解学习地图](/roadmap/visual-learning-map) |
 | 做阶段练习 | [学习路径练习包](/roadmap/practice-labs) |

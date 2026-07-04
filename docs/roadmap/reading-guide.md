@@ -35,6 +35,8 @@ flowchart TD
 ```text
 阅读顺序与使用方法
 ↓
+学习工作流与笔记模板
+↓
 学习路线总览
 ↓
 阶段任务清单
@@ -63,6 +65,7 @@ Vue 从零到项目落地
 | 当前目标 | 推荐入口 | 后续动作 |
 | --- | --- | --- |
 | 不知道从哪学 | [学习路线总览](/roadmap/introduction) | 选一条路线 |
+| 不知道怎么读、怎么记、怎么复盘 | [学习工作流与笔记模板](/roadmap/study-workflow) | 按目标、图解、实验、项目、问题、复盘形成闭环 |
 | 想先建立整体技术模型 | [图解学习地图](/roadmap/visual-learning-map) | 按图解顺序串起模块 |
 | 想按任务推进 | [阶段任务清单](/roadmap/phase-tasks) | 每阶段完成一个产出 |
 | 想动手练习 | [学习路径练习包](/roadmap/practice-labs) | 选择一个练习并记录问题 |
@@ -197,4 +200,4 @@ flowchart TD
 
 ## 下一步学习
 
-如果你是第一次使用本站，继续进入 [学习路线总览](/roadmap/introduction) 和 [图解学习地图](/roadmap/visual-learning-map)。如果你已经有明确目标，直接进入 [学习路径练习包](/roadmap/practice-labs)，从当前最薄弱的练习开始；完成基础练习后，进入 [前端综合实战练习](/roadmap/frontend-capstone-lab) 做一次完整项目闭环。
+如果你是第一次使用本站，继续进入 [学习路线总览](/roadmap/introduction)、[学习工作流与笔记模板](/roadmap/study-workflow) 和 [图解学习地图](/roadmap/visual-learning-map)。如果你已经有明确目标，直接进入 [学习路径练习包](/roadmap/practice-labs)，从当前最薄弱的练习开始；完成基础练习后，进入 [前端综合实战练习](/roadmap/frontend-capstone-lab) 做一次完整项目闭环。

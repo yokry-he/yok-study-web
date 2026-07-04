@@ -135,6 +135,7 @@ export default defineConfig({
           items: [
             { text: '学习路线总览', link: '/roadmap/introduction' },
             { text: '阅读顺序与使用方法', link: '/roadmap/reading-guide' },
+            { text: '学习工作流与笔记模板', link: '/roadmap/study-workflow' },
             { text: '图解学习地图', link: '/roadmap/visual-learning-map' },
             { text: 'Vue 前端工程师路线', link: '/roadmap/vue-frontend' },
             { text: 'Node 后端工程师路线', link: '/roadmap/node-backend' },
