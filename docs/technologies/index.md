@@ -14,7 +14,7 @@
 
 <TechGrid :items="[
   { title: '前端基础', description: 'HTML/CSS、TypeScript、浏览器与网络，帮助理解页面、类型和运行环境。', link: '/frontend/html-css', level: '基础' },
-  { title: 'CSS', description: '独立样式模块，覆盖图解入门、盒模型、Flex、Grid、响应式、动画、可访问性、设计 token、样式架构和真实项目问题库。', link: '/css/introduction', level: '样式' },
+  { title: 'CSS', description: '独立样式模块，覆盖图解入门、盒模型、Flex、Grid、响应式、动画、可访问性、设计 token、样式架构、从零到项目落地和真实项目问题库。', link: '/css/introduction', level: '样式' },
   { title: '浏览器与网络', description: '覆盖图解入门、HTTP、跨域、缓存、存储、安全、PWA、Web API、实时通信、原生组件、Wasm、WebGPU、自动化调试和性能排错。', link: '/browser/introduction', level: '基础' },
   { title: 'JavaScript', description: '独立语言模块，覆盖图解入门、数据类型、函数、原型链、数组对象、DOM 事件、正则、异步、事件循环、错误处理、内存管理、模块化、项目落地和真实项目问题库。', link: '/javascript/introduction', level: '语言' },
   { title: 'TypeScript', description: '独立类型系统模块，覆盖图解入门、基础类型、接口、泛型、类型收窄、工具类型、tsconfig 工程配置、Vue 集成和项目落地。', link: '/typescript/introduction', level: '类型' },
@@ -88,6 +88,7 @@ Vue Admin 实战
 | 做 JS 排障练习 | [学习路径练习包](/roadmap/practice-labs)、[JavaScript 真实项目问题库](/projects/issues-javascript) |
 | 查 JavaScript 项目问题 | [JavaScript 真实项目问题库](/projects/issues-javascript) |
 | 补 CSS | [CSS 学习导览](/css/introduction) |
+| 做 CSS 样式系统项目 | [CSS 从零到项目落地](/css/project-from-zero) |
 | 查 CSS 项目样式问题 | [CSS 真实项目问题库](/projects/issues-css) |
 | 补浏览器与网络 | [浏览器学习导览](/browser/introduction) |
 | 补 TypeScript | [TypeScript 学习导览](/typescript/introduction) |

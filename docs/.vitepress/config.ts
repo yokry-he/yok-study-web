@@ -240,6 +240,7 @@ export default defineConfig({
             { text: 'CSS 可访问性', link: '/css/accessibility' },
             { text: '设计 Token 与主题', link: '/css/design-tokens' },
             { text: '项目样式架构', link: '/css/architecture' },
+            { text: '从零到项目落地', link: '/css/project-from-zero' },
             { text: 'CSS 真实项目问题库', link: '/projects/issues-css' },
             { text: '常见问题', link: '/css/troubleshooting' }
           ]

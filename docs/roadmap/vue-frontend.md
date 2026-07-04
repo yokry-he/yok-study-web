@@ -41,7 +41,7 @@ flowchart TD
 
 <LearningPath :steps="[
   { title: '前端基础', description: '掌握 HTML 语义、CSS 布局、响应式页面和浏览器基础。', link: '/frontend/html-css', badge: '基础' },
-  { title: 'CSS', description: '掌握盒模型、Flex、Grid、响应式设计、可访问性和项目样式架构。', link: '/css/introduction', badge: '样式' },
+  { title: 'CSS', description: '掌握盒模型、Flex、Grid、响应式设计、可访问性、项目样式架构和 CSS 从零到项目落地。', link: '/css/introduction', badge: '样式' },
   { title: 'JavaScript', description: '掌握数据类型、函数、数组对象、DOM 事件、异步请求、事件循环和模块化。', link: '/javascript/introduction', badge: '基础' },
   { title: 'TypeScript', description: '理解类型、接口、泛型、类型收窄，并能给组件、接口、表单和状态建模。', link: '/typescript/introduction', badge: '必学' },
   { title: 'Vue 3 核心', description: '学习响应式、模板语法、组件通信、组合式 API、生命周期和内置组件。', link: '/vue/introduction', badge: '核心' },
@@ -112,6 +112,7 @@ Vue 项目里最常见的页面不是炫酷动画，而是后台业务页面：
 | 建立页面基础 | [HTML 与 CSS](/frontend/html-css) |
 | 学布局系统 | [CSS 学习导览](/css/introduction) |
 | 看图理解布局 | [图解 CSS 核心概念](/css/visual-guide) |
+| 做样式系统项目 | [CSS 从零到项目落地](/css/project-from-zero) |
 | 理解浏览器 | [浏览器与网络导览](/browser/introduction) |
 
 ### 最小练习
