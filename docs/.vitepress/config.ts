@@ -304,6 +304,7 @@ export default defineConfig({
             { text: 'Node.js 安全基础', link: '/node/security' },
             { text: '项目结构与部署', link: '/node/project-deployment' },
             { text: 'Node 权限 API 从零到项目', link: '/node/permission-api-project' },
+            { text: 'Redis 缓存与 BullMQ 队列项目', link: '/node/cache-queue-project' },
             { text: '常见问题', link: '/node/troubleshooting' }
           ]
         }

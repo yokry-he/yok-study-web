@@ -140,6 +140,7 @@ node/
 ├─ security
 ├─ project-deployment
 ├─ permission-api-project
+├─ cache-queue-project
 └─ troubleshooting
 ```
 
@@ -151,10 +152,10 @@ node/
 - 测试策略。
 - 安全基础。
 - Node 权限 API 从零到项目：用户、角色、菜单、按钮权限、事务、审计日志和部署说明。
+- Redis 缓存与 BullMQ 队列项目：权限缓存、字典缓存、导出任务、通知队列、重试退避、幂等和排障。
 
 后续继续扩展：
 
-- 缓存、队列与任务调度。
 - 文件上传与对象存储。
 - WebSocket 服务。
 - 性能优化和压测。
@@ -407,6 +408,6 @@ ai-engineering/
 继续完善顺序建议：
 
 1. 继续补从零到项目章节和复杂案例，例如 React 管理台、Node 权限 API、AI 文档问答、工程化组件库项目。
-2. 继续为 stable 模块补深入专题，例如 Go 微服务治理、Node 缓存队列、数据库分库分表、DevOps GitOps 和 AI eval 自动化。
+2. 继续为 stable 模块补深入专题，例如 Go 微服务治理、Node 文件上传与对象存储、数据库分库分表、DevOps GitOps 和 AI eval 自动化。
 3. 为实战项目继续补更多完整项目章节，例如销售风险指标治理预算执行复盘、渠道策略标准灾备演练、生产安全整改推荐模型治理、售后知识认证服务商复评和更多行业项目案例。
 4. 按读者反馈继续补充速查手册的浏览器命令、包管理器、云平台命令和团队协作命令。

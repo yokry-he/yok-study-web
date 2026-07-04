@@ -30,6 +30,7 @@ Node.js 官方 Learn 文档说明，Node.js 是一个开源、跨平台的 JavaS
   { title: 'Node.js 安全基础', description: '处理输入校验、注入、权限、上传、依赖和敏感配置风险。', link: '/node/security', badge: '安全' },
   { title: '项目结构与部署', description: '组织 API 项目目录、环境变量、启动命令和部署检查。', link: '/node/project-deployment', badge: '交付' },
   { title: 'Node 权限 API 从零到项目', description: '用用户、角色、菜单和按钮权限案例串联分层、鉴权、事务、日志和部署。', link: '/node/permission-api-project', badge: '实战' },
+  { title: 'Redis 缓存与 BullMQ 队列项目', description: '用权限缓存、字典缓存、导出任务和通知队列串联 Redis、BullMQ、重试、幂等和排障。', link: '/node/cache-queue-project', badge: '性能' },
   { title: '常见问题', description: '排查端口占用、异步错误、环境变量、跨域和进程崩溃。', link: '/node/troubleshooting', badge: '排错' }
 ]" />
 
@@ -67,11 +68,11 @@ HTTP 基础
 部署
 ```
 
-不要一开始就同时学微服务、消息队列、Kubernetes。先写出一个稳定 API 服务。
+不要一开始就同时学微服务、消息队列、Kubernetes。先写出一个稳定 API 服务，再补缓存、队列和后台任务。
 
 ## 推荐项目
 
-如果你已经学完 HTTP、鉴权和数据库，继续做 [Node 权限 API 从零到项目](/node/permission-api-project)。这个项目会把用户、角色、菜单、按钮权限、事务、审计日志和错误处理串起来。
+如果你已经学完 HTTP、鉴权和数据库，继续做 [Node 权限 API 从零到项目](/node/permission-api-project)。这个项目会把用户、角色、菜单、按钮权限、事务、审计日志和错误处理串起来。完成权限 API 后，继续进入 [Redis 缓存与 BullMQ 队列项目](/node/cache-queue-project)，把权限缓存、字典缓存、导出任务、通知任务和队列排障补齐。
 
 ## 下一步
 
