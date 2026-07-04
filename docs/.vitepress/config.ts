@@ -166,6 +166,7 @@ export default defineConfig({
           items: [
             { text: '浏览器学习导览', link: '/browser/introduction' },
             { text: '图解浏览器核心概念', link: '/browser/visual-guide' },
+            { text: '从零到项目落地', link: '/browser/project-from-zero' },
             { text: 'HTTP 与请求流程', link: '/browser/http-request' },
             { text: '跨域与登录态', link: '/browser/cors-auth' },
             { text: '缓存策略', link: '/browser/cache' },

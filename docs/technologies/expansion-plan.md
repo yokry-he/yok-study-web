@@ -28,7 +28,7 @@
 - Vue 从零到项目落地、JavaScript 项目落地实践、JavaScript 任务看板从零到项目、TypeScript 项目类型边界实践和 TypeScript 类型边界从零到项目。
 - 工程化图解核心概念、Vite、规范、环境、依赖、测试、Monorepo、组件库工程从零到项目、构建部署、包体积、模块联邦和工程性能。
 - 部署上线。
-- 浏览器图解核心概念、安全、Service Worker/PWA、常用 Web API。
+- 浏览器图解核心概念、浏览器与网络从零到项目落地、安全、Service Worker/PWA、常用 Web API。
 - WebSocket、WebRTC、Web Components。
 - WebAssembly、WebGPU、浏览器自动化调试。
 - Vue Admin 实战。
@@ -44,7 +44,7 @@
 - CSS 已补从零到项目落地、容器查询和样式系统练习，后续补打印样式、更多组件样式案例和大型项目主题治理。
 - TypeScript 后续补声明文件、发布类型、库类型设计和更多复杂业务案例。
 - JavaScript 后续补 DOM API 深入、日期时间、数字精度和更多项目题。
-- 浏览器模块继续补浏览器测试策略、WebView 兼容和更多性能案例。
+- 浏览器模块已补从零到项目落地，后续继续补浏览器测试策略、WebView 兼容和更多性能案例。
 - 前端工程化已经补充包体积分析、工程性能和模块联邦。
 - 增加更多 Vue Admin 案例页面。
 - 真实项目问题库已经补充故障复盘、联调问题、权限案例、项目阶段任务、React/Node/AI/组件库工程高频问题。

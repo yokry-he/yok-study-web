@@ -305,6 +305,54 @@ flowchart TD
 | 修复后不回归 | 旧问题可能变成新问题 | 对照验收标准重新操作一次 |
 | 把所有问题归为异步问题 | 根因判断粗糙 | 按数字、日期、异步、引用、生命周期分类 |
 
+### 加练：浏览器请求调试工作台
+
+完成 JavaScript 列表交互后，建议补一个浏览器专项加练。目标不是再写一个业务页面，而是训练你用浏览器证据定位请求、跨域、登录态、缓存和存储问题。
+
+#### 加练准备
+
+- [浏览器与网络从零到项目落地](/browser/project-from-zero)
+- [HTTP 与请求流程](/browser/http-request)
+- [跨域与登录态](/browser/cors-auth)
+- [缓存策略](/browser/cache)
+- [浏览器存储](/browser/storage)
+- [浏览器自动化调试](/browser/browser-automation-debugging)
+
+#### 诊断链路图
+
+```mermaid
+flowchart TD
+  A["请求异常"] --> B["Console"]
+  A --> C["Network"]
+  A --> D["Application"]
+  A --> E["Performance"]
+  C --> F["URL / Method / Status / Headers / Payload / Timing"]
+  D --> G["Cookie / Storage / Cache / Service Worker"]
+  F --> H["写 BROWSER_DEBUG_NOTES.md"]
+  G --> H
+  H --> I["修复并回归"]
+```
+
+#### 必做任务
+
+| 任务 | 要求 | 产出 |
+| --- | --- | --- |
+| 封装请求 | 记录 URL、method、status、duration、headers、traceId | `requestClient.ts` |
+| 模拟跨域 | 做一个跨源 API，分别配置成功和失败的 CORS | Network 截图或记录 |
+| 模拟登录态 | 分别实现 Cookie Session 和 Token 请求 | 登录态链路说明 |
+| 模拟缓存 | 给 HTML、hash 静态资源和接口设置不同缓存头 | 缓存策略表 |
+| 模拟存储异常 | 注入 localStorage 脏 JSON 和旧版本缓存 | 修复记录 |
+| 写排障记录 | 每个问题都有复现、证据、根因、修复、回归 | `BROWSER_DEBUG_NOTES.md` |
+
+#### 验收标准
+
+- 能解释为什么 Postman 能通不代表浏览器能通。
+- 能在 Network 中指出 OPTIONS、实际请求、请求头、响应头和 traceId。
+- 能判断 Cookie 是否保存、是否带出、为什么没带出。
+- 能区分 HTTP 缓存、CDN 缓存、Service Worker 缓存和前端状态缓存。
+- 至少沉淀 4 条浏览器排障记录。
+- 修复后能用同一组复现步骤证明问题不再出现。
+
 ## 练习 3：TypeScript 类型边界
 
 ### 目标

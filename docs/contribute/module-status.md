@@ -24,7 +24,7 @@
 | Nuxt / Next 元框架 | 10 | stable | 导览、Nuxt、Next、路由布局、数据获取、部署缓存、服务端鉴权、SEO、国际化、内容站案例、问题库 | 补边缘渲染、图片优化、CMS 接入、多租户门户案例 |
 | 数据库 | 14 | stable | 图解核心概念、MySQL、PostgreSQL、Redis、权限系统数据层落地、建模、索引、事务、迁移、ORM、备份恢复、安全审计、问题库 | 补分库分表、读写分离、RLS、多租户权限和云数据库案例 |
 | DevOps 与部署 | 12 | stable | 图解核心概念、Linux、Nginx、Docker、CI/CD、项目上线全流程、发布回滚、可观测性、Kubernetes、云服务、对象存储、问题库 | 补发布审计、安全基线、GitOps、环境漂移和云成本优化 |
-| 浏览器与网络 | 17 | stable | 图解核心概念、HTTP、跨域、缓存、存储、安全、Service Worker、Web API、WebSocket、WebRTC、Web Components、WebAssembly、WebGPU、自动化调试、渲染性能、问题库 | 补浏览器测试策略、WebView 兼容和更多性能案例 |
+| 浏览器与网络 | 18 | stable | 图解核心概念、浏览器与网络从零到项目落地、HTTP、跨域、缓存、存储、安全、Service Worker、Web API、WebSocket、WebRTC、Web Components、WebAssembly、WebGPU、自动化调试、渲染性能、问题库 | 补浏览器测试策略、WebView 兼容和更多性能案例 |
 | CSS | 11 | stable | 图解核心概念、盒模型、Flex、Grid、响应式、动画与过渡、可访问性、设计 token、样式架构、CSS 从零到项目落地、CSS 真实项目问题库、问题库 | 补现代 CSS、打印样式和更多组件样式案例 |
 | JavaScript | 16 | stable | 图解核心概念、学习导览、数据类型、函数、原型链、数组对象、DOM 事件、正则表达式、异步、事件循环、错误处理、内存管理、模块化、项目落地、任务看板从零到项目、JavaScript 真实项目问题库 | 补 DOM API 深入和更多项目题 |
 | TypeScript | 12 | stable | 图解核心概念、基础类型、接口、泛型、类型收窄、工具类型边界、tsconfig 工程配置、Vue 集成、项目落地、类型边界从零到项目、类型边界问题库、问题库 | 补声明文件、发布类型、库类型设计和更多复杂业务案例 |

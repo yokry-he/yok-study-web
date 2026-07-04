@@ -19,6 +19,8 @@ URL 与 HTTP 请求
 ↓
 图解浏览器核心概念
 ↓
+浏览器与网络从零到项目落地
+↓
 跨域与登录态
 ↓
 HTTP 缓存与发布缓存
@@ -78,6 +80,7 @@ Postman、curl 和浏览器都能发请求，但浏览器多了安全策略：
 | 章节 | 解决的问题 |
 | --- | --- |
 | [图解浏览器核心概念](/browser/visual-guide) | 用图理解 URL 到渲染、请求跨域、Cookie、缓存、存储、渲染和排错路径 |
+| [浏览器与网络从零到项目落地](/browser/project-from-zero) | 用请求诊断工作台串起 Fetch、CORS、Cookie、缓存、存储、Service Worker 和 DevTools 证据链 |
 | [HTTP 与请求流程](/browser/http-request) | URL、请求方法、状态码、请求头、响应头、Network 面板 |
 | [跨域与登录态](/browser/cors-auth) | CORS、预检请求、Cookie、token、401/403 |
 | [缓存策略](/browser/cache) | 强缓存、协商缓存、CDN 缓存、前端发布缓存 |
@@ -153,4 +156,4 @@ Postman、curl 和浏览器都能发请求，但浏览器多了安全策略：
 
 ## 下一步学习
 
-继续学习 [图解浏览器核心概念](/browser/visual-guide)，再进入 [HTTP 与请求流程](/browser/http-request)。
+继续学习 [图解浏览器核心概念](/browser/visual-guide)，再进入 [浏览器与网络从零到项目落地](/browser/project-from-zero)，用项目把 [HTTP 与请求流程](/browser/http-request)、[跨域与登录态](/browser/cors-auth)、[缓存策略](/browser/cache) 和 [浏览器存储](/browser/storage) 串起来。

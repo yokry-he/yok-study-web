@@ -114,6 +114,7 @@ Vue 项目里最常见的页面不是炫酷动画，而是后台业务页面：
 | 看图理解布局 | [图解 CSS 核心概念](/css/visual-guide) |
 | 做样式系统项目 | [CSS 从零到项目落地](/css/project-from-zero) |
 | 理解浏览器 | [浏览器与网络导览](/browser/introduction) |
+| 做请求调试项目 | [浏览器与网络从零到项目落地](/browser/project-from-zero) |
 
 ### 最小练习
 
