@@ -8,7 +8,7 @@
           <span class="custom-home__title-accent">技术学习工作台</span>
         </h1>
         <p class="custom-home__lead">
-          先从前端基础、JavaScript、Vue、工程化和 Vue Admin 实战打透学习闭环，再按统一模板扩展 React、Node、数据库、DevOps、AI 工程等技术模块。
+          用图解、核心章节、从零到项目、专项练习和真实问题库打通学习闭环，覆盖前端、框架、后端、数据、工程化与 AI 工程。
         </p>
         <div class="custom-home__actions">
           <a class="custom-home__action custom-home__action--primary" href="/roadmap/introduction">开始学习路线</a>
@@ -21,7 +21,7 @@
           <span class="custom-home__dot custom-home__dot--mint"></span>
           <span class="custom-home__dot custom-home__dot--lemon"></span>
           <span class="custom-home__dot custom-home__dot--rose"></span>
-        <span class="custom-home__panel-title">learning-roadmap.md</span>
+          <span class="custom-home__panel-title">learning-roadmap.md</span>
         </div>
         <div class="custom-home__route">
           <div class="custom-home__route-item">
@@ -61,6 +61,7 @@
       <TechGrid :items="[
         { title: '阅读顺序与使用方法', description: '说明如何按路线、图解、项目、练习、问题库和速查手册组合使用本站。', link: '/roadmap/reading-guide', level: '导读' },
         { title: '学习路线总览', description: '按前端、后端、全栈、AI 工程等目标组织可执行学习路径。', link: '/roadmap/introduction', level: '路线' },
+        { title: '前端基础模块', description: '图解 HTML、表单、图片、无障碍和浏览器页面链路，并用原生项目与故障注入完成验收。', link: '/frontend/introduction', level: '基础' },
         { title: 'JavaScript 模块', description: '覆盖类型、函数、数组对象、异步和模块化工程实践。', link: '/javascript/fundamentals', level: '语言' },
         { title: 'Vue 核心文档', description: '覆盖模板、响应式、组件、路由、Pinia、表单、性能和测试。', link: '/vue/introduction', level: '框架' },
         { title: '学习路径练习包', description: '用静态页面、JS 列表、TS 类型、Vue Admin、数据库和上线练习验证能力。', link: '/roadmap/practice-labs', level: '练习' },

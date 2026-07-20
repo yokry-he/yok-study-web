@@ -40,7 +40,7 @@ flowchart TD
 ## 推荐学习顺序
 
 <LearningPath :steps="[
-  { title: '前端基础', description: '掌握 HTML 语义、CSS 布局、响应式页面和浏览器基础。', link: '/frontend/html-css', badge: '基础' },
+  { title: '前端基础', description: '掌握 HTML 语义、表单、图片、无障碍、CSS 布局、响应式页面和浏览器基础。', link: '/frontend/introduction', badge: '基础' },
   { title: 'CSS', description: '掌握盒模型、Flex、Grid、响应式设计、可访问性、项目样式架构和 CSS 从零到项目落地。', link: '/css/introduction', badge: '样式' },
   { title: 'JavaScript', description: '掌握数据类型、函数、数组对象、DOM 事件、异步请求、事件循环和模块化。', link: '/javascript/introduction', badge: '基础' },
   { title: 'TypeScript', description: '理解类型、接口、泛型、类型收窄，并能给组件、接口、表单和状态建模。', link: '/typescript/introduction', badge: '必学' },
@@ -110,7 +110,10 @@ Vue 项目里最常见的页面不是炫酷动画，而是后台业务页面：
 
 | 任务 | 文档 |
 | --- | --- |
-| 建立页面基础 | [HTML 与 CSS](/frontend/html-css) |
+| 建立页面基础 | [前端基础学习导览](/frontend/introduction) |
+| 看图理解页面平台 | [图解前端页面核心概念](/frontend/visual-guide) |
+| 做原生页面项目 | [前端基础从零到项目](/frontend/project-from-zero) |
+| 练表单、图片和键盘 | [前端基础专项练习](/roadmap/frontend-foundation-practice) |
 | 学布局系统 | [CSS 学习导览](/css/introduction) |
 | 看图理解布局 | [图解 CSS 核心概念](/css/visual-guide) |
 | 做样式系统项目 | [CSS 从零到项目落地](/css/project-from-zero) |

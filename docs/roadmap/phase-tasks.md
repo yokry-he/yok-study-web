@@ -38,7 +38,10 @@
 
 建议学习：
 
-- [前端基础](/frontend/html-css)
+- [前端基础学习导览](/frontend/introduction)
+- [图解前端页面核心概念](/frontend/visual-guide)
+- [前端基础从零到项目](/frontend/project-from-zero)
+- [前端基础专项练习](/roadmap/frontend-foundation-practice)
 - [CSS 学习导览](/css/introduction)
 - [JavaScript 基础](/javascript/fundamentals)
 - [JavaScript 真实项目问题库](/projects/issues-javascript)
@@ -52,6 +55,8 @@
 4. 给按钮、链接、表单加上基础交互。
 5. 做一次 JavaScript 列表交互和排障加练。
 6. 用浏览器 DevTools 检查布局、网络请求、Storage 和控制台错误。
+7. 只用键盘完成一次筛选和表单提交，并记录焦点顺序。
+8. 阻止脚本或图片请求，验证核心内容和错误回退。
 
 验收：
 
@@ -61,6 +66,8 @@
 - 能解释一次点击事件如何触发 JS 逻辑。
 - 能复现并修复至少 2 个 JavaScript 常见问题。
 - 能说明浏览器如何加载 HTML、CSS、JS。
+- 表单错误有文字、字段关联和修正路径。
+- 生产预览下深层 URL 和资源路径正常。
 
 常见卡点：
 

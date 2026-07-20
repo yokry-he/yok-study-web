@@ -13,7 +13,7 @@
 ## 当前已完成模块
 
 <TechGrid :items="[
-  { title: '前端基础', description: 'HTML/CSS、TypeScript、浏览器与网络，帮助理解页面、类型和运行环境。', link: '/frontend/html-css', level: '基础' },
+  { title: '前端基础', description: '覆盖图解核心概念、HTML 语义、表单、图片、无障碍、响应式页面、从零到项目、专项练习和真实问题库。', link: '/frontend/introduction', level: '基础' },
   { title: 'CSS', description: '独立样式模块，覆盖图解入门、盒模型、Flex、Grid、响应式、动画、可访问性、设计 token、样式架构、从零到项目落地和真实项目问题库。', link: '/css/introduction', level: '样式' },
   { title: '浏览器与网络', description: '覆盖图解入门、从零到项目落地、HTTP、跨域、缓存、存储、安全、PWA、Web API、实时通信、原生组件、Wasm、WebGPU、自动化调试和性能排错。', link: '/browser/introduction', level: '基础' },
   { title: 'JavaScript', description: '独立语言模块，覆盖图解入门、数据类型、函数、原型链、数组对象、DOM 事件、正则、异步、事件循环、错误处理、内存管理、模块化、项目落地和真实项目问题库。', link: '/javascript/introduction', level: '语言' },
@@ -39,7 +39,7 @@
 如果你是前端方向，建议按这个顺序：
 
 ```text
-HTML/CSS
+前端基础（HTML、表单、图片、无障碍）
 ↓
 JavaScript
 ↓
@@ -67,6 +67,7 @@ Vue Admin 实战
 | 选择学习路线 | [学习路线总览](/roadmap/introduction) |
 | 先看懂技术之间如何连接 | [图解学习地图](/roadmap/visual-learning-map) |
 | 做阶段练习 | [学习路径练习包](/roadmap/practice-labs) |
+| 补齐 HTML、表单和无障碍基础 | [前端基础专项练习](/roadmap/frontend-foundation-practice) |
 | 做前端综合项目 | [前端综合实战练习](/roadmap/frontend-capstone-lab) |
 | 做后端 API 综合练习 | [学习路径练习包：后端 API 综合项目](/roadmap/practice-labs#练习-65后端-api-综合项目) |
 | 做 Vue Admin 练习 | [Vue Admin 专项练习](/roadmap/vue-admin-practice) |

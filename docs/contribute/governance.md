@@ -71,24 +71,27 @@
 
 ```text
 introduction       学习导览
-quick-start        快速开始
-core-concepts      核心概念
-practice           项目实践
-best-practices     最佳实践
-troubleshooting    常见问题
-resources          资料索引
+visual-guide       图解核心概念
+core-topics        分主题核心章节
+project-from-zero  从零到项目落地
+troubleshooting    模块内快速排错
+projects/issues-*  真实项目问题库
+roadmap/*-practice 专项练习与验收
 ```
 
-复杂模块可以拆成更具体的主题，例如 Vue 的路由、状态、表单、请求、权限，数据库的建模、索引、事务、迁移。
+复杂模块可以拆成更具体的主题，例如 Vue 的路由、状态、表单、请求、权限，数据库的建模、索引、事务、迁移。文件名不要求全部机械一致，但必须让读者从导览清楚进入“看图、学核心、做项目、练习、查问题”的闭环。
 
 ## 内容类型
 
 | 类型 | 目标 | 典型位置 |
 | --- | --- | --- |
 | 导览 | 帮用户判断是否该学、按什么顺序学 | `introduction.md` |
+| 图解 | 用关系图、时序图、状态图建立运行模型 | `visual-guide.md` |
 | 概念 | 把核心机制讲清楚 | 技术模块内部 |
-| 实践 | 解释真实项目如何落地 | 技术模块或项目模块 |
-| 问题库 | 记录症状、原因、解决和预防 | `troubleshooting.md` |
+| 项目 | 从需求、结构、代码、失败状态到部署验收 | 技术模块的 `project-from-zero.md` 或明确项目页 |
+| 练习 | 把知识拆成可执行任务、故障注入和验收 | `roadmap/` |
+| 快速排错 | 用最短路径分流常见现象 | 模块内 `troubleshooting.md` |
+| 真实问题库 | 记录症状、证据、根因、修复、回归和预防 | `projects/issues-*.md` |
 | 速查 | 提供 API 和命令快速查阅 | `cheatsheets/` |
 | 治理 | 约束结构、质量和贡献方式 | `contribute/` |
 
@@ -99,7 +102,8 @@ resources          资料索引
 - 路由使用英文小写和短横线，例如 `/database/query-optimization`。
 - 页面标题使用中文用户语言，例如 `索引与查询优化`。
 - 导览页统一使用 `introduction.md`。
-- 问题库统一使用 `troubleshooting.md`。
+- 模块快速排错统一使用 `troubleshooting.md`。
+- 真实项目问题库统一放在 `projects/issues-*.md`。
 - 顶部导航使用短标签，不写长句。
 - 同一概念在不同页面使用同一名称，例如“登录态”“权限码”“动态路由”。
 
@@ -108,25 +112,31 @@ resources          资料索引
 新增模块时按这个顺序：
 
 1. 在技术库和扩展路线中说明模块定位。
-2. 创建 `introduction.md`。
-3. 补 4 到 6 篇核心主题。
-4. 补 `troubleshooting.md`。
-5. 接入侧边栏和顶部导航分组。
-6. 运行 `npm run docs:check`。
-7. 运行 `npm run docs:build`。
-8. 用浏览器检查关键页面的桌面和移动端布局。
+2. 创建 `introduction.md`，明确适合谁、学习边界和阅读顺序。
+3. 用 `visual-guide.md` 建立核心运行模型。
+4. 补 4 到 6 篇核心主题，避免把全部知识堆在一篇长文里。
+5. 补从零到项目页，覆盖需求、状态、代码、失败和交付。
+6. 补模块内 `troubleshooting.md` 和 `projects/issues-*.md`。
+7. 在 `roadmap/` 增加专项练习、故障注入和完成标准。
+8. 接入导览、技术库、侧边栏、问题库总览和学习路线。
+9. 同步模块状态和本页治理说明。
+10. 运行 `npm run docs:check` 和 `npm run docs:build`。
+11. 用浏览器检查关键页面的桌面和移动端布局，并确认 Mermaid 全部生成 SVG。
 
 ## 质量门槛
 
 每个 stable 模块必须满足：
 
 - 有导览页。
-- 有问题库。
-- 有真实项目示例。
+- 有核心概念图解，或说明该模块为什么不需要图解。
+- 有从零到项目或等价的完整项目手册。
+- 有专项练习、故障注入和可检查产出。
+- 有模块内快速排错和真实项目问题库。
 - 有下一步学习。
 - 内部链接全部有效。
 - 侧边栏入口完整。
 - 构建通过。
+- Mermaid 在浏览器中无解析错误。
 - 移动端无页面级横向溢出。
 
 ## 下一步

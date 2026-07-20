@@ -289,4 +289,4 @@ Flex 布局中头像被压缩。
 
 ## 下一步学习
 
-继续学习 [JavaScript 基础](/javascript/fundamentals)。
+如果 HTML 结构、表单和图片基础还不稳定，先学习 [HTML 语义与页面结构](/frontend/html-semantics) 和 [表单、图片与无障碍](/frontend/forms-media-accessibility)。想把本页内容做成完整作品，进入 [前端基础从零到项目](/frontend/project-from-zero)。之后继续学习 [JavaScript 基础](/javascript/fundamentals)。

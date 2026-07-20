@@ -68,7 +68,9 @@ CHANGELOG.md           每次练习完成了什么
 
 ### 准备文档
 
-- [前端基础](/frontend/html-css)
+- [前端基础学习导览](/frontend/introduction)
+- [图解前端页面核心概念](/frontend/visual-guide)
+- [前端基础专项练习](/roadmap/frontend-foundation-practice)
 - [CSS 学习导览](/css/introduction)
 - [盒模型与布局基础](/css/box-model-layout)
 - [Flex 与 Grid](/css/flex-grid)

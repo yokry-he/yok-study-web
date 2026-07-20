@@ -31,6 +31,7 @@
 | Vue Admin 消息通知 | 未读数不准、重复通知、切换账号污染、实时连接重连、通知跳转 404/403、全部已读回退 | [Vue Admin 消息通知、未读数与实时提醒问题排查专题](/projects/issues-vue-admin-notification) |
 | JavaScript 专项 | 数字精度、日期时区、异步循环、旧请求覆盖、事件监听泄漏、深拷贝、数组变异、本地缓存和动态正则 | [JavaScript 真实项目问题库](/projects/issues-javascript) |
 | CSS 专项 | 横向溢出、组件库污染、固定元素变形、表格操作列压缩、长文本撑破、弹层遮挡、移动端导航和动画卡顿 | [CSS 真实项目问题库](/projects/issues-css) |
+| HTML 与无障碍 | 鼠标可点但键盘不可用、表单标签与错误、重复提交、图片跳动和过大、焦点丢失、资源路径与深层 URL | [HTML 与无障碍真实项目问题库](/projects/issues-html-accessibility) |
 | 前端页面与状态 | 搜索旧结果、弹窗污染列表、动态路由丢失、React 重复请求、组件库升级错位、列表卡顿 | [前端页面与状态问题](/projects/issues-frontend) |
 | Nuxt / Next 元框架 | hydration、重复取数、旧缓存、用户数据串号、SSR 会话、接口越权、重定向、静态部署和多实例一致性 | [Nuxt / Next 真实项目问题库](/projects/issues-meta-frameworks) |
 | TypeScript 类型边界 | DTO 泄漏到页面、表单和提交参数混用、权限码拼错、RouteMeta 未声明、Store 类型污染、typecheck 缺失 | [TypeScript 类型边界问题](/projects/issues-typescript) |

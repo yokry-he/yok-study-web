@@ -84,9 +84,11 @@ export default defineConfig({
       {
         text: '前端基础',
         items: [
-          { text: 'HTML 与 CSS', link: '/frontend/html-css' },
+          { text: '前端基础导览', link: '/frontend/introduction' },
+          { text: 'HTML 语义', link: '/frontend/html-semantics' },
+          { text: '表单与无障碍', link: '/frontend/forms-media-accessibility' },
           { text: 'CSS', link: '/css/introduction' },
-          { text: 'JavaScript', link: '/javascript/fundamentals' },
+          { text: 'JavaScript', link: '/javascript/introduction' },
           { text: 'TypeScript', link: '/typescript/introduction' },
           { text: '浏览器与网络', link: '/browser/introduction' }
         ]
@@ -143,6 +145,7 @@ export default defineConfig({
             { text: 'AI 工程路线', link: '/roadmap/ai-engineering' },
             { text: '阶段任务清单', link: '/roadmap/phase-tasks' },
             { text: '学习路径练习包', link: '/roadmap/practice-labs' },
+            { text: '前端基础专项练习', link: '/roadmap/frontend-foundation-practice' },
             { text: '前端综合实战练习', link: '/roadmap/frontend-capstone-lab' },
             { text: 'Nuxt / Next 专项练习', link: '/roadmap/meta-framework-practice' },
             { text: 'Vue Admin 学习地图', link: '/roadmap/vue-admin-learning-map' },
@@ -157,9 +160,15 @@ export default defineConfig({
         {
           text: '前端基础',
           items: [
+            { text: '前端基础学习导览', link: '/frontend/introduction' },
+            { text: '图解前端页面核心概念', link: '/frontend/visual-guide' },
+            { text: 'HTML 语义与页面结构', link: '/frontend/html-semantics' },
+            { text: '表单、图片与无障碍', link: '/frontend/forms-media-accessibility' },
             { text: 'HTML 与 CSS', link: '/frontend/html-css' },
-            { text: 'TypeScript 基础', link: '/frontend/typescript' },
-            { text: '浏览器与网络', link: '/browser/introduction' }
+            { text: '前端基础从零到项目', link: '/frontend/project-from-zero' },
+            { text: 'HTML 与无障碍问题库', link: '/projects/issues-html-accessibility' },
+            { text: '前端基础专项练习', link: '/roadmap/frontend-foundation-practice' },
+            { text: '常见问题', link: '/frontend/troubleshooting' }
           ]
         }
       ],
@@ -722,6 +731,7 @@ export default defineConfig({
             { text: 'Vue Admin 消息通知排障', link: '/projects/issues-vue-admin-notification' },
             { text: 'JavaScript 专项', link: '/projects/issues-javascript' },
             { text: 'CSS 专项', link: '/projects/issues-css' },
+            { text: 'HTML 与无障碍专项', link: '/projects/issues-html-accessibility' },
             { text: '前端页面与状态', link: '/projects/issues-frontend' },
             { text: 'Nuxt / Next 元框架专项', link: '/projects/issues-meta-frameworks' },
             { text: 'TypeScript 类型边界', link: '/projects/issues-typescript' },
