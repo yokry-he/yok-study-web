@@ -231,5 +231,7 @@ Edge：低延迟，但 Node API 受限
 
 - [路由、布局与数据获取](/meta-frameworks/routing-data)
 - [部署、缓存与运行时](/meta-frameworks/deployment)
+- [Nuxt / Next 真实项目问题库](/projects/issues-meta-frameworks)
+- [Nuxt / Next 专项练习](/roadmap/meta-framework-practice)
 - [前端页面与状态问题](/projects/issues-frontend)
 - [部署、缓存与 DevOps 问题](/projects/issues-deployment)

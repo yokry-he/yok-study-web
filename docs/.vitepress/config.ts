@@ -144,6 +144,7 @@ export default defineConfig({
             { text: '阶段任务清单', link: '/roadmap/phase-tasks' },
             { text: '学习路径练习包', link: '/roadmap/practice-labs' },
             { text: '前端综合实战练习', link: '/roadmap/frontend-capstone-lab' },
+            { text: 'Nuxt / Next 专项练习', link: '/roadmap/meta-framework-practice' },
             { text: 'Vue Admin 学习地图', link: '/roadmap/vue-admin-learning-map' },
             { text: 'Vue Admin 专项练习', link: '/roadmap/vue-admin-practice' },
             { text: '项目里程碑', link: '/roadmap/project-milestones' },
@@ -276,14 +277,17 @@ export default defineConfig({
           text: 'Nuxt / Next 元框架',
           items: [
             { text: '元框架学习导览', link: '/meta-frameworks/introduction' },
+            { text: '图解元框架核心概念', link: '/meta-frameworks/visual-guide' },
             { text: 'Nuxt 项目实践', link: '/meta-frameworks/nuxt' },
             { text: 'Next.js 项目实践', link: '/meta-frameworks/next' },
             { text: '路由、布局与数据获取', link: '/meta-frameworks/routing-data' },
+            { text: '课程平台从零到项目', link: '/meta-frameworks/project-from-zero' },
             { text: '部署、缓存与运行时', link: '/meta-frameworks/deployment' },
             { text: '服务端鉴权与登录态', link: '/meta-frameworks/server-auth' },
             { text: 'SEO、Metadata 与结构化数据', link: '/meta-frameworks/seo-metadata' },
             { text: '国际化与多语言站点', link: '/meta-frameworks/i18n' },
             { text: '内容站案例', link: '/meta-frameworks/content-site-case' },
+            { text: '元框架真实项目问题库', link: '/projects/issues-meta-frameworks' },
             { text: '常见问题', link: '/meta-frameworks/troubleshooting' }
           ]
         }
@@ -483,6 +487,7 @@ export default defineConfig({
       '/projects/': [
         {
           text: '项目实战',
+          collapsed: true,
           items: [
             { text: 'Vue Admin 实战', link: '/projects/vue-admin' },
             { text: '组件库实战', link: '/projects/component-library' },
@@ -718,6 +723,7 @@ export default defineConfig({
             { text: 'JavaScript 专项', link: '/projects/issues-javascript' },
             { text: 'CSS 专项', link: '/projects/issues-css' },
             { text: '前端页面与状态', link: '/projects/issues-frontend' },
+            { text: 'Nuxt / Next 元框架专项', link: '/projects/issues-meta-frameworks' },
             { text: 'TypeScript 类型边界', link: '/projects/issues-typescript' },
             { text: '前端工程化专项', link: '/projects/issues-engineering' },
             { text: '后端接口与服务', link: '/projects/issues-backend' },

@@ -99,8 +99,9 @@ body {
   }
 
   .mermaid-diagram__canvas svg {
-    width: 100%;
-    min-width: 0;
+    width: 600px;
+    max-width: none;
+    min-width: 600px;
   }
 }
 

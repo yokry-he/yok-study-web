@@ -216,7 +216,9 @@ Next 的缓存能力很强，但也容易误用。
 
 ## 下一步学习
 
+- [图解 Nuxt / Next 元框架核心概念](/meta-frameworks/visual-guide)
 - [路由、布局与数据获取](/meta-frameworks/routing-data)
+- [课程内容平台从零到项目](/meta-frameworks/project-from-zero)
 - [部署、缓存与运行时](/meta-frameworks/deployment)
 - [常见问题](/meta-frameworks/troubleshooting)
 - [React 学习导览](/react/introduction)

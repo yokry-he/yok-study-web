@@ -90,9 +90,11 @@ react/
 ```text
 meta-frameworks/
 ├─ introduction
+├─ visual-guide
 ├─ nuxt
 ├─ next
 ├─ routing-data
+├─ project-from-zero
 ├─ deployment
 ├─ server-auth
 ├─ seo-metadata
@@ -104,15 +106,19 @@ meta-frameworks/
 已覆盖：
 
 - 元框架适用场景和学习路线。
+- 图解运行环境、SSR/SSG/ISR/CSR、hydration、数据载荷、缓存、鉴权和部署。
 - Nuxt 项目实践。
 - Next.js 项目实践。
 - 文件路由、布局和数据获取。
+- 课程内容平台从零到项目：公开课程、私有学习中心、Cookie 会话、缓存、SEO、测试和部署。
 - SSR、静态生成、Node server、Serverless 和 Edge 部署取舍。
 - 服务端鉴权、登录态、接口保护和用户态缓存边界。
 - SEO、metadata、Open Graph、sitemap 和结构化数据。
 - 国际化、多语言路由、多语言 SEO 和翻译治理。
 - 内容站案例：技术博客、官网、路由、内容模型和发布缓存。
 - hydration、缓存、环境变量、部署后 404 等常见问题。
+- 元框架真实项目问题库：重复取数、用户数据串号、接口越权、静态部署、Edge 和多实例一致性。
+- 10 个专项练习、故障注入、14 天训练节奏和最终验收清单。
 
 后续继续扩展：
 

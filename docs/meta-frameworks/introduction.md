@@ -64,15 +64,15 @@ Vite 与工程化
 ↓
 浏览器与 HTTP
 ↓
-Nuxt / Next 共同模型
+图解 Nuxt / Next 共同模型
 ↓
 Nuxt 或 Next 选择一个深入
 ↓
 路由、布局、数据获取
 ↓
-部署和缓存
+课程平台从零到项目
 ↓
-真实项目问题排查
+专项练习和真实项目问题排查
 ```
 
 如果你是 Vue 方向，优先学 Nuxt。
@@ -166,20 +166,24 @@ public/            静态资源
 
 | 文档 | 解决的问题 |
 | --- | --- |
+| [图解 Nuxt / Next 元框架核心概念](/meta-frameworks/visual-guide) | 用 18 张图理解运行环境、渲染、hydration、数据载荷、缓存、鉴权和部署 |
 | [Nuxt 项目实践](/meta-frameworks/nuxt) | Vue 方向如何进入 Nuxt |
 | [Next.js 项目实践](/meta-frameworks/next) | React 方向如何进入 Next |
 | [路由、布局与数据获取](/meta-frameworks/routing-data) | 元框架最核心的页面和数据模型 |
+| [课程内容平台从零到项目](/meta-frameworks/project-from-zero) | 用公开课程页和私有学习中心串起完整项目边界 |
 | [部署、缓存与运行时](/meta-frameworks/deployment) | 如何选择部署方式和缓存策略 |
 | [服务端鉴权与登录态](/meta-frameworks/server-auth) | SSR、API Route、Cookie 会话、401/403 和缓存边界 |
 | [SEO、Metadata 与结构化数据](/meta-frameworks/seo-metadata) | title、description、Open Graph、sitemap、robots 和结构化数据 |
 | [国际化与多语言站点](/meta-frameworks/i18n) | locale 路由、翻译字典、多语言 SEO 和缓存 |
 | [内容站案例：技术博客与官网](/meta-frameworks/content-site-case) | 把路由、内容、SEO、国际化、缓存和部署组合成完整项目 |
+| [Nuxt / Next 真实项目问题库](/projects/issues-meta-frameworks) | 按现象排查 hydration、缓存、会话、权限、路由和运行时故障 |
+| [Nuxt / Next 专项练习](/roadmap/meta-framework-practice) | 用 10 个练习和故障注入完成项目训练闭环 |
 | [常见问题](/meta-frameworks/troubleshooting) | SSR、hydration、环境变量、缓存等问题排查 |
 
 ## 下一步学习
 
-如果你是 Vue 方向，继续看 [Nuxt 项目实践](/meta-frameworks/nuxt)。
+第一次进入本模块，先看 [图解 Nuxt / Next 元框架核心概念](/meta-frameworks/visual-guide)，再选择 Nuxt 或 Next。
 
-如果你是 React 方向，继续看 [Next.js 项目实践](/meta-frameworks/next)。
+如果你是 Vue 方向，继续看 [Nuxt 项目实践](/meta-frameworks/nuxt)；如果你是 React 方向，继续看 [Next.js 项目实践](/meta-frameworks/next)。
 
-如果你想先理解共性，继续看 [路由、布局与数据获取](/meta-frameworks/routing-data)。
+完成核心章节后，进入 [课程内容平台从零到项目](/meta-frameworks/project-from-zero) 和 [Nuxt / Next 专项练习](/roadmap/meta-framework-practice)。
