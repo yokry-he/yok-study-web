@@ -1,5 +1,15 @@
 # React 常见问题
 
+## 适合谁看
+
+适合开发过程中需要快速定位 React 常见症状的人。本页用于快速分流；需要完整证据、修复代码、故障注入和回归清单时，进入 [React 真实项目问题库](/projects/issues-react)。
+
+## 先做三项检查
+
+1. 看 Console 的第一条错误和组件栈，不从最后一条连锁报错开始。
+2. 看 Network 的请求触发源、参数、状态码和返回顺序。
+3. 用 React DevTools 检查异常组件的 props、state、context 和 render 来源。
+
 ## 1. Effect 无限循环
 
 ### 症状
@@ -144,3 +154,7 @@ setForm(createDefaultForm())
 - key 使用稳定 id。
 - 状态放在最近共同父组件。
 - 页面、组件、hooks、services 分层清楚。
+
+## 下一步学习
+
+如果问题涉及 Strict Mode 重复请求、竞态、组件身份、Context 性能、路由刷新、401/403、权限绕过或发布后 chunk 404，继续查 [React 真实项目问题库](/projects/issues-react)。想主动训练这些问题，进入 [React 专项练习](/roadmap/react-practice)；模型不清楚时回到 [图解 React 核心概念](/react/visual-guide)。

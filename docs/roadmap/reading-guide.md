@@ -57,6 +57,8 @@ Vue 从零到项目落地
 ↓
 前端综合实战练习
 ↓
+React 专项练习（React 路线）
+↓
 真实项目问题库
 ```
 
@@ -73,6 +75,8 @@ Vue 从零到项目落地
 | 想动手练习 | [学习路径练习包](/roadmap/practice-labs) | 选择一个练习并记录问题 |
 | HTML、表单、图片和键盘基础不稳 | [前端基础专项练习](/roadmap/frontend-foundation-practice) | 完成 10 个练习和故障注入 |
 | 想做综合前端项目 | [前端综合实战练习](/roadmap/frontend-capstone-lab) | 按阶段完成可运行、可排错、可交付项目 |
+| 想系统完成 React 管理台 | [React 管理台从零到项目](/react/project-admin) | 完成后进入 React 专项练习和问题库复盘 |
+| React 的 state、Effect、竞态和权限不稳 | [React 专项练习](/roadmap/react-practice) | 完成 12 个练习、故障注入和生产验收 |
 | 想做 SSR、SEO 或全栈前端项目 | [Nuxt / Next 专项练习](/roadmap/meta-framework-practice) | 完成课程平台、会话、缓存、故障注入和部署验收 |
 | 想做后端 API 练习 | [学习路径练习包](/roadmap/practice-labs#练习-65后端-api-综合项目) | 选择 Java、Go 或 Node 做真实 API 并接前端 |
 | 想系统完成 Vue Admin | [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map) | 按阶段完成用户、权限、菜单、请求和问题复盘 |

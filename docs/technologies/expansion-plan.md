@@ -70,18 +70,26 @@ react/
 ├─ router-structure
 ├─ project-admin
 └─ troubleshooting
+
+projects/
+└─ issues-react
+
+roadmap/
+└─ react-practice
 ```
 
 后续继续扩展：
 
 - Next.js 与服务端渲染已经放入元框架模块。
-- 后续补 React 生态里的 Remix、TanStack Router 或更完整状态库对比。
+- 后续补 React Compiler、库类型设计、TanStack Router 或更完整状态库对比。
 
 已覆盖：
 
-- 图解组件树、props、state、Effect、服务端数据和排错路径。
+- 19 组图解覆盖组件树、render/commit、state 快照、批处理、组件身份、Effect 生命周期、状态分类、Reducer/Context、路由数据、竞态、性能和排错路径。
 - JSX、组件拆分、Hooks、Effect、表单、请求、Context、路由、性能和测试。
-- React 管理台从零到项目：登录、路由、请求、表格、表单、权限、测试和部署说明。
+- React 管理台从零到项目：Vite 脚手架、本地 HTTP Mock、登录、会话恢复、Data Router、URL 状态、表格、表单、权限、结构化错误、测试、故障注入和生产预览。
+- React 真实项目问题库：Strict Mode、Effect 循环、旧闭包、请求竞态、不可变更新、key、派生状态、表单、Context 性能、路由刷新、401/403、权限绕过和发布后 chunk 失效。
+- React 专项练习：12 个练习、14 天训练节奏、故障矩阵、交付物和能力自测。
 
 ## 阶段二补充：Nuxt / Next 元框架方向
 

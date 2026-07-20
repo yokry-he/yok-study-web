@@ -64,6 +64,7 @@ AI 工程
   { title: '学习路径练习包', description: '用静态页面、JS 列表、TS 类型、Vue Admin、数据库、后端 API、上线和复盘练习验证能力。', link: '/roadmap/practice-labs', level: '练习' },
   { title: '前端基础专项练习', description: '用 10 个练习掌握语义 HTML、表单、图片、键盘操作、渐进增强、故障注入和生产验收。', link: '/roadmap/frontend-foundation-practice', level: '基础' },
   { title: '前端综合实战练习', description: '用一个 Vue Admin 工作台串联 CSS、浏览器、工程化、Vue、问题库和交付验收。', link: '/roadmap/frontend-capstone-lab', level: '综合' },
+  { title: 'React 专项练习', description: '用 React 管理台训练渲染模型、state、Effect、Data Router、请求竞态、表单、权限、测试和生产验收。', link: '/roadmap/react-practice', level: '练习' },
   { title: 'Nuxt / Next 专项练习', description: '用课程内容平台训练路由、SSR、数据边界、Cookie 会话、缓存、SEO、排错和部署。', link: '/roadmap/meta-framework-practice', level: '练习' },
   { title: 'Vue Admin 学习地图', description: '把 Vue Admin 文档组织成从入门、项目、权限、问题库到交付验收的完整路线。', link: '/roadmap/vue-admin-learning-map', level: '地图' },
   { title: 'Vue Admin 专项练习', description: '用 14 天计划完成 Vue Admin 用户管理模块，覆盖路由、Pinia、请求、表单、权限、测试和复盘。', link: '/roadmap/vue-admin-practice', level: '练习' },
@@ -100,4 +101,4 @@ AI 工程
 
 ## 下一步学习
 
-如果你是第一次使用本站，先看 [阅读顺序与使用方法](/roadmap/reading-guide)、[学习工作流与笔记模板](/roadmap/study-workflow) 和 [图解学习地图](/roadmap/visual-learning-map)。如果 HTML、表单、图片和键盘操作还不稳定，先完成 [前端基础专项练习](/roadmap/frontend-foundation-practice)。如果你以 Vue 为主线，继续进入 [Vue 前端工程师路线](/roadmap/vue-frontend)。如果你目标是完成后台项目，进入 [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map)。如果你已经有前端基础，可以直接进入 [全栈工程师路线](/roadmap/fullstack)。如果你想按任务推进，进入 [阶段任务清单](/roadmap/phase-tasks) 和 [学习路径练习包](/roadmap/practice-labs)；完成基础练习后，用 [前端综合实战练习](/roadmap/frontend-capstone-lab) 把 CSS、浏览器、工程化、Vue 和问题库串成一个可交付项目。如果你的项目需要 SSR、SEO 或全栈前端能力，进入 [Nuxt / Next 专项练习](/roadmap/meta-framework-practice)。
+如果你是第一次使用本站，先看 [阅读顺序与使用方法](/roadmap/reading-guide)、[学习工作流与笔记模板](/roadmap/study-workflow) 和 [图解学习地图](/roadmap/visual-learning-map)。如果 HTML、表单、图片和键盘操作还不稳定，先完成 [前端基础专项练习](/roadmap/frontend-foundation-practice)。如果你以 Vue 为主线，继续进入 [Vue 前端工程师路线](/roadmap/vue-frontend)。如果你以 React 为主线，完成 [React 管理台从零到项目](/react/project-admin) 和 [React 专项练习](/roadmap/react-practice)。如果你目标是完成 Vue 后台项目，进入 [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map)。如果你已经有前端基础，可以直接进入 [全栈工程师路线](/roadmap/fullstack)。如果你想按任务推进，进入 [阶段任务清单](/roadmap/phase-tasks) 和 [学习路径练习包](/roadmap/practice-labs)；完成基础练习后，用 [前端综合实战练习](/roadmap/frontend-capstone-lab) 把 CSS、浏览器、工程化、Vue 和问题库串成一个可交付项目。如果你的项目需要 SSR、SEO 或全栈前端能力，进入 [Nuxt / Next 专项练习](/roadmap/meta-framework-practice)。

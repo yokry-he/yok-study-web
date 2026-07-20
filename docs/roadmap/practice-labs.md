@@ -1033,4 +1033,4 @@ flowchart TD
 
 ## 下一步学习
 
-如果你还没有选路线，先看 [学习路线总览](/roadmap/introduction)。如果你已经完成了前端、数据库和后端 API 练习，继续进入 [项目里程碑](/roadmap/project-milestones)，把练习成果组合成一个可展示项目。
+如果你还没有选路线，先看 [学习路线总览](/roadmap/introduction)。如果你以 React 为主线，继续完成 [React 管理台从零到项目](/react/project-admin) 和 [React 专项练习](/roadmap/react-practice)。如果你已经完成了前端、数据库和后端 API 练习，继续进入 [项目里程碑](/roadmap/project-milestones)，把练习成果组合成一个可展示项目。

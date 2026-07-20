@@ -55,18 +55,22 @@
 | 技术 | 学习目标 |
 | --- | --- |
 | Vue | 响应式、组件、路由、状态、表单 |
-| React | 组件、Hooks、状态、路由、服务端渲染 |
+| React | 组件、render/commit、state 快照、Effect、Data Router、管理台交付 |
 | 框架生态 | Nuxt、Next、组件库、工具链 |
 
 当前已完成：
 
 - [Vue 学习导览](/vue/introduction)
+- [React 学习导览](/react/introduction)
+- [图解 React 核心概念](/react/visual-guide)
+- [React 管理台从零到项目](/react/project-admin)
+- [React 专项练习](/roadmap/react-practice)
+- [React 真实项目问题库](/projects/issues-react)
 
 后续扩展：
 
-- React 模块。
-- Nuxt 模块。
-- Next.js 模块。
+- React Compiler、复杂组件交互和更多状态库对比。
+- Nuxt / Next 的边缘渲染、CMS 和多租户门户案例。
 
 ## 4. 状态与数据
 

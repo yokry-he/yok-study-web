@@ -147,6 +147,7 @@ export default defineConfig({
             { text: '学习路径练习包', link: '/roadmap/practice-labs' },
             { text: '前端基础专项练习', link: '/roadmap/frontend-foundation-practice' },
             { text: '前端综合实战练习', link: '/roadmap/frontend-capstone-lab' },
+            { text: 'React 专项练习', link: '/roadmap/react-practice' },
             { text: 'Nuxt / Next 专项练习', link: '/roadmap/meta-framework-practice' },
             { text: 'Vue Admin 学习地图', link: '/roadmap/vue-admin-learning-map' },
             { text: 'Vue Admin 专项练习', link: '/roadmap/vue-admin-practice' },
@@ -277,6 +278,8 @@ export default defineConfig({
             { text: '测试策略', link: '/react/testing' },
             { text: '最佳实践', link: '/react/best-practices' },
             { text: 'React 管理台从零到项目', link: '/react/project-admin' },
+            { text: 'React 真实项目问题库', link: '/projects/issues-react' },
+            { text: 'React 专项练习', link: '/roadmap/react-practice' },
             { text: '常见问题', link: '/react/troubleshooting' }
           ]
         }
@@ -732,6 +735,7 @@ export default defineConfig({
             { text: 'JavaScript 专项', link: '/projects/issues-javascript' },
             { text: 'CSS 专项', link: '/projects/issues-css' },
             { text: 'HTML 与无障碍专项', link: '/projects/issues-html-accessibility' },
+            { text: 'React 专项', link: '/projects/issues-react' },
             { text: '前端页面与状态', link: '/projects/issues-frontend' },
             { text: 'Nuxt / Next 元框架专项', link: '/projects/issues-meta-frameworks' },
             { text: 'TypeScript 类型边界', link: '/projects/issues-typescript' },

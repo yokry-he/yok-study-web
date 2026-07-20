@@ -19,7 +19,7 @@
   { title: 'JavaScript', description: '独立语言模块，覆盖图解入门、数据类型、函数、原型链、数组对象、DOM 事件、正则、异步、事件循环、错误处理、内存管理、模块化、项目落地和真实项目问题库。', link: '/javascript/introduction', level: '语言' },
   { title: 'TypeScript', description: '独立类型系统模块，覆盖图解入门、基础类型、接口、泛型、类型收窄、工具类型、tsconfig 工程配置、Vue 集成和项目落地。', link: '/typescript/introduction', level: '类型' },
   { title: 'Vue', description: '完整 Vue 3 模块，覆盖图解入门、模板、响应式、组件、路由、状态、表单、项目落地、性能、测试和排错。', link: '/vue/introduction', level: '框架' },
-  { title: 'React', description: 'React 稳定模块，覆盖图解入门、JSX、组件、Hooks、Effect、表单、请求、状态、路由、性能、测试、管理台项目和常见问题。', link: '/react/introduction', level: '框架' },
+  { title: 'React', description: 'React 稳定模块，覆盖 19 组核心图解、JSX、state、Effect、表单、请求、Data Router、可运行管理台项目、12 个专项练习、16 类真实问题和快速排错。', link: '/react/introduction', level: '框架' },
   { title: 'Nuxt / Next 元框架', description: '覆盖图解核心概念、SSR、文件路由、数据获取、课程平台从零到项目、部署缓存、服务端鉴权、SEO、国际化、专项练习和问题库。', link: '/meta-frameworks/introduction', level: '框架生态' },
   { title: 'Node.js', description: '后端 JavaScript 稳定模块，覆盖图解入门、运行时、包管理、HTTP API、鉴权会话、数据库集成、错误日志、测试、安全、部署、权限 API、Redis 缓存与 BullMQ 队列项目。', link: '/node/introduction', level: '后端' },
   { title: 'Java', description: '企业后端语言模块，覆盖图解入门、JDK、面向对象、集合泛型、异常日志、并发虚拟线程、JVM、Spring Boot、从零到项目、Spring Security 权限认证、事务、测试和排错。', link: '/java/introduction', level: '后端' },
@@ -115,7 +115,9 @@ Vue Admin 实战
 | 查 Vue Admin 请求权限问题 | [Vue Admin 请求、权限与数据问题排查专题](/projects/issues-vue-admin-request) |
 | 查 Vue Admin 消息通知问题 | [Vue Admin 消息通知、未读数与实时提醒问题排查专题](/projects/issues-vue-admin-notification) |
 | 入门 React | [React 学习导览](/react/introduction) |
+| 图解理解 React 渲染与状态 | [图解 React 核心概念](/react/visual-guide) |
 | 做 React 管理台 | [React 管理台从零到项目](/react/project-admin) |
+| 练习和排查 React | [React 专项练习](/roadmap/react-practice) 与 [React 真实项目问题库](/projects/issues-react) |
 | 学 Nuxt / Next | [Nuxt / Next 元框架学习导览](/meta-frameworks/introduction) |
 | 图解理解 SSR、hydration 和缓存 | [图解 Nuxt / Next 元框架核心概念](/meta-frameworks/visual-guide) |
 | 做 Nuxt / Next 完整项目 | [Nuxt / Next 从零到项目：课程内容平台](/meta-frameworks/project-from-zero) |
