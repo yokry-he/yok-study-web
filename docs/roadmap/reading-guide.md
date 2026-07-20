@@ -79,6 +79,7 @@ React 专项练习（React 路线）
 | React 的 state、Effect、竞态和权限不稳 | [React 专项练习](/roadmap/react-practice) | 完成 12 个练习、故障注入和生产验收 |
 | 想做 SSR、SEO 或全栈前端项目 | [Nuxt / Next 专项练习](/roadmap/meta-framework-practice) | 完成课程平台、会话、缓存、故障注入和部署验收 |
 | 想做后端 API 练习 | [学习路径练习包](/roadmap/practice-labs#练习-65后端-api-综合项目) | 选择 Java、Go 或 Node 做真实 API 并接前端 |
+| 想系统训练 Node.js 运行时能力 | [Node.js 专项练习](/roadmap/node-practice) | 完成 12 个故障注入并用真实问题库复盘 |
 | 想系统完成 Vue Admin | [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map) | 按阶段完成用户、权限、菜单、请求和问题复盘 |
 | Vue Admin 文档太多不知道下一篇看什么 | [Vue Admin 阅读顺序与实战索引](/vue/admin-reading-guide) | 按当前任务选择实现手册、问题库和交付检查 |
 | 想做完整项目 | [项目里程碑](/roadmap/project-milestones) | 对照验收清单补功能 |

@@ -66,6 +66,7 @@ AI 工程
   { title: '前端综合实战练习', description: '用一个 Vue Admin 工作台串联 CSS、浏览器、工程化、Vue、问题库和交付验收。', link: '/roadmap/frontend-capstone-lab', level: '综合' },
   { title: 'React 专项练习', description: '用 React 管理台训练渲染模型、state、Effect、Data Router、请求竞态、表单、权限、测试和生产验收。', link: '/roadmap/react-practice', level: '练习' },
   { title: 'Nuxt / Next 专项练习', description: '用课程内容平台训练路由、SSR、数据边界、Cookie 会话、缓存、SEO、排错和部署。', link: '/roadmap/meta-framework-practice', level: '练习' },
+  { title: 'Node.js 专项练习', description: '用 12 个运行时练习训练模块、事件循环、线程池、Stream、异步上下文、进程退出和多实例。', link: '/roadmap/node-practice', level: '练习' },
   { title: 'Vue Admin 学习地图', description: '把 Vue Admin 文档组织成从入门、项目、权限、问题库到交付验收的完整路线。', link: '/roadmap/vue-admin-learning-map', level: '地图' },
   { title: 'Vue Admin 专项练习', description: '用 14 天计划完成 Vue Admin 用户管理模块，覆盖路由、Pinia、请求、表单、权限、测试和复盘。', link: '/roadmap/vue-admin-practice', level: '练习' },
   { title: '项目里程碑', description: '用静态页面、Vue Admin、Node API、全栈后台、内容站和 AI 助手验证能力。', link: '/roadmap/project-milestones', level: '项目' },

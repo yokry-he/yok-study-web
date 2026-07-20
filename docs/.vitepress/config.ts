@@ -149,6 +149,7 @@ export default defineConfig({
             { text: '前端综合实战练习', link: '/roadmap/frontend-capstone-lab' },
             { text: 'React 专项练习', link: '/roadmap/react-practice' },
             { text: 'Nuxt / Next 专项练习', link: '/roadmap/meta-framework-practice' },
+            { text: 'Node.js 专项练习', link: '/roadmap/node-practice' },
             { text: 'Vue Admin 学习地图', link: '/roadmap/vue-admin-learning-map' },
             { text: 'Vue Admin 专项练习', link: '/roadmap/vue-admin-practice' },
             { text: '项目里程碑', link: '/roadmap/project-milestones' },
@@ -321,6 +322,8 @@ export default defineConfig({
             { text: '项目结构与部署', link: '/node/project-deployment' },
             { text: 'Node 权限 API 从零到项目', link: '/node/permission-api-project' },
             { text: 'Redis 缓存与 BullMQ 队列项目', link: '/node/cache-queue-project' },
+            { text: 'Node.js 真实项目问题库', link: '/projects/issues-node' },
+            { text: 'Node.js 专项练习', link: '/roadmap/node-practice' },
             { text: '常见问题', link: '/node/troubleshooting' }
           ]
         }
@@ -740,6 +743,7 @@ export default defineConfig({
             { text: 'Nuxt / Next 元框架专项', link: '/projects/issues-meta-frameworks' },
             { text: 'TypeScript 类型边界', link: '/projects/issues-typescript' },
             { text: '前端工程化专项', link: '/projects/issues-engineering' },
+            { text: 'Node.js 专项', link: '/projects/issues-node' },
             { text: '后端接口与服务', link: '/projects/issues-backend' },
             { text: '前后端联调排查', link: '/projects/integration-debugging' },
             { text: '数据库与缓存', link: '/projects/issues-database' },

@@ -21,7 +21,7 @@
   { title: 'Vue', description: '完整 Vue 3 模块，覆盖图解入门、模板、响应式、组件、路由、状态、表单、项目落地、性能、测试和排错。', link: '/vue/introduction', level: '框架' },
   { title: 'React', description: 'React 稳定模块，覆盖 19 组核心图解、JSX、state、Effect、表单、请求、Data Router、可运行管理台项目、12 个专项练习、16 类真实问题和快速排错。', link: '/react/introduction', level: '框架' },
   { title: 'Nuxt / Next 元框架', description: '覆盖图解核心概念、SSR、文件路由、数据获取、课程平台从零到项目、部署缓存、服务端鉴权、SEO、国际化、专项练习和问题库。', link: '/meta-frameworks/introduction', level: '框架生态' },
-  { title: 'Node.js', description: '后端 JavaScript 稳定模块，覆盖图解入门、运行时、包管理、HTTP API、鉴权会话、数据库集成、错误日志、测试、安全、部署、权限 API、Redis 缓存与 BullMQ 队列项目。', link: '/node/introduction', level: '后端' },
+  { title: 'Node.js', description: '后端 JavaScript 稳定模块，覆盖 27 组核心图解、运行时、HTTP、鉴权、数据库、测试、可运行权限 API、缓存队列项目、12 个专项练习和 16 类真实问题。', link: '/node/introduction', level: '后端' },
   { title: 'Java', description: '企业后端语言模块，覆盖图解入门、JDK、面向对象、集合泛型、异常日志、并发虚拟线程、JVM、Spring Boot、从零到项目、Spring Security 权限认证、事务、测试和排错。', link: '/java/introduction', level: '后端' },
   { title: 'Go', description: '云原生后端语言模块，覆盖图解入门、Go Modules、类型函数、接口组合、错误处理、并发、Context、HTTP、从零到项目、gRPC 服务间通信、数据库、测试、部署和性能诊断。', link: '/go/introduction', level: '后端' },
   { title: '数据库', description: '稳定数据模块，覆盖图解入门、MySQL、PostgreSQL、Redis、权限系统数据层落地、建模、索引、事务、迁移、ORM、备份恢复、安全审计、脱敏和排错。', link: '/database/introduction', level: '数据' },
@@ -70,6 +70,7 @@ Vue Admin 实战
 | 补齐 HTML、表单和无障碍基础 | [前端基础专项练习](/roadmap/frontend-foundation-practice) |
 | 做前端综合项目 | [前端综合实战练习](/roadmap/frontend-capstone-lab) |
 | 做后端 API 综合练习 | [学习路径练习包：后端 API 综合项目](/roadmap/practice-labs#练习-65后端-api-综合项目) |
+| 系统训练 Node.js 运行时 | [Node.js 专项练习](/roadmap/node-practice)、[Node.js 真实项目问题库](/projects/issues-node) |
 | 做 Vue Admin 练习 | [Vue Admin 专项练习](/roadmap/vue-admin-practice) |
 | 做 Vue Admin 消息通知练习 | [学习路径练习包](/roadmap/practice-labs)、[Vue Admin 专项练习](/roadmap/vue-admin-practice) |
 | 系统完成 Vue Admin 项目 | [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map) |
@@ -124,6 +125,7 @@ Vue Admin 实战
 | 练习和排查 Nuxt / Next | [Nuxt / Next 专项练习](/roadmap/meta-framework-practice) |
 | 入门 Node.js | [Node.js 学习导览](/node/introduction) |
 | 做权限 API | [Node 权限 API 从零到项目](/node/permission-api-project) |
+| 做 Node.js 故障注入与排障 | [Node.js 专项练习](/roadmap/node-practice)、[Node.js 真实项目问题库](/projects/issues-node) |
 | 做 Node 缓存和队列 | [Redis 缓存与 BullMQ 队列项目](/node/cache-queue-project) |
 | 学 Java 后端 | [Java 学习导览](/java/introduction) |
 | 做 Java Spring Boot API | [Spring Boot 从零到项目落地](/java/spring-boot-project-from-zero) |

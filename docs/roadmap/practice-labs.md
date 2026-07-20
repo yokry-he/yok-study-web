@@ -658,6 +658,8 @@ flowchart TD
 
 如果你是第一次做后端，建议只选一条路线。不要同一周同时写 Node、Java 和 Go，否则容易把语言差异误认为后端能力。
 
+选择 Node.js 时，完成通用 API 交付后继续进入 [Node.js 专项练习](/roadmap/node-practice)，再用 [Node.js 真实项目问题库](/projects/issues-node) 复盘运行时故障。接口契约、401/403 和事务问题仍保留在本练习和 [后端接口与服务问题](/projects/issues-backend) 中。
+
 ### 后端能力闭环图
 
 ```mermaid

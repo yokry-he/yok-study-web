@@ -2,7 +2,7 @@
 
 ## 适合谁看
 
-这篇适合开始接触 Node.js、Java、Go、Python 后端项目，或者需要和后端联调的前端同学。你不需要先掌握复杂架构，只要理解“接口不是只返回数据，还要处理鉴权、错误、幂等、日志和并发”。
+这篇适合开始接触 Node.js、Java、Go、Python 后端项目，或者需要和后端联调的前端同学。这里收录语言无关的接口契约、鉴权、幂等、事务、日志和并发问题；如果根因位于 Node.js 模块加载、事件循环、线程池、Stream 或进程生命周期，请转到 [Node.js 真实项目问题库](/projects/issues-node)。
 
 ## 使用方式
 
@@ -414,5 +414,7 @@ if (error.status === 403) {
 - [Node.js HTTP API 开发](/node/http-api)
 - [错误处理与日志](/node/error-logging)
 - [Node 权限 API 从零到项目](/node/permission-api-project)
+- [Node.js 真实项目问题库](/projects/issues-node)
+- [Node.js 专项练习](/roadmap/node-practice)
 - [Node.js 常见问题](/node/troubleshooting)
 - [数据库事务、锁与并发](/database/transactions)
