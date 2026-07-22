@@ -2,7 +2,7 @@
 
 ## 适合谁看
 
-这篇适合开始接触 Node.js、Java、Go、Python 后端项目，或者需要和后端联调的前端同学。这里收录语言无关的接口契约、鉴权、幂等、事务、日志和并发问题；如果根因位于 Node.js 模块加载、事件循环、线程池、Stream 或进程生命周期，请转到 [Node.js 真实项目问题库](/projects/issues-node)。
+这篇适合开始接触 Node.js、Java、Go、Python 后端项目，或者需要和后端联调的前端同学。这里收录语言无关的接口契约、鉴权、幂等、事务、日志和并发问题；如果根因位于 Node.js 模块加载、事件循环、线程池、Stream 或进程生命周期，请转到 [Node.js 真实项目问题库](/projects/issues-node)；如果根因位于 Java 字节码、类路径、Spring 代理、JPA、连接池、线程或 GC，请转到 [Java 真实项目问题库](/projects/issues-java)；如果根因位于 Go 的 typed nil、slice、map 竞态、goroutine、channel、Context、`database/sql` 连接池或优雅关闭，请转到 [Go 真实项目问题库](/projects/issues-go)。
 
 ## 使用方式
 
@@ -416,5 +416,9 @@ if (error.status === 403) {
 - [Node 权限 API 从零到项目](/node/permission-api-project)
 - [Node.js 真实项目问题库](/projects/issues-node)
 - [Node.js 专项练习](/roadmap/node-practice)
+- [Java 真实项目问题库](/projects/issues-java)
+- [Java 专项练习](/roadmap/java-practice)
+- [Go 真实项目问题库](/projects/issues-go)
+- [Go 专项实战练习](/roadmap/go-practice)
 - [Node.js 常见问题](/node/troubleshooting)
 - [数据库事务、锁与并发](/database/transactions)

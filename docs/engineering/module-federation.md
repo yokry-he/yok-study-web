@@ -34,6 +34,18 @@
 
 ## 基本模型
 
+Module Federation 在运行时获取远程入口、初始化共享依赖，再加载 exposed 模块。任何一步都可能因为网络、版本或远程发布失败而进入降级边界。
+
+<DocFigure
+  src="/images/engineering/module-federation-runtime.webp"
+  alt="Module Federation 宿主路由获取 remoteEntry、协商共享依赖、加载远程模块并进入错误边界"
+  caption="共享 singleton 只能减少重复实例，不能替代跨团队版本治理和发布兼容契约。"
+  :width="1440"
+  :height="900"
+/>
+
+远程模块不是编译期一定存在的本地 import；宿主必须为超时、版本不兼容和远程不可用设计可观察的失败状态。
+
 ```text
 host shell
 ├─ navigation

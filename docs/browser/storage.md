@@ -17,6 +17,18 @@
 | Cache API | 按缓存策略保存 | 较大 | 否 | PWA、离线资源、请求响应缓存 |
 | Memory | 页面生命周期 | 取决于内存 | 否 | Pinia/Redux 状态、临时数据 |
 
+最容易混淆的是 LocalStorage 和 SessionStorage。图中两个同源标签页都能读到 `theme=light`，但标签页 A 的临时草稿不会自动出现在标签页 B。
+
+<DocFigure
+  src="/images/browser/storage-local-session.webp"
+  alt="浏览器 Application 面板对比 LocalStorage 跨同源标签共享与 SessionStorage 按标签隔离"
+  caption="两者都按源隔离；LocalStorage 的值跨同源标签共享，SessionStorage 的状态通常只属于当前标签页。"
+  :width="1440"
+  :height="900"
+/>
+
+不依赖图片的读取路径：Application → Storage → 分别打开 Local Storage 与 Session Storage → 新开一个同源标签页 → 比较相同 key 是否出现 → 关闭并重开标签页验证生命周期。
+
 ## Cookie
 
 Cookie 最适合和服务端会话绑定。浏览器会根据 Domain、Path、SameSite、Secure 等规则决定是否发送。

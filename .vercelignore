@@ -8,6 +8,8 @@ docs/.vitepress/cache/
 
 .env
 .env.*
+# VitePress imports this public sample into the Go tutorial at build time.
+!examples/go-task-api/.env.example
 
 outputs/
 work/

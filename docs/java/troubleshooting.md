@@ -144,4 +144,4 @@ mvn dependency:tree
 
 ## 下一步学习
 
-继续查看 [Java 速查](/cheatsheets/java)，或回到 [技术库总览](/technologies/)。
+需要快速查命令时进入 [Java 速查](/cheatsheets/java)；需要系统处理 classpath、事务代理、JPA、连接池、线程和 GC 故障时进入 [Java 真实项目问题库](/projects/issues-java)，并用 [Java 专项练习](/roadmap/java-practice) 完成故障注入和回归。

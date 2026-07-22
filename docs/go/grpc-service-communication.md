@@ -19,6 +19,22 @@ Go 写完 HTTP API 后，很多团队会继续遇到服务间通信问题：
 - 正在做内部服务调用、网关、BFF、任务服务或云原生服务的人。
 - 遇到过 gRPC 超时、连接失败、错误码不一致、proto 字段兼容问题的人。
 
+## 先建立心智模型
+
+gRPC 不是“自动可靠的远程函数调用”。网络仍会超时、重复、部分成功；Protobuf 解决结构化契约，deadline 和状态码表达失败，幂等与补偿仍由业务设计。
+
+```mermaid
+flowchart LR
+  Caller[调用方业务] --> Stub[生成 Client Stub]
+  Stub --> Transport[HTTP/2 + Protobuf]
+  Transport --> Server[生成 Server 接口]
+  Server --> Domain[服务端业务]
+  Context[deadline / cancel / metadata] --> Stub
+  Context --> Server
+  Domain --> Status[gRPC status code]
+  Status --> Caller
+```
+
 ## gRPC 先解决什么
 
 gRPC 的核心价值不是“比 HTTP 更高级”，而是把服务间通信变成强契约：
@@ -143,7 +159,9 @@ sequenceDiagram
 
 真正的项目里，订单创建还会涉及事务、消息、补偿和幂等。本篇先把服务通信链路打通。
 
-## Protobuf 契约
+## 从最小示例开始
+
+### Protobuf 契约
 
 先定义库存服务：
 
@@ -205,7 +223,7 @@ message StockEvent {
 
 Protobuf 契约一旦被多个服务使用，就要像数据库迁移一样谨慎治理。
 
-## 生成代码
+### 生成代码
 
 安装工具：
 
@@ -238,7 +256,9 @@ proto:
 
 生成代码不要手改。契约变化时改 `.proto`，再重新生成。
 
-## 服务端实现
+## 放进真实项目
+
+### 服务端实现
 
 服务端实现生成的接口：
 
@@ -299,7 +319,7 @@ func main() {
 }
 ```
 
-## 客户端调用
+### 客户端调用
 
 订单服务通过 client 调库存服务：
 
@@ -508,7 +528,7 @@ ReserveStock failed:
 - message: insufficient stock
 ```
 
-## 常见问题
+## 常见错误与根因
 
 ### 客户端一直连接失败
 
@@ -579,7 +599,18 @@ ReserveStock failed:
 
 没有契约文档的 gRPC 项目，后续会在 proto 兼容、错误码、超时和调用方排查上反复返工。
 
-## 学习顺序
+## 验证清单
+
+- [ ] `.proto` 的 package、`go_package`、字段编号和兼容规则已评审。
+- [ ] 生成命令可重复执行，生成代码不混入手写业务逻辑。
+- [ ] 每个调用都有 deadline，取消信号传到数据库和外部依赖。
+- [ ] 业务错误映射到稳定 gRPC code，客户端不解析 message 分支。
+- [ ] 只有幂等操作才自动重试，并限制次数、退避和总时间预算。
+- [ ] interceptor 覆盖 recover、request ID、日志和指标，不放业务规则。
+- [ ] 流式调用测试客户端取消、背压和 goroutine 退出。
+- [ ] 集成测试同时保存成功、业务失败、超时和连接失败证据。
+
+## 下一步学习
 
 建议按这个顺序推进：
 

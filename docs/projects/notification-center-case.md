@@ -19,6 +19,20 @@
 - 支持失败重试和发送日志。
 - 支持 WebSocket 推送未读数量。
 
+## 先看消息中心
+
+一条业务事件可能生成站内信，同时触发 WebSocket、邮件或短信。用户读状态与外部通道发送状态必须分开保存。
+
+<DocFigure
+  src="/images/projects/notification-center-unread.webp"
+  alt="消息中心展示审批提醒、报表完成和权限更新消息，以及站内信、WebSocket、邮件和短信通道状态"
+  caption="用户消息记录负责已读未读，发送任务负责渠道重试；二者共享业务事件但不是同一个状态。"
+  :width="1440"
+  :height="900"
+/>
+
+图中邮件重试不会撤销已经送达的站内信。消费者应使用 `event_id + user_id + template_code` 做幂等，避免队列重试时给同一用户生成重复消息。
+
 ## 消息链路图
 
 ```mermaid

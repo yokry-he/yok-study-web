@@ -73,6 +73,18 @@ axios.create({
 
 预检请求失败时，真正的业务请求不会发出去。此时后端日志里可能看不到你的 `POST /api/users`，只能看到 `OPTIONS /api/users`。
 
+观察下面三步：浏览器先发送 `OPTIONS` 说明想使用的 Method 与 Headers；服务端返回允许的 Origin、Methods 和 Headers；只有这些条件匹配，浏览器才继续发送带身份凭证的 `POST`。
+
+<DocFigure
+  src="/images/browser/cors-preflight.webp"
+  alt="跨域请求先发送 OPTIONS 预检，服务端返回允许规则后再发送带 Authorization 的 POST"
+  caption="预检是浏览器执行的权限询问；OPTIONS 失败时，真正的业务请求根本不会发送。"
+  :width="1440"
+  :height="900"
+/>
+
+不依赖图片的读取路径：Network → 按目标路径过滤 → 先找 Method 为 OPTIONS 的请求 → 核对 Request 中的 Origin、Access-Control-Request-Method、Access-Control-Request-Headers → 再核对响应中的三个 Allow 头。
+
 ## Cookie 登录态
 
 Cookie 登录态通常是：

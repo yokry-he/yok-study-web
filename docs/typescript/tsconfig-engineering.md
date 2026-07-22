@@ -110,6 +110,18 @@ tsconfig.node.json
 
 ## paths 和运行时解析
 
+路径别名失败时先确定实际加载的配置和解析轨迹。图中 `@/api/user` 命中本地 paths，而 `@shared/missing` 的所有候选文件都不存在。
+
+<DocFigure
+  src="/images/typescript/tsconfig-trace.webp"
+  alt="TypeScript 模块解析报告展示 tsconfig 继承、paths 命中、包 exports 与缺失模块候选"
+  caption="使用 tsc --showConfig 确认最终配置，再用 --traceResolution 查看每个候选路径。"
+  :width="1440"
+  :height="900"
+/>
+
+`paths` 只影响 TypeScript 解析，不自动改写浏览器或 Node 的运行时路径；Vite、测试工具和部署环境也要配置同一别名规则。
+
 TypeScript 的 `paths` 只负责类型检查和编辑器解析，不一定改变运行时或打包解析。
 
 ```json

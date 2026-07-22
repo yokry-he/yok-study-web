@@ -97,6 +97,18 @@ update stock = stock - 1
 
 ## 悲观锁
 
+锁等待排查必须同时找到等待者和持有者。图中 PID 8421 的 SQL 只是等待，真正需要优先检查的是已经 `idle in transaction` 38 秒的 PID 8177。
+
+<DocFigure
+  src="/images/database/transaction-lock-wait.webp"
+  alt="PostgreSQL 锁等待报告显示 PID 8177 持有锁并处于长事务，PID 8421 等待 4.8 秒"
+  caption="不要只终止等待者；先保存持有者 SQL、事务年龄、锁对象和业务 Request ID。"
+  :width="1440"
+  :height="900"
+/>
+
+悲观锁本身不是错误，长事务和不稳定的加锁顺序才容易把正常竞争放大为超时或死锁。
+
 ```sql
 begin;
 

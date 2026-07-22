@@ -197,6 +197,7 @@ java/
 ├─ concurrency-virtual-threads
 ├─ jvm-memory-gc
 ├─ spring-boot-api
+├─ spring-boot-project-from-zero
 ├─ spring-security-permission
 ├─ persistence-transaction
 ├─ testing-deployment
@@ -205,7 +206,7 @@ java/
 
 已覆盖：
 
-- 图解 JDK、JVM、对象引用、调用栈、Spring 请求链路、事务、线程和排错路径。
+- 29 组图解覆盖源码到 JVM、语法值传递、集合、Stream、内存、类加载、GC、并发、Spring、JPA、连接池、测试、容器和排障证据链。
 - JDK、JVM、JRE、Maven、Gradle 和 IDE 工具链。
 - Java 语法、面向对象、接口、record 和 sealed class。
 - 集合、泛型、Optional、equals/hashCode 和常见集合选择。
@@ -214,10 +215,13 @@ java/
 - 平台线程、线程池、CompletableFuture 和虚拟线程。
 - JVM 内存、GC、线程 dump、heap dump 和类冲突排查。
 - Spring Boot API、分层架构、配置、参数校验和请求链路。
+- 可运行用户角色 API：Java 25、Spring Boot 4.1、PostgreSQL 18、Flyway、JPA、乐观锁、Testcontainers、Docker 和优雅停机。
 - Spring Security 权限认证项目：登录、token、角色权限、接口保护、401/403、审计日志和前后端联调。
 - 数据库访问、事务、ORM、连接池和 N+1 查询。
 - 测试、打包、部署、健康检查和上线验证。
 - Java 速查和常见问题。
+- Java 专项练习：12 个版本、依赖、Bean、事务、JPA、连接池、线程、JVM、测试和交付练习。
+- Java 真实项目问题库：16 类字节码、classpath、代理、JPA、线程、内存和发布问题。
 
 后续继续扩展：
 
@@ -246,11 +250,17 @@ go/
 ├─ project-deployment
 ├─ performance
 └─ troubleshooting
+
+projects/
+└─ issues-go
+
+roadmap/
+└─ go-practice
 ```
 
 已覆盖：
 
-- 图解模块构建、包边界、Handler-Service-Repository、goroutine 生命周期、channel、context、连接池和性能排查。
+- 26 组图解覆盖模块构建、包边界、Handler-Service-Repository、goroutine 生命周期、channel、context、连接池、事务、测试、关闭和性能排查。
 - Go 安装、go.mod、go.sum、workspace、replace 和 GOPRIVATE。
 - 变量、零值、函数、结构体、方法、指针接收者和泛型。
 - 小接口、隐式实现、组合和按业务域组织包。
@@ -262,13 +272,15 @@ go/
 - 单元测试、表格测试、benchmark、fuzzing 和 race 检查。
 - 项目结构、构建、Docker、部署检查和版本信息。
 - pprof、goroutine profile、heap profile 和性能诊断。
-- Go 速查和常见问题。
+- 可运行 `examples/go-task-api`：Go 1.26.5、PostgreSQL 18.4、标准库 ServeMux、pgx、migrate、slog、严格 JSON、乐观锁和优雅关闭。
+- 使用 race detector、Fuzz、Testcontainers、真实 PostgreSQL 集成测试和非 root 容器完成交付验证。
+- 12 个循序渐进专项练习、16 类 Go 真实项目问题、Go 速查和常见问题。
 
 后续继续扩展：
 
+- 微服务治理、服务发现、限流、熔断和可观测性传播。
 - 云原生组件、Kubernetes Operator 和控制器模式。
 - CLI 工具、后台任务和任务队列。
-- 更多高并发接口、网关和基础设施案例。
 
 ## 阶段四：数据库方向
 

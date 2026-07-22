@@ -1,5 +1,8 @@
 import { defineConfig } from 'vitepress'
 
+const goIssuesRoute = '/projects/issues-go'
+const goPracticeRoute = '/roadmap/go-practice'
+
 export default defineConfig({
   lang: 'zh-CN',
   title: '程序员技术学习站',
@@ -150,6 +153,7 @@ export default defineConfig({
             { text: 'React 专项练习', link: '/roadmap/react-practice' },
             { text: 'Nuxt / Next 专项练习', link: '/roadmap/meta-framework-practice' },
             { text: 'Node.js 专项练习', link: '/roadmap/node-practice' },
+            { text: 'Java 专项练习', link: '/roadmap/java-practice' },
             { text: 'Vue Admin 学习地图', link: '/roadmap/vue-admin-learning-map' },
             { text: 'Vue Admin 专项练习', link: '/roadmap/vue-admin-practice' },
             { text: '项目里程碑', link: '/roadmap/project-milestones' },
@@ -367,6 +371,8 @@ export default defineConfig({
             { text: 'Spring Security 权限认证项目', link: '/java/spring-security-permission' },
             { text: '数据库、事务与 ORM', link: '/java/persistence-transaction' },
             { text: '测试、打包与部署', link: '/java/testing-deployment' },
+            { text: 'Java 真实项目问题库', link: '/projects/issues-java' },
+            { text: 'Java 专项练习', link: '/roadmap/java-practice' },
             { text: '常见问题', link: '/java/troubleshooting' }
           ]
         }
@@ -389,6 +395,8 @@ export default defineConfig({
             { text: '测试、Benchmark 与 Fuzzing', link: '/go/testing' },
             { text: '项目结构、构建与部署', link: '/go/project-deployment' },
             { text: '性能分析与线上诊断', link: '/go/performance' },
+            { text: 'Go 真实项目问题库', link: goIssuesRoute },
+            { text: 'Go 专项练习', link: goPracticeRoute },
             { text: '常见问题', link: '/go/troubleshooting' }
           ]
         }
@@ -744,6 +752,7 @@ export default defineConfig({
             { text: 'TypeScript 类型边界', link: '/projects/issues-typescript' },
             { text: '前端工程化专项', link: '/projects/issues-engineering' },
             { text: 'Node.js 专项', link: '/projects/issues-node' },
+            { text: 'Java 专项', link: '/projects/issues-java' },
             { text: '后端接口与服务', link: '/projects/issues-backend' },
             { text: '前后端联调排查', link: '/projects/integration-debugging' },
             { text: '数据库与缓存', link: '/projects/issues-database' },

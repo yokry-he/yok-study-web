@@ -8,6 +8,26 @@
 
 每个元素都可以理解为一个盒子：
 
+先观察下图，再回到代码理解四层空间。内容区保存真正的数据，`padding` 扩大内容与边框的距离，`border` 画出边界，`margin` 负责元素与外界的距离。
+
+<DocFigure
+  src="/images/css/box-model.webp"
+  alt="CSS 盒模型四层结构图，依次标出内容区、内边距、边框和外边距"
+  caption="盒模型不是四个互不相关的属性，而是从内容向外逐层包裹的空间结构。"
+  :width="1440"
+  :height="900"
+/>
+
+两个普通块级元素上下排列时，垂直 `margin` 可能发生折叠。图中可以看到，间距取较大的 `32px`，而不是把 `24px` 与 `32px` 相加得到 `56px`。
+
+<DocFigure
+  src="/images/css/margin-collapse.webp"
+  alt="两个上下排列的块级元素发生外边距折叠，最终垂直间距为 32 像素"
+  caption="外边距折叠只发生在特定的普通文档流场景；Flex、Grid 和建立 BFC 后的结果会不同。"
+  :width="1440"
+  :height="900"
+/>
+
 ```text
 content 内容
 padding 内边距

@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>P1 技术证据场景</title>
+    <link rel="stylesheet" href="../shared/demo.css" />
+    <style>
+      .p1-stage {
+        max-width: 1200px;
+        margin: 36px auto 0;
+      }
+
+      .p1-shell {
+        overflow: hidden;
+        border: 1px solid #b6c8c1;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 20px 54px rgb(34 64 54 / 10%);
+      }
+
+      .p1-shell__bar {
+        display: flex;
+        min-height: 58px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border-bottom: 1px solid #d6e0dc;
+        padding: 0 22px;
+        background: #f5f8f7;
+      }
+
+      .p1-shell__name {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 12px;
+        font-weight: 900;
+      }
+
+      .p1-shell__mark {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        place-items: center;
+        border-radius: 7px;
+        background: #087f68;
+        color: #fff;
+        font-weight: 950;
+      }
+
+      .p1-shell__context {
+        overflow: hidden;
+        color: #64766f;
+        font: 13px ui-monospace, SFMono-Regular, Menlo, monospace;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .p1-content { padding: 24px; }
+
+      .p1-metrics {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 20px;
+      }
+
+      .p1-metric {
+        border: 1px solid #cbd8d3;
+        border-left: 5px solid #087f68;
+        border-radius: 6px;
+        padding: 16px;
+        background: #fbfdfc;
+      }
+
+      .p1-metric:nth-child(2) { border-left-color: #7952a5; }
+      .p1-metric:nth-child(3) { border-left-color: #d78a20; }
+      .p1-metric:nth-child(4) { border-left-color: #2d7895; }
+      .p1-metric__label { display: block; color: #64766f; font-size: 12px; font-weight: 850; }
+      .p1-metric__value { display: block; margin-top: 8px; color: #21312b; font-size: 25px; font-weight: 950; }
+
+      .p1-flow {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 18px;
+      }
+
+      .p1-step {
+        position: relative;
+        display: grid;
+        min-height: 148px;
+        align-content: center;
+        gap: 9px;
+        border: 1px solid #c7d5d0;
+        border-top: 5px solid #087f68;
+        border-radius: 7px;
+        padding: 17px;
+        background: #fbfdfc;
+      }
+
+      .p1-step:nth-child(2) { border-top-color: #7952a5; }
+      .p1-step:nth-child(3) { border-top-color: #d78a20; }
+      .p1-step:nth-child(4) { border-top-color: #2d7895; }
+      .p1-step:nth-child(5) { border-top-color: #b43a44; }
+      .p1-step:not(:last-child)::after { position: absolute; z-index: 2; top: 50%; right: -23px; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 12px solid #7d9189; content: ""; transform: translateY(-50%); }
+      .p1-step__index { color: #087f68; font: 900 13px ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .p1-step__title { margin: 0; font-size: 17px; }
+      .p1-step__text { margin: 0; color: #61736c; font-size: 13px; line-height: 1.55; }
+
+      .p1-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+      }
+
+      .p1-panel {
+        min-width: 0;
+        border: 1px solid #c8d5d0;
+        border-radius: 7px;
+        overflow: hidden;
+      }
+
+      .p1-panel__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 15px 18px;
+        background: #eef4f1;
+      }
+
+      .p1-panel__title { margin: 0; font-size: 17px; }
+      .p1-panel__badge { border-radius: 999px; padding: 4px 9px; background: #e7f7f1; color: #087f68; font-size: 12px; font-weight: 900; white-space: nowrap; }
+      .p1-panel__body { padding: 18px; }
+
+      .p1-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .p1-list__item {
+        display: grid;
+        grid-template-columns: 24px 1fr;
+        gap: 10px;
+        align-items: start;
+        color: #4e615a;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .p1-list__item::before {
+        display: grid;
+        width: 22px;
+        height: 22px;
+        place-items: center;
+        border-radius: 50%;
+        background: #e7f7f1;
+        color: #087f68;
+        content: "✓";
+        font-size: 12px;
+        font-weight: 950;
+      }
+
+      .p1-table-wrap { overflow-x: auto; }
+
+      .p1-table {
+        width: 100%;
+        min-width: 720px;
+        border-collapse: collapse;
+        text-align: left;
+      }
+
+      .p1-table th,
+      .p1-table td {
+        border-bottom: 1px solid #dfe7e4;
+        padding: 13px 15px;
+        color: #40534c;
+        font-size: 13px;
+      }
+
+      .p1-table th { background: #eef4f1; color: #52655e; font-weight: 900; }
+      .p1-table td:first-child { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 800; }
+
+      .p1-status {
+        display: inline-flex;
+        border-radius: 999px;
+        padding: 4px 9px;
+        background: #e7f7f1;
+        color: #087f68;
+        font-size: 12px;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+
+      .p1-status--warn { background: #fff1d8; color: #956100; }
+      .p1-status--error { background: #fdebed; color: #aa2d38; }
+      .p1-status--neutral { background: #edf1ef; color: #5b6c65; }
+
+      .p1-callout {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        gap: 12px;
+        margin-top: 20px;
+        border-left: 5px solid #d88a20;
+        padding: 15px 17px;
+        background: #fff8e9;
+      }
+
+      .p1-callout__mark { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 50%; background: #d88a20; color: #fff; font-weight: 950; }
+      .p1-callout__text { margin: 2px 0 0; color: #5d4920; line-height: 1.55; }
+
+      @media (max-width: 760px) {
+        .demo-frame { padding: 22px; }
+        .demo-frame::before { inset: 10px; }
+        .p1-stage { margin-top: 28px; }
+        .p1-shell__bar { align-items: flex-start; flex-direction: column; padding: 15px; }
+        .p1-content { padding: 16px; }
+        .p1-metrics,
+        .p1-flow,
+        .p1-grid { grid-template-columns: 1fr; }
+        .p1-step { min-height: 108px; }
+        .p1-step:not(:last-child)::after { top: auto; right: 50%; bottom: -18px; border-top: 11px solid #7d9189; border-right: 7px solid transparent; border-bottom: 0; border-left: 7px solid transparent; transform: translateX(50%); }
+        .p1-metrics .p1-metric:nth-child(n+3),
+        .p1-flow .p1-step:nth-child(n+4),
+        .p1-grid .p1-panel:nth-child(n+3) { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="demo-frame">
+      <p id="kicker" class="demo-kicker"></p>
+      <h1 id="title" class="demo-title"></h1>
+      <p id="subtitle" class="demo-subtitle"></p>
+      <section class="p1-stage p1-shell">
+        <header class="p1-shell__bar"><div class="p1-shell__name"><span id="mark" class="p1-shell__mark"></span><span id="module"></span></div><span id="context" class="p1-shell__context"></span></header>
+        <div id="content" class="p1-content"></div>
+      </section>
+    </main>
+    <script>
+      const scenes = {
+        'event-loop-devtools': {k:'JavaScript · Event Loop',m:'JS',t:'同步任务、微任务和渲染机会出现在不同检查点',s:'从调用栈开始追踪 Promise、setTimeout 与渲染，而不是只背“宏任务先还是微任务先”。',c:'Performance · Main thread',type:'flow',steps:[['同步脚本','调用栈执行当前 script'],['Promise.then','进入微任务队列'],['清空微任务','直到队列为空'],['渲染机会','样式、布局与绘制'],['setTimeout','后续任务进入调用栈']],note:'微任务会在当前任务结束后批量清空；递归创建微任务同样可能推迟渲染。'},
+        'dom-event-path': {k:'JavaScript · DOM Events',m:'JS',t:'一次点击沿捕获、目标和冒泡路径传播',s:'事件委托依赖稳定的传播路径；stopPropagation 会改变后续监听器是否有机会执行。',c:'click · eventPhase',type:'flow',steps:[['window','捕获阶段起点'],['document','向目标祖先传播'],['button','target 目标阶段'],['list item','冒泡经过委托容器'],['document','冒泡结束']],note:'使用 event.target 找实际来源，使用 currentTarget 找当前监听器绑定节点。'},
+        'task-board-states': {k:'JavaScript · Task Board',m:'JS',t:'任务看板不能只有“有数据”一种状态',s:'加载、空列表、正常列表、保存失败和离线恢复需要各自可见且互不混用。',c:'task-board state matrix',type:'panels',panels:[['加载中','骨架稳定，禁止重复提交','loading'],['正常列表','筛选、排序、拖拽可用','ready'],['空列表','解释原因并提供新建入口','empty'],['离线失败','保留本地草稿并允许重试','error']],note:'状态必须由同一状态机驱动；不要让空数组同时代表 loading、empty 和 error。'},
+        'narrowing-control-flow': {k:'TypeScript · Narrowing',m:'TS',t:'控制流逐步缩小联合类型，分支外重新合并',s:'typeof、in、判别字段和自定义类型守卫都在证明当前路径上能安全访问哪些字段。',c:'UserResult union',type:'flow',steps:[['unknown','外部输入不可直接使用'],['结构校验','确认对象与 kind 字段'],['kind = success','缩小到 SuccessResult'],['访问 data','字段类型已被证明'],['穷尽检查','never 捕获遗漏分支']],note:'类型断言不会产生运行时证据；外部数据必须先校验再缩小。'},
+        'type-boundary-error-state': {k:'TypeScript · Boundary',m:'TS',t:'DTO、领域模型、表单状态和错误状态不能混成一个类型',s:'每跨过一个边界就显式转换，使 nullable、日期、枚举和字段错误在正确层处理。',c:'API → mapper → UI',type:'flow',steps:[['UserDTO','string date · nullable'],['运行时校验','拒绝错误响应结构'],['mapper','规范日期与缺省值'],['UserViewModel','页面可直接渲染'],['FormError','字段错误独立保存']],note:'后端字段错误属于提交结果，不应塞进业务实体或永久 DTO。'},
+        'tsconfig-trace': {k:'TypeScript · tsconfig',m:'TS',t:'一次模块解析失败要沿配置继承与解析轨迹找证据',s:'先确认使用了哪份 tsconfig，再检查 extends、paths、moduleResolution 和实际候选文件。',c:'tsc --showConfig / --traceResolution',type:'table',metrics:[['配置入口','apps/admin'],['moduleResolution','Bundler'],['路径别名','@/ → src/'],['最终结果','resolved']],rows:[['tsconfig.json','extends ../../tsconfig.base.json','loaded','当前应用配置'],['@/api/user','paths @/* → src/*','matched','src/api/user.ts'],['vue','package exports','matched','node_modules/vue'],['@shared/missing','候选均不存在','failed','修正别名或文件']],note:'IDE 与命令行结果不一致时，先比较它们实际加载的 tsconfig 和 TypeScript 版本。'},
+        'effect-request-race': {k:'React · Effect',m:'R',t:'后发请求应赢得当前页面，旧响应不能覆盖新查询',s:'输入条件改变后取消旧请求，或用请求序号只接收最新结果。',c:'query: v → vue',type:'flow',steps:[['query = v','发出 request #1'],['query = vue','清理旧 effect'],['Abort #1','旧请求进入取消态'],['response #2','更新当前结果'],['late #1','被忽略，不写 state']],note:'cleanup 不只是卸载时运行；依赖变化前也会执行上一轮清理。'},
+        'performance-profiler': {k:'React · Profiler',m:'R',t:'用提交证据判断哪个组件重渲染，以及为什么重渲染',s:'先看 commit 时长和组件火焰图，再回到 props、state、context 与 memo 边界。',c:'Profiler · update commit',type:'table',metrics:[['Commit','18.4 ms'],['渲染组件','37'],['最慢组件','OrderTable'],['交互','筛选状态']],rows:[['OrderTable','12.8 ms','props changed','检查 rows 稳定性'],['FilterBar','2.1 ms','state changed','正常更新'],['Sidebar','1.7 ms','context changed','拆分 Context'],['Logo','0.1 ms','memoized','跳过']],note:'Profiler 证明“哪里花时间”，业务代码与数据流分析才解释“为什么”。'},
+        'admin-states': {k:'React · Admin Project',m:'R',t:'后台页面需要覆盖加载、空态、错误和权限拒绝',s:'项目验收不能只截一张成功列表；每个状态都有恢复路径和不同数据暴露边界。',c:'admin page state matrix',type:'panels',panels:[['列表就绪','筛选、分页、行操作一致','ready'],['无结果','清除筛选或新建记录','empty'],['接口失败','保留条件，提供重试','error'],['无权限','不渲染业务数据，返回工作台','403']],note:'错误、空态和无权限不是同一个 fallback；状态混用会误导用户并泄露信息。'},
+        'route-data-boundaries': {k:'Meta Framework · Routing',m:'M',t:'路由、服务端加载、客户端交互和错误边界各有职责',s:'把鉴权和首屏数据留在服务端边界，把局部交互状态留在客户端组件。',c:'route /courses/[id]',type:'flow',steps:[['路由匹配','解析 params 与 locale'],['服务端鉴权','读取 session 与权限'],['数据加载','并行请求课程与进度'],['页面渲染','流式输出首屏内容'],['客户端交互','收藏、筛选、播放状态']],note:'redirect、notFound 与业务错误应在最靠近事实来源的边界决定。'},
+        'server-auth-redirect': {k:'Meta Framework · Auth',m:'M',t:'服务端在输出敏感页面前完成身份判断与重定向',s:'客户端闪现后再跳转既影响体验，也不能充当真正安全边界。',c:'GET /admin/users',type:'flow',steps:[['请求到达','携带 HttpOnly session'],['服务端读会话','验证签名与过期时间'],['检查权限','users:read'],['无权限 redirect','302 /login?returnTo=...'],['有权限 render','再读取受保护数据']],note:'无权请求不应先查询和序列化受保护数据；接口仍需独立鉴权。'},
+        'course-platform': {k:'Meta Framework · Project',m:'M',t:'课程平台首屏把路由数据、学习进度和交互状态分层',s:'服务端输出课程与权限，客户端管理播放器和练习交互，缓存按数据时效分别设计。',c:'course detail delivery',type:'panels',panels:[['课程概要','服务端渲染标题、目录和权限','SSR'],['学习进度','按用户读取，可短时缓存','user'],['视频播放','客户端状态与断点续播','client'],['练习提交','写请求、幂等与反馈闭环','mutation']],note:'不要把所有数据都放进一次巨大 loader；独立区块应允许并行、失败隔离和渐进显示。'},
+        'permission-api-response': {k:'Node.js · Permission API',m:'N',t:'权限接口返回稳定资源、动作和数据范围',s:'前端菜单与按钮可以消费权限结果，但后端每个业务接口仍必须再次校验。',c:'GET /api/me/permissions',type:'table',metrics:[['HTTP','200'],['角色','运营管理员'],['权限码','6'],['数据范围','DEPARTMENT']],rows:[['users:read','用户列表','allowed','部门范围'],['users:write','新增编辑','allowed','部门范围'],['roles:grant','角色授权','denied','仅超级管理员'],['audit:read','审计日志','allowed','本租户']],note:'返回 denied 有助于解释界面状态，但不能把完整内部策略和敏感条件暴露给客户端。'},
+        'cache-queue-dashboard': {k:'Node.js · Cache & Queue',m:'N',t:'缓存命中率、队列积压和失败重试要一起观察',s:'只看 Redis 是否在线无法判断系统是否健康；业务延迟取决于命中、回源和消费速度。',c:'operations dashboard',type:'table',metrics:[['Cache hit','92.4%'],['回源 P95','84 ms'],['队列积压','128'],['失败任务','3']],rows:[['email-send','4 workers','23 waiting','healthy'],['report-export','2 workers','96 waiting','warning'],['cache-refresh','1 worker','9 waiting','healthy'],['dead-letter','manual review','3 failed','action']],note:'扩容消费者前先确认下游限流、任务幂等和失败原因，否则只会放大重试风暴。'},
+        'testcontainers-run': {k:'Java · Testcontainers',m:'J',t:'测试用真实 PostgreSQL 启动、迁移、执行并清理',s:'绿色结果应证明真实约束、JPA 行为和 HTTP 契约，而不是把数据库测试替换成内存模拟。',c:'mvn test · Java 25.0.1',type:'flow',steps:[['Docker 连接','Testcontainers 2.0.5'],['PostgreSQL 18.4','随机宿主端口'],['Flyway','V1 + V2 成功'],['JUnit','9 tests · 0 failed'],['Ryuk 清理','容器随 JVM 退出']],note:'容器环境内运行 Testcontainers 时，本次验证使用 TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal。'},
+        'index-explain': {k:'Database · EXPLAIN',m:'DB',t:'执行计划用行数、访问方式和实际耗时证明索引是否有效',s:'不能因为“建了索引”就断言查询变快；要比较估算行数、实际行数、扫描方式和缓冲命中。',c:'EXPLAIN (ANALYZE, BUFFERS)',type:'table',metrics:[['Plan','Index Scan'],['Actual rows','20'],['Execution','1.84 ms'],['Buffers','hit 12']],rows:[['Index Scan','idx_orders_tenant_status','20 rows','1.42 ms'],['Filter','deleted_at IS NULL','removed 0','0.08 ms'],['Sort','created_at DESC','top-N heapsort','0.21 ms'],['Total','planning + execution','buffers hit','1.84 ms']],note:'生产执行 ANALYZE 可能真正运行写查询；对高风险 SQL 先在只读副本或等价数据集验证。'},
+        'transaction-lock-wait': {k:'Database · Transactions',m:'DB',t:'锁等待要找到持有者、等待者、SQL 和事务开始时间',s:'等待者通常只是受害者；真正根因常是持有锁的长事务没有及时提交。',c:'pg_stat_activity + pg_locks',type:'table',metrics:[['Blocked PID','8421'],['Blocking PID','8177'],['Wait','4.8 s'],['Lock','tuple']],rows:[['8177','idle in transaction','UPDATE orders...','blocking'],['8421','active','UPDATE orders...','waiting'],['8177','xact age 38s','app=worker','inspect'],['8421','statement 4.8s','app=api','timeout soon']],note:'不要直接杀等待者后结束排查；先保存持有者 SQL、事务年龄、业务请求 ID 和锁对象。'},
+        'permission-project': {k:'Database · Permission Project',m:'DB',t:'角色、权限与数据范围最终落到可查询的关系模型',s:'项目页面展示的是授权结果，数据库负责唯一性、引用完整性和租户隔离事实。',c:'RBAC + data scope',type:'flow',steps:[['用户','tenant_id + user_id'],['用户角色','有效期与授权人'],['角色权限','resource:action'],['数据范围','SELF / DEPT / ALL'],['业务查询','WHERE tenant + scope']],note:'前端隐藏按钮不改变数据库查询范围；所有写入还要记录授权来源和审计事件。'},
+        'bundle-analysis': {k:'Engineering · Bundle',m:'E',t:'体积分析先找重复依赖、大模块和首屏非必要代码',s:'压缩后体积、解析执行成本和缓存边界需要一起评估，不能只看一个 gzip 数字。',c:'production bundle report',type:'table',metrics:[['Initial JS','612 KB'],['目标','< 400 KB'],['重复依赖','2'],['最大模块','charts']],rows:[['charts-vendor','238 KB','首屏加载','改为路由懒加载'],['date-lib x2','96 KB','版本重复','统一版本与导入'],['admin-page','84 KB','页面代码','拆分编辑器'],['framework','112 KB','长期缓存','独立 chunk']],note:'拆包不是越碎越好；还要观察请求数量、缓存命中和用户关键路径。'},
+        'module-federation-runtime': {k:'Engineering · Module Federation',m:'E',t:'宿主在运行时解析远程入口、共享依赖和版本约束',s:'远程不可用、版本不兼容和重复 Vue/React 实例都需要明确降级边界。',c:'host → remoteEntry → shared scope',type:'flow',steps:[['Host route','决定加载订单模块'],['remoteEntry','获取远程容器'],['init sharing','协商共享依赖'],['get module','加载 exposed 页面'],['error boundary','超时或版本冲突降级']],note:'共享 singleton 只能减少重复实例，不能替代跨团队版本治理和发布兼容契约。'},
+        'project-pipeline': {k:'Engineering · Delivery',m:'E',t:'前端项目从提交到发布需要可追踪质量门禁',s:'构建成功只是中间状态；类型、测试、产物、预览、审批和回滚证据都要可复核。',c:'commit → production',type:'flow',steps:[['静态检查','lint + typecheck'],['自动测试','unit + integration'],['构建产物','hash + manifest + SBOM'],['预览验收','关键路由与视觉'],['渐进发布','监控、回滚与版本标记']],note:'每个阶段失败都应阻止后续发布，并保留能定位到提交、环境和产物的记录。'},
+        'docker-container-state': {k:'DevOps · Docker',m:'D',t:'容器状态要同时看进程、健康检查、重启次数和日志',s:'running 只说明主进程还在，不代表服务已经能接收流量。',c:'docker compose ps',type:'table',metrics:[['API','healthy'],['PostgreSQL','healthy'],['Migration','exited 0'],['Restarts','0']],rows:[['postgres','running (healthy)','5432/tcp','依赖就绪'],['migrate','exited (0)','one-shot','迁移完成'],['api','running (healthy)','8080/tcp','可以接流量'],['worker','restarting (3)','none','检查启动错误']],note:'重启策略可能掩盖持续崩溃；看到 restarting 要先保留第一条错误和退出码。'},
+        'observability-dashboard': {k:'DevOps · Observability',m:'D',t:'一次告警要把流量、错误、延迟、饱和度和链路样本串联',s:'只有 CPU 折线无法解释用户影响；指标发现异常，日志与 Trace 定位具体请求。',c:'service checkout-api · 15m',type:'table',metrics:[['RPS','842'],['Error','2.8%'],['P95','1.42 s'],['DB pool','96%']],rows:[['14:02','error rate > 2%','firing','影响支付提交'],['14:03','db pool wait','842 ms','连接饱和'],['14:04','trace req_91a','slow query','orders index miss'],['14:08','rollback v142','resolved','P95 210 ms']],note:'告警阈值要连接用户 SLO；日志和 Trace 中不得记录密码、Token 或完整敏感请求体。'},
+        'deployment-canary': {k:'DevOps · Canary',m:'D',t:'金丝雀发布按流量比例扩大，并用业务指标决定继续或回滚',s:'时间到了自动全量不是安全策略；每一阶段都必须比较基线并设置停止条件。',c:'release v143',type:'flow',steps:[['1% 流量','内部与探针验证'],['5% 流量','错误率与 P95 对比'],['25% 流量','核心转化与资源'],['50% 流量','观察完整高峰窗口'],['100% 或回滚','保留版本与事件记录']],note:'任何阶段超过错误率、延迟或业务转化阈值，都应停止扩量并自动回滚。'},
+        'evaluation-report': {k:'AI Engineering · Evaluation',m:'AI',t:'评测报告要分解检索、回答、引用和安全性',s:'一个总分无法指导修复；每项指标需要固定数据集、判定规则和失败样本。',c:'doc-qa evaluation · dataset v7',type:'table',metrics:[['Retrieval@5','91.2%'],['Groundedness','87.6%'],['Citation','94.1%'],['Unsafe leak','0']],rows:[['权限政策','检索正确','回答完整','pass'],['退款时限','片段缺版本','引用旧文档','fail'],['合同条款','权限过滤','明确拒答','pass'],['模糊问题','召回分散','要求澄清','pass']],note:'每次模型、Embedding、切分、索引或 Prompt 变化都要在同一版本数据集上回归。'},
+        'doc-qa-citations': {k:'AI Engineering · Doc QA',m:'AI',t:'文档问答把每个关键结论连接到可打开的来源片段',s:'引用不是在答案末尾随便列链接；来源要包含文档、章节、版本、页码或 chunk 标识。',c:'answer with evidence',type:'panels',panels:[['回答','上线前先完成权限、迁移与回滚演练。','grounded'],['来源 1','发布规范 §3.2 · version 2026-07','exact'],['来源 2','数据库迁移指南 · 回滚章节','exact'],['证据不足','未检索到停机窗口，要求用户补充','refuse']],note:'点击引用应回到原始上下文；来源权限变化后，缓存答案也必须失效。'}
+      }
+
+      const params = new URLSearchParams(location.search)
+      const requested = params.get('scene') || 'event-loop-devtools'
+      const data = scenes[requested] || scenes['event-loop-devtools']
+      document.title = `${requested} · P1 技术证据场景`
+      document.querySelector('#kicker').textContent = data.k
+      document.querySelector('#title').textContent = data.t
+      document.querySelector('#subtitle').textContent = data.s
+      document.querySelector('#mark').textContent = data.m
+      document.querySelector('#module').textContent = data.k.split(' · ')[0] + ' 教学证据'
+      document.querySelector('#context').textContent = data.c
+
+      const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]))
+      const statusClass = value => /fail|error|denied|403|waiting|restarting|阻塞|失败/i.test(value) ? 'p1-status p1-status--error' : /warn|empty|neutral|action|inspect|loading|refuse/i.test(value) ? 'p1-status p1-status--warn' : 'p1-status'
+      const callout = note => `<div class="p1-callout"><span class="p1-callout__mark">!</span><p class="p1-callout__text">${escapeHtml(note)}</p></div>`
+      const renderFlow = scene => `<div class="p1-flow">${scene.steps.map((step,index)=>`<article class="p1-step"><span class="p1-step__index">0${index+1}</span><h2 class="p1-step__title">${escapeHtml(step[0])}</h2><p class="p1-step__text">${escapeHtml(step[1])}</p></article>`).join('')}</div>${callout(scene.note)}`
+      const renderPanels = scene => `<div class="p1-grid">${scene.panels.map(panel=>`<article class="p1-panel"><header class="p1-panel__head"><h2 class="p1-panel__title">${escapeHtml(panel[0])}</h2><span class="${statusClass(panel[2])}">${escapeHtml(panel[2])}</span></header><div class="p1-panel__body"><ul class="p1-list"><li class="p1-list__item">${escapeHtml(panel[1])}</li><li class="p1-list__item">状态、操作与恢复路径保持一致</li></ul></div></article>`).join('')}</div>${callout(scene.note)}`
+      const renderTable = scene => `<div class="p1-metrics">${scene.metrics.map(metric=>`<div class="p1-metric"><span class="p1-metric__label">${escapeHtml(metric[0])}</span><strong class="p1-metric__value">${escapeHtml(metric[1])}</strong></div>`).join('')}</div><div class="p1-table-wrap"><table class="p1-table"><thead><tr><th>对象 / 时间</th><th>证据</th><th>结果</th><th>下一步</th></tr></thead><tbody>${scene.rows.map(row=>`<tr><td>${escapeHtml(row[0])}</td><td>${escapeHtml(row[1])}</td><td><span class="${statusClass(row[2])}">${escapeHtml(row[2])}</span></td><td>${escapeHtml(row[3])}</td></tr>`).join('')}</tbody></table></div>${callout(scene.note)}`
+      document.querySelector('#content').innerHTML = data.type === 'flow' ? renderFlow(data) : data.type === 'panels' ? renderPanels(data) : renderTable(data)
+    </script>
+  </body>
+</html>

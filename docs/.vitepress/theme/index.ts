@@ -1,5 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
+import DocFigure from './components/DocFigure.vue'
 import HomeHero from './components/HomeHero.vue'
 import LearningPath from './components/LearningPath.vue'
 import MermaidDiagram from './components/MermaidDiagram.vue'
@@ -10,6 +11,7 @@ import './styles.css'
 export default {
   extends: DefaultTheme,
   enhanceApp({ app }) {
+    app.component('DocFigure', DocFigure)
     app.component('HomeHero', HomeHero)
     app.component('LearningPath', LearningPath)
     app.component('MermaidDiagram', MermaidDiagram)

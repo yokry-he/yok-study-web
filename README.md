@@ -32,6 +32,13 @@ docs/
 ├─ cheatsheets/
 ├─ technologies/
 └─ contribute/
+examples/
+├─ java-admin-api/          # Java 25 + Spring Boot + PostgreSQL 用户角色 API
+└─ go-task-api/             # Go 1.26.5 + PostgreSQL 18.4 用户任务 API
+scripts/
+├─ check-docs.mjs
+├─ check-visual-assets.mjs
+└─ audit-doc-visuals.mjs
 ```
 
 ## 内容方向
@@ -62,7 +69,7 @@ npm run docs:dev
 npm run docs:check
 ```
 
-该命令检查内部路由是否存在、成熟模块是否有导览和快速排错页、核心页面是否有必备章节，以及配置路由和技术库入口是否指向真实页面。内容深度、侧边栏顺序和图示运行时渲染仍需要人工验收。
+该命令检查内部路由、成熟模块结构、核心页面必备章节、配置入口和视觉资产登记；本地图片缺失、空 alt、未登记或超出体积限制都会失败。内容深度、侧边栏顺序和图示运行时渲染仍需要人工验收。
 
 ## 构建
 
@@ -75,6 +82,39 @@ npm run docs:build
 ```bash
 npm run docs:preview
 ```
+
+## 配套示例验证
+
+Go 普通单元测试不依赖 Docker：
+
+```bash
+cd examples/go-task-api
+go test ./...
+go test -race ./...
+go vet ./...
+```
+
+Java 示例当前测试套件包含 Testcontainers 集成测试；下面两组数据库测试都会启动真实 PostgreSQL，需要本机 Docker daemon 可用：
+
+```bash
+cd examples/java-admin-api
+mvn -B -ntp test
+
+cd ../go-task-api
+go test -tags=integration ./... -count=1 -v
+```
+
+Go 示例还可执行短时 Fuzz 与完整容器 smoke：
+
+```bash
+cd examples/go-task-api
+go test ./internal/platform/httpx -run '^$' -fuzz '^FuzzDecodeJSON$' -fuzztime 10s
+POSTGRES_PORT=55432 docker compose -p go-task-api up -d --build
+docker compose -p go-task-api ps
+docker compose -p go-task-api down -v --remove-orphans
+```
+
+完整前置条件、迁移命令、接口请求和清理风险分别记录在两个示例目录的 README 中。
 
 ## 主题说明
 

@@ -45,6 +45,18 @@ AI 功能常见变化：
 
 ## 评测维度
 
+总分无法指导修复。下面的报告分别观察检索命中、答案有据、引用正确和安全泄漏，并保留具体失败样本。
+
+<DocFigure
+  src="/images/ai-engineering/evaluation-report.webp"
+  alt="文档问答评测报告展示 Retrieval at 5、Groundedness、Citation 和安全泄漏指标及失败样本"
+  caption="模型、Embedding、切分、索引或 Prompt 改变后，都要在同一版本数据集上回归。"
+  :width="1440"
+  :height="900"
+/>
+
+“退款时限”失败样本显示检索命中了旧版本文档，这应修索引版本与过滤规则，而不是只调整模型回答语气。
+
 | 维度 | 说明 |
 | --- | --- |
 | 正确性 | 答案是否对 |

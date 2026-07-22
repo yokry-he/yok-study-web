@@ -74,6 +74,18 @@ button.addEventListener('click', (event) => {
 
 ## 冒泡和捕获
 
+一次点击不是只到达目标按钮。事件会沿祖先链捕获到目标，再沿同一条路径冒泡，这也是列表事件委托能够工作的基础。
+
+<DocFigure
+  src="/images/javascript/dom-event-path.webp"
+  alt="DOM 点击事件从 window 和 document 捕获到 button，再经过列表项向 document 冒泡"
+  caption="target 表示最初触发节点，currentTarget 表示当前监听器绑定节点；两者不能混用。"
+  :width="1440"
+  :height="900"
+/>
+
+如果中途调用 `stopPropagation()`，后续路径上的监听器将失去执行机会；排查“点击没反应”时要同时检查传播阶段和阻止位置。
+
 页面结构：
 
 ```html

@@ -86,6 +86,18 @@ dist
 
 ## Docker Compose
 
+Compose 状态需要同时阅读进程状态、健康检查、一次性迁移退出码和重启次数。`running` 只说明主进程仍在，不代表服务已经就绪。
+
+<DocFigure
+  src="/images/devops/docker-container-state.webp"
+  alt="Docker Compose 状态报告展示 PostgreSQL 和 API healthy、迁移 exited 0、Worker 反复 restarting"
+  caption="重启策略可能掩盖持续崩溃；看到 restarting 时先保存第一条错误和退出码。"
+  :width="1440"
+  :height="900"
+/>
+
+迁移容器正常完成后应 `exited 0`，而长驻 API 应保持 `running (healthy)`；两者不能使用同一健康判断。
+
 Compose 适合本地或中小型部署管理多服务：
 
 ```yaml

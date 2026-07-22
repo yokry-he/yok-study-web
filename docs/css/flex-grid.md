@@ -37,6 +37,26 @@
 
 ## Flex 常见属性
 
+先把主轴和交叉轴认清，再记属性。`flex-direction` 决定主轴方向，`justify-content` 沿主轴分配空间，`align-items` 沿交叉轴对齐项目。
+
+<DocFigure
+  src="/images/css/flex-main-cross-axis.webp"
+  alt="Flex 容器的主轴、交叉轴以及 justify-content 和 align-items 的作用方向"
+  caption="先判断轴，再选择对齐属性，可以避免靠反复试值完成布局。"
+  :width="1440"
+  :height="900"
+/>
+
+当子项内容过长时，Flex 项目的默认最小宽度可能阻止它继续收缩。图中对比了溢出状态与设置 `min-width: 0` 后的截断状态。
+
+<DocFigure
+  src="/images/css/flex-overflow.webp"
+  alt="Flex 子项长文本溢出与设置 min-width 0 后正确截断的对比"
+  caption="项目中常见的“省略号不生效”，根因往往不是 text-overflow，而是 Flex 子项仍保留内容最小宽度。"
+  :width="1440"
+  :height="900"
+/>
+
 | 属性 | 用途 |
 | --- | --- |
 | `align-items` | 交叉轴对齐 |
@@ -47,6 +67,26 @@
 | `flex: 1` | 占据剩余空间 |
 
 ## Grid：二维布局
+
+Grid 适合同时控制行和列。具名区域让页面结构直接体现在 CSS 中，比依赖网格序号更容易维护。
+
+<DocFigure
+  src="/images/css/grid-template-areas.webp"
+  alt="使用 header sidebar main 和 aside 命名区域组成的 CSS Grid 页面布局"
+  caption="grid-template-areas 把页面骨架写成可阅读的二维地图，适合后台与内容型页面。"
+  :width="1440"
+  :height="900"
+/>
+
+卡片网格通常不需要手写多个媒体查询。`repeat(auto-fit, minmax(...))` 可以让列数随容器宽度自然变化。
+
+<DocFigure
+  src="/images/css/grid-minmax.webp"
+  alt="CSS Grid 使用 auto-fit 与 minmax 在不同容器宽度下自动调整卡片列数"
+  caption="minmax 为单列设置可接受的宽度范围，auto-fit 再决定当前能放下多少列。"
+  :width="1440"
+  :height="900"
+/>
 
 卡片网格：
 

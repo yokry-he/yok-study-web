@@ -1,0 +1,287 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #17221e;
+  background: #f4f8f6;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #f4f8f6;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 4px solid #f2a51f;
+  outline-offset: 3px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.demo-frame {
+  position: relative;
+  min-height: 100vh;
+  padding: clamp(24px, 5vw, 72px);
+  overflow: hidden;
+}
+
+.demo-frame::before {
+  position: absolute;
+  inset: 24px;
+  border: 1px solid #c8d8d2;
+  pointer-events: none;
+  content: "";
+}
+
+.demo-kicker {
+  margin: 0 0 10px;
+  color: #087f68;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.demo-title {
+  margin: 0;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.18;
+  letter-spacing: 0;
+}
+
+.demo-subtitle {
+  max-width: 880px;
+  margin: 14px 0 0;
+  color: #52645d;
+  font-size: clamp(16px, 2vw, 21px);
+  line-height: 1.6;
+}
+
+.demo-panel {
+  border: 1px solid #b9cbc4;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.demo-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.demo-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #98afa7;
+  border-radius: 6px;
+  padding: 0 18px;
+  background: #ffffff;
+  color: #17221e;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.demo-button--primary {
+  border-color: #087f68;
+  background: #087f68;
+  color: #ffffff;
+}
+
+.demo-button--danger {
+  border-color: #b43a44;
+  color: #9f2934;
+}
+
+.demo-field {
+  display: grid;
+  gap: 8px;
+}
+
+.demo-label {
+  color: #24332e;
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.demo-input,
+.demo-select,
+.demo-textarea {
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid #9fb3ac;
+  border-radius: 6px;
+  padding: 10px 13px;
+  background: #ffffff;
+  color: #17221e;
+}
+
+.demo-input[aria-invalid="true"],
+.demo-select[aria-invalid="true"],
+.demo-textarea[aria-invalid="true"] {
+  border: 2px solid #b43a44;
+}
+
+.demo-field__hint {
+  margin: 0;
+  color: #64766f;
+  font-size: 14px;
+}
+
+.demo-field__success {
+  margin: 0;
+  color: #087f68;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.demo-field__error {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  color: #a32934;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.demo-field__error::before {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  place-items: center;
+  border-radius: 50%;
+  background: #b43a44;
+  color: #ffffff;
+  content: "!";
+  font-size: 12px;
+}
+
+.demo-status {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  border-radius: 999px;
+  padding: 3px 11px;
+  background: #e7f7f1;
+  color: #087f68;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.demo-status--warning {
+  background: #fff4dc;
+  color: #936000;
+}
+
+.demo-status--danger {
+  background: #fdecee;
+  color: #a32934;
+}
+
+.demo-status--neutral {
+  background: #edf1ef;
+  color: #566660;
+}
+
+.demo-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.demo-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.demo-table__head {
+  border-bottom: 1px solid #aebfb9;
+  background: #f0f6f3;
+  color: #41524c;
+  font-size: 13px;
+}
+
+.demo-table__header,
+.demo-table__cell {
+  padding: 15px 17px;
+  border-bottom: 1px solid #dde6e2;
+  white-space: nowrap;
+}
+
+.demo-table__cell {
+  color: #2b3a35;
+  font-size: 14px;
+}
+
+.demo-metric {
+  min-width: 0;
+  padding: 22px;
+  border-left: 4px solid #09a17f;
+  background: #ffffff;
+}
+
+.demo-metric__label {
+  color: #64766f;
+  font-size: 14px;
+}
+
+.demo-metric__value {
+  display: block;
+  margin-top: 10px;
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.demo-metric__trend {
+  display: block;
+  margin-top: 8px;
+  color: #087f68;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+@media (max-width: 640px) {
+  .demo-frame {
+    padding: 48px 20px 28px;
+  }
+
+  .demo-frame::before {
+    inset: 10px;
+  }
+
+  .demo-toolbar {
+    align-items: stretch;
+  }
+
+  .demo-button {
+    flex: 1 1 auto;
+  }
+}

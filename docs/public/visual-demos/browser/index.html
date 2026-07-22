@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>浏览器证据实验台</title>
+    <link rel="stylesheet" href="../shared/demo.css" />
+    <style>
+      .browser-stage {
+        max-width: 1220px;
+        margin: 40px auto 0;
+      }
+
+      .devtools {
+        overflow: hidden;
+        border: 1px solid #a9bab4;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 20px 52px rgb(34 64 54 / 10%);
+      }
+
+      .devtools__bar {
+        display: flex;
+        min-height: 54px;
+        align-items: center;
+        gap: 6px;
+        border-bottom: 1px solid #ccd8d3;
+        padding: 0 18px;
+        background: #f5f8f7;
+      }
+
+      .devtools__dot {
+        width: 12px;
+        height: 12px;
+        flex: 0 0 12px;
+        border-radius: 50%;
+        background: #b6c4bf;
+      }
+
+      .devtools__dot--red { background: #d75a61; }
+      .devtools__dot--yellow { background: #e2a13c; }
+      .devtools__dot--green { background: #27a886; }
+
+      .devtools__tabs {
+        display: flex;
+        min-width: 0;
+        align-self: stretch;
+        gap: 4px;
+        margin-left: 20px;
+        overflow: hidden;
+      }
+
+      .devtools__tab {
+        display: flex;
+        align-items: center;
+        border-bottom: 3px solid transparent;
+        padding: 0 14px;
+        color: #5b6b65;
+        font-size: 14px;
+        font-weight: 750;
+        white-space: nowrap;
+      }
+
+      .devtools__tab--active {
+        border-bottom-color: #087f68;
+        color: #17221e;
+      }
+
+      .request-summary {
+        display: grid;
+        grid-template-columns: minmax(240px, 1.25fr) repeat(3, minmax(120px, .5fr));
+        border-bottom: 1px solid #d7e0dc;
+        background: #fbfdfc;
+      }
+
+      .request-summary__item {
+        min-width: 0;
+        padding: 15px 18px;
+        border-right: 1px solid #e1e8e5;
+      }
+
+      .request-summary__item:last-child { border-right: 0; }
+
+      .request-summary__label {
+        display: block;
+        color: #6a7b74;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .request-summary__value {
+        display: block;
+        margin-top: 6px;
+        overflow: hidden;
+        color: #26362f;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 14px;
+        font-weight: 750;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .request-summary__value--success { color: #087f68; }
+      .request-summary__value--warning { color: #9a6500; }
+      .request-summary__value--danger { color: #ad2f3a; }
+
+      .headers-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .headers-card {
+        min-width: 0;
+        padding: 24px;
+      }
+
+      .headers-card:first-child { border-right: 1px solid #d7e0dc; }
+
+      .panel-title {
+        margin: 0 0 18px;
+        font-size: 19px;
+        letter-spacing: 0;
+      }
+
+      .header-list {
+        display: grid;
+        gap: 6px;
+        margin: 0;
+      }
+
+      .header-row {
+        display: grid;
+        grid-template-columns: minmax(150px, .7fr) minmax(0, 1.3fr);
+        gap: 14px;
+        border-bottom: 1px solid #e7ecea;
+        padding: 10px 12px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 13px;
+      }
+
+      .header-row--focus {
+        border-left: 4px solid #e4a126;
+        background: #fff8e9;
+      }
+
+      .header-row__key {
+        color: #7952a5;
+        font-weight: 800;
+      }
+
+      .header-row__value {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        color: #34463f;
+      }
+
+      .network-table {
+        display: grid;
+        grid-template-columns: minmax(220px, 1fr) 90px 100px 110px minmax(340px, 1.6fr);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 13px;
+      }
+
+      .network-cell {
+        min-width: 0;
+        border-right: 1px solid #e1e8e5;
+        border-bottom: 1px solid #e1e8e5;
+        padding: 12px 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .network-cell--head {
+        background: #eef4f1;
+        color: #52645d;
+        font-weight: 850;
+      }
+
+      .network-cell--success { color: #087f68; font-weight: 850; }
+      .network-cell--muted { color: #6c7c76; }
+
+      .waterfall {
+        position: relative;
+        min-height: 24px;
+        background-image: repeating-linear-gradient(90deg, transparent 0, transparent 59px, #d8e2de 60px);
+      }
+
+      .waterfall__bar {
+        position: absolute;
+        top: 7px;
+        height: 10px;
+        border-radius: 3px;
+      }
+
+      .waterfall__bar--dns { left: 4%; width: 10%; background: #7a5bac; }
+      .waterfall__bar--connect { left: 14%; width: 14%; background: #dc8f22; }
+      .waterfall__bar--wait { left: 28%; width: 44%; background: #087f68; }
+      .waterfall__bar--download { left: 72%; width: 12%; background: #3c7f9b; }
+
+      .timing-details {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        padding: 24px;
+      }
+
+      .timing-card {
+        border: 1px solid #cbd8d3;
+        border-top-width: 6px;
+        border-radius: 6px;
+        padding: 18px;
+        background: #fff;
+      }
+
+      .timing-card--dns { border-top-color: #7a5bac; }
+      .timing-card--connect { border-top-color: #dc8f22; }
+      .timing-card--wait { border-top-color: #087f68; }
+      .timing-card--download { border-top-color: #3c7f9b; }
+
+      .timing-card__name {
+        display: block;
+        color: #5d6e67;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .timing-card__value {
+        display: block;
+        margin-top: 8px;
+        font-size: 26px;
+        font-weight: 900;
+      }
+
+      .timing-note {
+        margin: 0 24px 24px;
+        border-left: 4px solid #e4a126;
+        padding: 15px 18px;
+        background: #fff8e9;
+        color: #5f4a1c;
+        line-height: 1.6;
+      }
+
+      .cache-layout {
+        display: grid;
+        grid-template-columns: 1.4fr .8fr;
+      }
+
+      .cache-list {
+        border-right: 1px solid #d7e0dc;
+      }
+
+      .cache-row {
+        display: grid;
+        grid-template-columns: minmax(180px, 1fr) 86px 145px 130px;
+        border-bottom: 1px solid #e1e8e5;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 13px;
+      }
+
+      .cache-row__cell {
+        padding: 15px 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .cache-row--head { background: #eef4f1; color: #52645d; font-weight: 850; }
+      .cache-source { color: #087f68; font-weight: 850; }
+
+      .cache-guide {
+        display: grid;
+        align-content: start;
+        gap: 16px;
+        padding: 24px;
+      }
+
+      .cache-guide__step {
+        display: grid;
+        grid-template-columns: 32px 1fr;
+        gap: 12px;
+        align-items: start;
+      }
+
+      .cache-guide__index {
+        display: grid;
+        width: 32px;
+        height: 32px;
+        place-items: center;
+        border-radius: 50%;
+        background: #e7f7f1;
+        color: #087f68;
+        font-weight: 900;
+      }
+
+      .cache-guide__text { margin: 4px 0 0; color: #52645d; line-height: 1.55; }
+
+      .storage-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        padding: 24px;
+      }
+
+      .storage-card {
+        border: 1px solid #c5d3ce;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .storage-card__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 18px 20px;
+        background: #eef4f1;
+      }
+
+      .storage-card__title { margin: 0; font-size: 19px; }
+
+      .storage-card__body { padding: 18px 20px; }
+
+      .storage-entry {
+        display: grid;
+        grid-template-columns: minmax(120px, .7fr) minmax(0, 1.3fr);
+        gap: 12px;
+        border-bottom: 1px solid #e2e9e6;
+        padding: 12px 0;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 13px;
+      }
+
+      .storage-entry__key { color: #7952a5; font-weight: 800; }
+      .storage-entry__value { overflow-wrap: anywhere; color: #34463f; }
+
+      .storage-tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .storage-tab {
+        border: 1px solid #c8d5d0;
+        border-radius: 6px;
+        padding: 13px;
+        background: #f9fbfa;
+        color: #53655e;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .storage-tab--same { border-color: #5eaa94; background: #effaf6; }
+      .storage-tab--different { border-color: #e0a545; background: #fff8e9; }
+
+      .cors-flow {
+        display: grid;
+        grid-template-columns: 180px minmax(380px, 1fr) 180px;
+        gap: 20px;
+        align-items: stretch;
+        padding: 26px;
+      }
+
+      .cors-endpoint {
+        display: grid;
+        place-items: center;
+        border: 2px solid #79a99a;
+        border-radius: 8px;
+        background: #effaf6;
+        font-weight: 900;
+        text-align: center;
+      }
+
+      .cors-endpoint--api { border-color: #d3a454; background: #fff8e9; }
+
+      .cors-exchange {
+        display: grid;
+        gap: 14px;
+      }
+
+      .cors-request {
+        position: relative;
+        border: 1px solid #c8d5d0;
+        border-radius: 8px;
+        padding: 16px 18px;
+        background: #fff;
+      }
+
+      .cors-request::after {
+        position: absolute;
+        right: -15px;
+        top: 50%;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 14px solid #087f68;
+        content: "";
+        transform: translateY(-50%);
+      }
+
+      .cors-request--response::after {
+        right: auto;
+        left: -15px;
+        border-right: 14px solid #dc8f22;
+        border-left: 0;
+      }
+
+      .cors-request__method {
+        display: inline-flex;
+        min-width: 76px;
+        justify-content: center;
+        border-radius: 4px;
+        padding: 5px 9px;
+        background: #e7f7f1;
+        color: #087f68;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-weight: 900;
+      }
+
+      .cors-request__method--response { background: #fff1d8; color: #946100; }
+      .cors-request__title { margin-left: 10px; font-weight: 850; }
+      .cors-request__headers { margin: 12px 0 0; color: #52645d; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.75; }
+
+      .performance-head {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        border-bottom: 1px solid #d7e0dc;
+      }
+
+      .performance-label {
+        display: grid;
+        place-items: center start;
+        border-right: 1px solid #d7e0dc;
+        padding: 14px 16px;
+        color: #52645d;
+        font-size: 13px;
+        font-weight: 850;
+      }
+
+      .performance-ruler {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        background-image: repeating-linear-gradient(90deg, transparent 0, transparent calc(12.5% - 1px), #e0e7e4 12.5%);
+      }
+
+      .performance-ruler__tick { padding: 14px 8px; color: #6b7b75; font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+      .performance-row {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        min-height: 82px;
+        border-bottom: 1px solid #e0e7e4;
+      }
+
+      .performance-track {
+        position: relative;
+        background-image: repeating-linear-gradient(90deg, transparent 0, transparent calc(12.5% - 1px), #edf1ef 12.5%);
+      }
+
+      .task-bar {
+        position: absolute;
+        top: 18px;
+        height: 28px;
+        border-radius: 4px;
+        padding: 6px 10px;
+        overflow: hidden;
+        color: #fff;
+        font: 700 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+        white-space: nowrap;
+      }
+
+      .task-bar--script { left: 4%; width: 19%; background: #7952a5; }
+      .task-bar--long { left: 28%; width: 42%; background: #bb3945; }
+      .task-bar--layout { left: 72%; width: 10%; background: #dc8f22; }
+      .task-bar--paint { left: 83%; width: 9%; background: #087f68; }
+      .task-bar--input { left: 30%; width: 3%; min-width: 30px; background: #297995; }
+      .task-bar--delayed { left: 70%; width: 6%; min-width: 54px; background: #d88321; }
+
+      .long-task-callout {
+        display: grid;
+        grid-template-columns: 52px 1fr;
+        gap: 14px;
+        margin: 22px;
+        border: 1px solid #e5a8ae;
+        border-left: 6px solid #bb3945;
+        border-radius: 6px;
+        padding: 18px;
+        background: #fff2f3;
+      }
+
+      .long-task-callout__value { color: #a52632; font-size: 27px; font-weight: 950; }
+      .long-task-callout__text { margin: 1px 0 0; color: #5d3438; line-height: 1.6; }
+
+      .failure-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .failure-panel {
+        min-width: 0;
+        padding: 24px;
+      }
+
+      .failure-panel:first-child { border-right: 1px solid #d7e0dc; }
+
+      .failure-code {
+        border: 1px solid #e1a1a8;
+        border-radius: 6px;
+        padding: 18px;
+        background: #fff2f3;
+        color: #5b2d32;
+        font: 14px/1.75 ui-monospace, SFMono-Regular, Menlo, monospace;
+        white-space: pre-wrap;
+      }
+
+      .dom-preview {
+        border: 1px solid #cbd8d3;
+        border-radius: 6px;
+        padding: 22px;
+        background: #f8fbfa;
+      }
+
+      .dom-preview__toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        border-bottom: 1px solid #dce5e1;
+        padding-bottom: 18px;
+      }
+
+      .dom-preview__button {
+        min-height: 42px;
+        border: 0;
+        border-radius: 6px;
+        padding: 0 22px;
+        background: #087f68;
+        color: #fff;
+        font-weight: 850;
+      }
+
+      .dom-preview__tree {
+        margin: 18px 0 0;
+        color: #34463f;
+        font: 13px/1.8 ui-monospace, SFMono-Regular, Menlo, monospace;
+        white-space: pre-wrap;
+      }
+
+      .evidence-list {
+        display: grid;
+        gap: 10px;
+        margin: 18px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .evidence-list__item {
+        display: grid;
+        grid-template-columns: 24px 1fr;
+        gap: 10px;
+        color: #52645d;
+        line-height: 1.5;
+      }
+
+      .evidence-list__item::before {
+        display: grid;
+        width: 22px;
+        height: 22px;
+        place-items: center;
+        border-radius: 50%;
+        background: #fff0d2;
+        color: #926000;
+        content: "!";
+        font-weight: 900;
+      }
+
+      @media (max-width: 760px) {
+        .demo-frame { padding: 22px; }
+        .demo-frame::before { inset: 10px; }
+        .browser-stage { margin-top: 28px; }
+        .devtools__tabs .devtools__tab:not(.devtools__tab--active) { display: none; }
+        .request-summary { grid-template-columns: 1fr 1fr; }
+        .request-summary__item:nth-child(1) { grid-column: 1 / -1; }
+        .request-summary__item:nth-child(4) { display: none; }
+        .headers-grid,
+        .cache-layout,
+        .storage-layout,
+        .failure-layout { grid-template-columns: 1fr; }
+        .headers-card:first-child,
+        .cache-list,
+        .failure-panel:first-child { border-right: 0; border-bottom: 1px solid #d7e0dc; }
+        .headers-card:nth-child(2) { display: none; }
+        .header-row { grid-template-columns: 1fr; gap: 5px; }
+        .network-table { grid-template-columns: minmax(150px, 1fr) 64px 90px minmax(180px, 1fr); overflow-x: auto; }
+        .network-table .network-cell:nth-child(4),
+        .network-table .network-cell:nth-child(9) { display: none; }
+        .timing-details { grid-template-columns: 1fr 1fr; }
+        .cache-row { grid-template-columns: minmax(150px, 1fr) 74px 118px; }
+        .cache-row__cell:nth-child(4) { display: none; }
+        .storage-layout { padding: 16px; }
+        .storage-tabs { grid-template-columns: 1fr; }
+        .cors-flow { grid-template-columns: 1fr; padding: 18px; }
+        .cors-endpoint { min-height: 76px; }
+        .cors-request::after { display: none; }
+        .performance-head,
+        .performance-row { grid-template-columns: 72px minmax(520px, 1fr); }
+        .performance-scroll { overflow-x: auto; }
+        .failure-panel:nth-child(2) { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="demo-frame">
+      <section data-scene="network-request-headers" hidden>
+        <p class="demo-kicker">Network · Headers</p>
+        <h1 class="demo-title">先确认请求事实，再解释页面现象</h1>
+        <p class="demo-subtitle">同一次请求里同时核对 URL、方法、状态码、请求头和响应头，避免只盯着响应正文猜测。</p>
+        <div class="browser-stage devtools">
+          <header class="devtools__bar"><span class="devtools__dot devtools__dot--red"></span><span class="devtools__dot devtools__dot--yellow"></span><span class="devtools__dot devtools__dot--green"></span><nav class="devtools__tabs"><span class="devtools__tab">Elements</span><span class="devtools__tab">Console</span><span class="devtools__tab devtools__tab--active">Network</span><span class="devtools__tab">Performance</span><span class="devtools__tab">Application</span></nav></header>
+          <div class="request-summary"><div class="request-summary__item"><span class="request-summary__label">Request URL</span><span class="request-summary__value">https://api.example.test/v1/tasks?status=open</span></div><div class="request-summary__item"><span class="request-summary__label">Method</span><span class="request-summary__value">GET</span></div><div class="request-summary__item"><span class="request-summary__label">Status</span><span class="request-summary__value request-summary__value--success">200 OK</span></div><div class="request-summary__item"><span class="request-summary__label">Remote</span><span class="request-summary__value">127.0.0.1:4173</span></div></div>
+          <div class="headers-grid"><section class="headers-card"><h2 class="panel-title">Request Headers</h2><div class="header-list"><div class="header-row header-row--focus"><span class="header-row__key">authorization</span><span class="header-row__value">Bearer demo-token</span></div><div class="header-row"><span class="header-row__key">accept</span><span class="header-row__value">application/json</span></div><div class="header-row"><span class="header-row__key">x-request-id</span><span class="header-row__value">req_demo_7f29</span></div><div class="header-row"><span class="header-row__key">origin</span><span class="header-row__value">https://admin.example.test</span></div></div></section><section class="headers-card"><h2 class="panel-title">Response Headers</h2><div class="header-list"><div class="header-row header-row--focus"><span class="header-row__key">content-type</span><span class="header-row__value">application/json; charset=utf-8</span></div><div class="header-row"><span class="header-row__key">cache-control</span><span class="header-row__value">no-store</span></div><div class="header-row"><span class="header-row__key">x-request-id</span><span class="header-row__value">req_demo_7f29</span></div><div class="header-row"><span class="header-row__key">server-timing</span><span class="header-row__value">app;dur=84, db;dur=31</span></div></div></section></div>
+        </div>
+      </section>
+
+      <section data-scene="network-request-timing" hidden>
+        <p class="demo-kicker">Network · Timing</p>
+        <h1 class="demo-title">总耗时要拆成连接、等待和下载</h1>
+        <p class="demo-subtitle">如果 Waiting 占绝大部分，应优先检查服务端和上游依赖；如果连接阶段很长，再看 DNS、TLS 和网络路径。</p>
+        <div class="browser-stage devtools">
+          <header class="devtools__bar"><span class="devtools__dot devtools__dot--red"></span><span class="devtools__dot devtools__dot--yellow"></span><span class="devtools__dot devtools__dot--green"></span><nav class="devtools__tabs"><span class="devtools__tab">Headers</span><span class="devtools__tab">Preview</span><span class="devtools__tab devtools__tab--active">Timing</span></nav></header>
+          <div class="network-table"><div class="network-cell network-cell--head">Name</div><div class="network-cell network-cell--head">Status</div><div class="network-cell network-cell--head">Type</div><div class="network-cell network-cell--head">Duration</div><div class="network-cell network-cell--head">Waterfall · 0–240 ms</div><div class="network-cell">tasks?status=open</div><div class="network-cell network-cell--success">200</div><div class="network-cell">fetch</div><div class="network-cell">218 ms</div><div class="network-cell waterfall"><span class="waterfall__bar waterfall__bar--dns"></span><span class="waterfall__bar waterfall__bar--connect"></span><span class="waterfall__bar waterfall__bar--wait"></span><span class="waterfall__bar waterfall__bar--download"></span></div></div>
+          <div class="timing-details"><div class="timing-card timing-card--dns"><span class="timing-card__name">DNS Lookup</span><strong class="timing-card__value">18 ms</strong></div><div class="timing-card timing-card--connect"><span class="timing-card__name">Initial connection + TLS</span><strong class="timing-card__value">34 ms</strong></div><div class="timing-card timing-card--wait"><span class="timing-card__name">Waiting · TTFB</span><strong class="timing-card__value">142 ms</strong></div><div class="timing-card timing-card--download"><span class="timing-card__name">Content Download</span><strong class="timing-card__value">24 ms</strong></div></div>
+          <p class="timing-note"><strong>证据结论：</strong>本次瓶颈位于 Waiting 阶段；先使用 Request ID 对齐后端日志，而不是先压缩 18 KB 的响应体。</p>
+        </div>
+      </section>
+
+      <section data-scene="cache-memory-disk" hidden>
+        <p class="demo-kicker">Network · Cache source</p>
+        <h1 class="demo-title">状态码相同，不代表资源来源相同</h1>
+        <p class="demo-subtitle">Size 列与响应头共同说明资源来自网络、memory cache、disk cache，还是完成了 304 协商验证。</p>
+        <div class="browser-stage devtools">
+          <header class="devtools__bar"><span class="devtools__dot devtools__dot--red"></span><span class="devtools__dot devtools__dot--yellow"></span><span class="devtools__dot devtools__dot--green"></span><nav class="devtools__tabs"><span class="devtools__tab devtools__tab--active">Network</span><span class="devtools__tab">Application</span></nav></header>
+          <div class="cache-layout"><div class="cache-list"><div class="cache-row cache-row--head"><span class="cache-row__cell">Name</span><span class="cache-row__cell">Status</span><span class="cache-row__cell">Size / Source</span><span class="cache-row__cell">Cache-Control</span></div><div class="cache-row"><span class="cache-row__cell">app.8c12d.js</span><span class="cache-row__cell">200</span><span class="cache-row__cell cache-source">memory cache</span><span class="cache-row__cell">max-age=31536000</span></div><div class="cache-row"><span class="cache-row__cell">vendor.4a91f.js</span><span class="cache-row__cell">200</span><span class="cache-row__cell cache-source">disk cache</span><span class="cache-row__cell">max-age=31536000</span></div><div class="cache-row"><span class="cache-row__cell">index.html</span><span class="cache-row__cell">304</span><span class="cache-row__cell">212 B</span><span class="cache-row__cell">no-cache</span></div><div class="cache-row"><span class="cache-row__cell">/api/profile</span><span class="cache-row__cell">200</span><span class="cache-row__cell">1.8 KB</span><span class="cache-row__cell">no-store</span></div></div><aside class="cache-guide"><h2 class="panel-title">判断顺序</h2><div class="cache-guide__step"><span class="cache-guide__index">1</span><p class="cache-guide__text">先看 Size / Source，确认是否真正发出网络请求。</p></div><div class="cache-guide__step"><span class="cache-guide__index">2</span><p class="cache-guide__text">再看 Cache-Control、ETag 和响应状态。</p></div><div class="cache-guide__step"><span class="cache-guide__index">3</span><p class="cache-guide__text">最后结合文件名 hash 判断发布策略是否正确。</p></div></aside></div>
+        </div>
+      </section>
+
+      <section data-scene="storage-local-session" hidden>
+        <p class="demo-kicker">Application · Storage</p>
+        <h1 class="demo-title">LocalStorage 跨标签共享，SessionStorage 按标签隔离</h1>
+        <p class="demo-subtitle">两者都按源隔离，但生命周期与标签页范围不同；登录敏感信息还要额外考虑 XSS 和 Cookie 安全属性。</p>
+        <div class="browser-stage devtools">
+          <header class="devtools__bar"><span class="devtools__dot devtools__dot--red"></span><span class="devtools__dot devtools__dot--yellow"></span><span class="devtools__dot devtools__dot--green"></span><nav class="devtools__tabs"><span class="devtools__tab">Network</span><span class="devtools__tab devtools__tab--active">Application</span></nav></header>
+          <div class="storage-layout"><section class="storage-card"><header class="storage-card__head"><h2 class="storage-card__title">Local Storage</h2><span class="demo-status">同源共享</span></header><div class="storage-card__body"><div class="storage-entry"><span class="storage-entry__key">theme</span><span class="storage-entry__value">"light"</span></div><div class="storage-entry"><span class="storage-entry__key">sidebar</span><span class="storage-entry__value">{"collapsed":false}</span></div><div class="storage-tabs"><div class="storage-tab storage-tab--same"><strong>标签页 A</strong><br>读取 theme = light</div><div class="storage-tab storage-tab--same"><strong>标签页 B</strong><br>读取 theme = light</div></div></div></section><section class="storage-card"><header class="storage-card__head"><h2 class="storage-card__title">Session Storage</h2><span class="demo-status demo-status--warning">标签隔离</span></header><div class="storage-card__body"><div class="storage-entry"><span class="storage-entry__key">draftId</span><span class="storage-entry__value">"draft-tab-a"</span></div><div class="storage-entry"><span class="storage-entry__key">returnPath</span><span class="storage-entry__value">"/orders/42"</span></div><div class="storage-tabs"><div class="storage-tab storage-tab--different"><strong>标签页 A</strong><br>draftId = draft-tab-a</div><div class="storage-tab storage-tab--different"><strong>标签页 B</strong><br>没有标签页 A 的草稿</div></div></div></section></div>
+        </div>
+      </section>
+
+      <section data-scene="cors-preflight" hidden>
+        <p class="demo-kicker">CORS · Preflight</p>
+        <h1 class="demo-title">真正的业务请求之前，浏览器可能先询问权限</h1>
+        <p class="demo-subtitle">预检通过后浏览器才发送带 Authorization 的 POST；只观察业务接口会漏掉最先失败的 OPTIONS。</p>
+        <div class="browser-stage devtools">
+          <header class="devtools__bar"><span class="devtools__dot devtools__dot--red"></span><span class="devtools__dot devtools__dot--yellow"></span><span class="devtools__dot devtools__dot--green"></span><nav class="devtools__tabs"><span class="devtools__tab devtools__tab--active">Network</span><span class="devtools__tab">Console</span></nav></header>
+          <div class="cors-flow"><div class="cors-endpoint">管理端页面<br>admin.example.test</div><div class="cors-exchange"><div class="cors-request"><span class="cors-request__method">OPTIONS</span><span class="cors-request__title">预检请求</span><p class="cors-request__headers">Origin: https://admin.example.test<br>Access-Control-Request-Method: POST<br>Access-Control-Request-Headers: authorization, content-type</p></div><div class="cors-request cors-request--response"><span class="cors-request__method cors-request__method--response">204</span><span class="cors-request__title">允许本次跨域方式</span><p class="cors-request__headers">Access-Control-Allow-Origin: https://admin.example.test<br>Access-Control-Allow-Methods: POST<br>Access-Control-Allow-Headers: authorization, content-type</p></div><div class="cors-request"><span class="cors-request__method">POST</span><span class="cors-request__title">业务请求</span><p class="cors-request__headers">Authorization: Bearer demo-token<br>Content-Type: application/json</p></div></div><div class="cors-endpoint cors-endpoint--api">业务 API<br>api.example.test</div></div>
+        </div>
+      </section>
+
+      <section data-scene="performance-long-task" hidden>
+        <p class="demo-kicker">Performance · Main thread</p>
+        <h1 class="demo-title">超过 50 ms 的长任务会推迟输入响应</h1>
+        <p class="demo-subtitle">先在主线程轨道找到长任务，再向下展开调用栈；红色块说明时间被占用，不直接说明根因。</p>
+        <div class="browser-stage devtools">
+          <header class="devtools__bar"><span class="devtools__dot devtools__dot--red"></span><span class="devtools__dot devtools__dot--yellow"></span><span class="devtools__dot devtools__dot--green"></span><nav class="devtools__tabs"><span class="devtools__tab">Network</span><span class="devtools__tab devtools__tab--active">Performance</span><span class="devtools__tab">Memory</span></nav></header>
+          <div class="performance-scroll"><div class="performance-head"><div class="performance-label">时间</div><div class="performance-ruler"><span class="performance-ruler__tick">0 ms</span><span class="performance-ruler__tick">40</span><span class="performance-ruler__tick">80</span><span class="performance-ruler__tick">120</span><span class="performance-ruler__tick">160</span><span class="performance-ruler__tick">200</span><span class="performance-ruler__tick">240</span><span class="performance-ruler__tick">280</span></div></div><div class="performance-row"><div class="performance-label">Main</div><div class="performance-track"><span class="task-bar task-bar--script">Event</span><span class="task-bar task-bar--long">filterAndRender · 121 ms</span><span class="task-bar task-bar--layout">Layout</span><span class="task-bar task-bar--paint">Paint</span></div></div><div class="performance-row"><div class="performance-label">Interactions</div><div class="performance-track"><span class="task-bar task-bar--input">输入</span><span class="task-bar task-bar--delayed">延迟 118 ms</span></div></div></div>
+          <div class="long-task-callout"><strong class="long-task-callout__value">121</strong><p class="long-task-callout__text"><strong>长任务证据：</strong>一次同步筛选和渲染占用了主线程，输入事件只能等任务结束后处理。下一步应展开调用栈，区分计算、Vue 更新和布局成本。</p></div>
+        </div>
+      </section>
+
+      <section data-scene="automation-locator-failure" hidden>
+        <p class="demo-kicker">Playwright · Locator evidence</p>
+        <h1 class="demo-title">定位失败先比较测试意图与当前 DOM</h1>
+        <p class="demo-subtitle">错误日志告诉你“找不到什么”，DOM 快照告诉你“页面实际有什么”；两份证据必须对应同一时刻。</p>
+        <div class="browser-stage devtools">
+          <header class="devtools__bar"><span class="devtools__dot devtools__dot--red"></span><span class="devtools__dot devtools__dot--yellow"></span><span class="devtools__dot devtools__dot--green"></span><nav class="devtools__tabs"><span class="devtools__tab devtools__tab--active">Test failure</span><span class="devtools__tab">Trace</span><span class="devtools__tab">DOM snapshot</span></nav></header>
+          <div class="failure-layout"><section class="failure-panel"><h2 class="panel-title">失败日志</h2><pre class="failure-code">Timeout 5000ms exceeded
+
+Locator: getByRole('button', { name: '提交' })
+Expected: visible
+Received: &lt;element(s) not found&gt;
+
+at user-form.spec.ts:42:18</pre><ul class="evidence-list"><li class="evidence-list__item">定位目标使用了用户可见名称“提交”。</li><li class="evidence-list__item">失败时页面已进入“编辑用户”抽屉。</li><li class="evidence-list__item">需要判断文案变更、条件渲染还是加载未完成。</li></ul></section><section class="failure-panel"><h2 class="panel-title">同一时刻的 DOM 快照</h2><div class="dom-preview"><div class="dom-preview__toolbar"><strong>编辑用户</strong><button class="dom-preview__button" type="button">保存</button></div><pre class="dom-preview__tree">&lt;section aria-label="编辑用户"&gt;
+  &lt;label&gt;姓名&lt;/label&gt;
+  &lt;input value="张敏" /&gt;
+  &lt;button&gt;取消&lt;/button&gt;
+  &lt;button&gt;保存&lt;/button&gt;
+&lt;/section&gt;</pre></div><ul class="evidence-list"><li class="evidence-list__item">页面存在“保存”，不存在“提交”。</li><li class="evidence-list__item">优先修正测试期望或产品文案契约。</li><li class="evidence-list__item">不要改成脆弱的第几个按钮选择器。</li></ul></section></div>
+        </div>
+      </section>
+    </main>
+    <script>
+      const params = new URLSearchParams(window.location.search)
+      const requestedScene = params.get('scene') || 'network-request-headers'
+      const fallback = document.querySelector('[data-scene="network-request-headers"]')
+      const scene = document.querySelector(`[data-scene="${requestedScene}"]`) || fallback
+      scene.hidden = false
+      document.title = `${requestedScene} · 浏览器证据实验台`
+    </script>
+  </body>
+</html>

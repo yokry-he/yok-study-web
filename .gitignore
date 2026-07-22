@@ -14,3 +14,12 @@ pnpm-debug.log*
 .env.*
 !.env.example
 .vercel
+
+# 示例项目构建产物
+examples/java-admin-api/target/
+
+# Go 示例构建与测试产物
+examples/go-task-api/bin/
+examples/go-task-api/coverage.out
+examples/go-task-api/*.test
+examples/go-task-api/.env

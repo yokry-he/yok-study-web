@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>综合项目案例教学场景</title>
+    <link rel="stylesheet" href="../shared/demo.css" />
+    <style>
+      .project-stage { max-width: 1200px; margin: 30px auto 0; }
+      .project-app { overflow: hidden; border: 1px solid #b8c9c2; border-radius: 8px; background: #fff; box-shadow: 0 22px 54px rgb(32 66 54 / 12%); }
+      .project-topbar { display: flex; min-height: 58px; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid #d6e1dd; padding: 0 20px; background: #f5f8f7; }
+      .project-brand { display: flex; min-width: 0; align-items: center; gap: 11px; font-weight: 900; }
+      .project-brand__mark { display: grid; width: 34px; height: 34px; flex: 0 0 34px; place-items: center; border-radius: 7px; background: #087f68; color: #fff; font-weight: 950; }
+      .project-meta { overflow: hidden; color: #64766f; font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; text-overflow: ellipsis; white-space: nowrap; }
+      .project-body { padding: 22px; }
+      .project-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+      .project-heading__title { margin: 0; font-size: 20px; }
+      .project-heading__hint { margin: 6px 0 0; color: #64766f; font-size: 13px; line-height: 1.5; }
+      .project-action { display: inline-flex; min-height: 38px; align-items: center; border: 1px solid #087f68; border-radius: 6px; padding: 0 14px; background: #087f68; color: #fff; font-size: 13px; font-weight: 850; white-space: nowrap; }
+      .project-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(260px, .8fr); gap: 16px; }
+      .project-grid--equal { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .project-stack { display: grid; gap: 14px; }
+      .project-panel { min-width: 0; overflow: hidden; border: 1px solid #c9d6d1; border-radius: 7px; background: #fff; }
+      .project-panel__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid #dce5e1; padding: 13px 15px; background: #f1f6f4; }
+      .project-panel__title { margin: 0; font-size: 15px; }
+      .project-panel__body { padding: 15px; }
+      .project-badge { display: inline-flex; min-height: 25px; align-items: center; border-radius: 999px; padding: 3px 9px; background: #e4f6ef; color: #087f68; font-size: 11px; font-weight: 900; white-space: nowrap; }
+      .project-badge--warn { background: #fff0d2; color: #936000; }
+      .project-badge--danger { background: #fde9eb; color: #aa2d38; }
+      .project-badge--neutral { background: #edf1ef; color: #5b6a65; }
+      .metric-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 16px; }
+      .metric { min-width: 0; border: 1px solid #cad7d2; border-left: 4px solid #087f68; border-radius: 6px; padding: 14px; background: #fbfdfc; }
+      .metric:nth-child(2) { border-left-color: #7952a5; }
+      .metric:nth-child(3) { border-left-color: #d68a20; }
+      .metric:nth-child(4) { border-left-color: #2d7895; }
+      .metric__label { display: block; overflow: hidden; color: #65766f; font-size: 11px; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
+      .metric__value { display: block; margin-top: 7px; font-size: 22px; font-weight: 950; }
+      .project-table { width: 100%; border-collapse: collapse; table-layout: fixed; text-align: left; }
+      .project-table th, .project-table td { border-bottom: 1px solid #e0e7e4; padding: 10px 11px; color: #43544e; font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
+      .project-table th { background: #f3f7f5; color: #61726b; font-weight: 900; }
+      .project-table tr:last-child td { border-bottom: 0; }
+      .project-list { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+      .project-list__item { display: grid; grid-template-columns: 9px 1fr auto; gap: 9px; align-items: center; color: #465851; font-size: 12px; line-height: 1.45; }
+      .project-list__item::before { width: 8px; height: 8px; border-radius: 50%; background: #087f68; content: ""; }
+      .project-list__item--warn::before { background: #d68a20; }
+      .project-list__item--danger::before { background: #b43a44; }
+      .bar-chart { display: grid; height: 170px; grid-template-columns: repeat(8, 1fr); align-items: end; gap: 9px; border-bottom: 1px solid #9eb1aa; padding: 12px 4px 0; }
+      .bar-chart__bar { position: relative; min-height: 14px; border-radius: 4px 4px 0 0; background: #0a8a71; }
+      .bar-chart__bar:nth-child(3n+2) { background: #7952a5; }
+      .bar-chart__bar:nth-child(3n) { background: #d68a20; }
+      .bar-chart__bar::after { position: absolute; bottom: -22px; left: 50%; color: #687a73; content: attr(data-label); font-size: 10px; transform: translateX(-50%); }
+      .flow { display: flex; align-items: stretch; gap: 16px; padding: 8px 0; }
+      .flow-step { position: relative; display: grid; min-width: 0; flex: 1; align-content: center; gap: 7px; border: 1px solid #c5d3ce; border-top: 4px solid #087f68; border-radius: 6px; padding: 14px; background: #fbfdfc; text-align: center; }
+      .flow-step:nth-child(2) { border-top-color: #7952a5; }
+      .flow-step:nth-child(3) { border-top-color: #d68a20; }
+      .flow-step:nth-child(4) { border-top-color: #2d7895; }
+      .flow-step:nth-child(5) { border-top-color: #b43a44; }
+      .flow-step:not(:last-child)::after { position: absolute; z-index: 2; top: 50%; right: -20px; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-left: 10px solid #7d9189; content: ""; transform: translateY(-50%); }
+      .flow-step__title { font-size: 13px; font-weight: 900; }
+      .flow-step__text { color: #667770; font-size: 11px; line-height: 1.4; }
+      .workflow-canvas { position: relative; min-height: 330px; overflow: hidden; background-color: #f8fbfa; background-image: radial-gradient(#b8c9c2 1px, transparent 1px); background-size: 18px 18px; }
+      .workflow-line { position: absolute; height: 2px; background: #769188; transform-origin: left center; }
+      .workflow-node { position: absolute; display: grid; width: 148px; min-height: 72px; align-content: center; gap: 5px; border: 2px solid #98afa7; border-radius: 7px; padding: 10px 12px; background: #fff; box-shadow: 0 8px 18px rgb(33 61 52 / 9%); }
+      .workflow-node--active { border-color: #087f68; }
+      .workflow-node--condition { border-color: #d68a20; background: #fffaf0; }
+      .workflow-node__type { color: #687a73; font-size: 10px; font-weight: 900; }
+      .workflow-node__name { font-size: 13px; font-weight: 900; }
+      .file-item { display: grid; grid-template-columns: 36px 1fr auto; gap: 11px; align-items: center; border-bottom: 1px solid #e1e8e5; padding: 11px 0; }
+      .file-item:last-child { border-bottom: 0; }
+      .file-item__icon { display: grid; width: 34px; height: 38px; place-items: center; border: 1px solid #c5d3ce; border-radius: 5px; background: #f1f6f4; color: #087f68; font: 900 10px ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .file-item__name { margin: 0; font-size: 12px; font-weight: 850; }
+      .file-item__meta { margin: 4px 0 0; color: #6a7a74; font-size: 10px; }
+      .progress { height: 7px; margin-top: 7px; overflow: hidden; border-radius: 999px; background: #e2e9e6; }
+      .progress__fill { height: 100%; border-radius: inherit; background: #087f68; }
+      .message-item { display: grid; grid-template-columns: 8px 1fr auto; gap: 11px; align-items: start; border-bottom: 1px solid #e1e8e5; padding: 12px 0; }
+      .message-item:last-child { border-bottom: 0; }
+      .message-item__dot { width: 8px; height: 8px; margin-top: 5px; border-radius: 50%; background: #0a8a71; }
+      .message-item--read .message-item__dot { background: #c1cdc8; }
+      .message-item__title { margin: 0; font-size: 12px; font-weight: 900; }
+      .message-item__text { margin: 4px 0 0; color: #687972; font-size: 10px; line-height: 1.45; }
+      .scope-map { display: grid; grid-template-columns: 1fr 44px 1fr; align-items: center; gap: 10px; }
+      .scope-column { display: grid; gap: 9px; }
+      .scope-box { border: 1px solid #c6d4cf; border-radius: 6px; padding: 12px; background: #fbfdfc; font-size: 12px; font-weight: 850; }
+      .scope-arrow { color: #087f68; font-size: 28px; font-weight: 950; text-align: center; }
+      .risk-score { display: grid; width: 124px; height: 124px; place-items: center; border: 13px solid #f0c265; border-right-color: #b43a44; border-radius: 50%; color: #a32934; font-size: 32px; font-weight: 950; }
+      .region-map { display: grid; grid-template-columns: 1fr 110px 1fr; align-items: center; gap: 12px; }
+      .region { border: 2px solid #a9bcb5; border-radius: 7px; padding: 16px; background: #fbfdfc; }
+      .region--standby { border-color: #087f68; background: #f0faf6; }
+      .region__name { margin: 0 0 10px; font-size: 14px; }
+      .region__service { margin-top: 7px; border: 1px solid #cbd7d3; border-radius: 5px; padding: 8px 9px; background: #fff; color: #53655e; font-size: 11px; }
+      .switch-path { display: grid; gap: 8px; color: #087f68; font-size: 12px; font-weight: 900; text-align: center; }
+      .project-callout { display: flex; align-items: flex-start; gap: 10px; margin-top: 15px; border-left: 4px solid #d68a20; padding: 12px 14px; background: #fff8e9; color: #624d24; font-size: 12px; line-height: 1.5; }
+      .project-callout::before { display: grid; width: 24px; height: 24px; flex: 0 0 24px; place-items: center; border-radius: 50%; background: #d68a20; color: #fff; content: "!"; font-weight: 950; }
+
+      @media (max-width: 760px) {
+        .demo-frame { padding: 22px; }
+        .demo-frame::before { inset: 10px; }
+        .project-stage { margin-top: 24px; }
+        .project-topbar { align-items: flex-start; flex-direction: column; padding: 14px; }
+        .project-body { padding: 14px; }
+        .project-heading { align-items: stretch; flex-direction: column; }
+        .project-action { justify-content: center; }
+        .project-grid, .project-grid--equal { grid-template-columns: 1fr; }
+        .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .flow { align-items: stretch; flex-direction: column; }
+        .flow-step:not(:last-child)::after { top: auto; right: 50%; bottom: -15px; border-top: 9px solid #7d9189; border-right: 6px solid transparent; border-bottom: 0; border-left: 6px solid transparent; transform: translateX(50%); }
+        .flow-step:nth-child(n+4) { display: none; }
+        .workflow-canvas { min-height: 400px; }
+        .workflow-node { width: 132px; }
+        .workflow-line { display: none; }
+        .workflow-node:nth-of-type(1) { top: 20px !important; left: calc(50% - 66px) !important; }
+        .workflow-node:nth-of-type(2) { top: 114px !important; left: calc(50% - 66px) !important; }
+        .workflow-node:nth-of-type(3) { top: 208px !important; left: calc(50% - 66px) !important; }
+        .workflow-node:nth-of-type(4) { top: 302px !important; left: calc(50% - 66px) !important; }
+        .scope-map, .region-map { grid-template-columns: 1fr; }
+        .scope-arrow { transform: rotate(90deg); }
+        .switch-path { padding: 8px 0; }
+        .desktop-only { display: none !important; }
+        .project-table th, .project-table td { padding: 8px 6px; font-size: 10px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="demo-frame">
+      <p id="kicker" class="demo-kicker"></p>
+      <h1 id="title" class="demo-title"></h1>
+      <p id="subtitle" class="demo-subtitle"></p>
+      <section class="project-stage project-app">
+        <header class="project-topbar">
+          <div class="project-brand"><span id="mark" class="project-brand__mark"></span><span id="appName"></span></div>
+          <span id="meta" class="project-meta"></span>
+        </header>
+        <div id="content" class="project-body"></div>
+      </section>
+    </main>
+    <script>
+      const metric = (label, value) => `<div class="metric"><span class="metric__label">${label}</span><strong class="metric__value">${value}</strong></div>`;
+      const badge = (text, type = '') => `<span class="project-badge${type ? ` project-badge--${type}` : ''}">${text}</span>`;
+      const heading = (title, hint, action) => `<div class="project-heading"><div><h2 class="project-heading__title">${title}</h2><p class="project-heading__hint">${hint}</p></div><span class="project-action">${action}</span></div>`;
+      const panel = (title, body, tag = '') => `<section class="project-panel"><header class="project-panel__head"><h3 class="project-panel__title">${title}</h3>${tag}</header><div class="project-panel__body">${body}</div></section>`;
+      const list = (items) => `<ul class="project-list">${items.map(([text, state = '', end = '']) => `<li class="project-list__item${state ? ` project-list__item--${state}` : ''}"><span>${text}</span>${end}</li>`).join('')}</ul>`;
+      const flow = (items) => `<div class="flow">${items.map(([title, text]) => `<div class="flow-step"><span class="flow-step__title">${title}</span><span class="flow-step__text">${text}</span></div>`).join('')}</div>`;
+      const scenes = {
+        'vue-admin-overview': {
+          k: '综合项目 · Vue Admin', m: 'V', a: 'Yok Admin', meta: '租户：远山科技 · 运营管理员', t: '一个可交付后台需要数据、权限、状态和操作形成闭环', s: '总览同时呈现业务指标、待处理事项、用户列表与权限范围，帮助你理解管理台不是若干孤立页面。',
+          render: () => `${heading('运营工作台', '数据更新时间：10:32 · 权限范围：华东大区', '新增用户')}<div class="metric-grid">${metric('今日活跃','1,284')}${metric('待审批','18')}${metric('异常任务','3')}${metric('本月新增','246')}</div><div class="project-grid">${panel('用户管理', `<table class="project-table"><thead><tr><th>用户</th><th>部门</th><th>状态</th><th>权限</th></tr></thead><tbody><tr><td>林晓 / 10018</td><td>产品部</td><td>${badge('正常')}</td><td>查看 · 编辑</td></tr><tr><td>陈诚 / 10023</td><td>运营部</td><td>${badge('待激活','warn')}</td><td>查看</td></tr><tr><td>周岚 / 10031</td><td>财务部</td><td>${badge('已停用','neutral')}</td><td>无</td></tr></tbody></table>`, badge('第 1 / 24 页'))}${panel('今日待办', list([['采购审批 #PA-20281','warn',badge('剩余 2h','warn')],['导入任务 #IM-8421','',badge('76%')],['角色权限变更 #RB-118','danger',badge('高风险','danger')],['月度报表导出','',badge('已排队','neutral')]]), badge('18 项'))}</div><div class="project-callout">同一个页面需要独立处理列表加载、按钮提交、接口失败、403 和空状态，不能只用一个全局 loading。</div>`
+        },
+        'approval-workflow-state': {
+          k: '综合项目 · 审批流', m: '审', a: '流程中心', meta: '实例 #WF-20260721-018 · version 4', t: '审批实例必须明确当前节点、处理人、时限和历史证据', s: '把状态流转、当前待办与审计时间线放在同一视图，避免“页面显示通过但流程仍停在上一节点”。',
+          render: () => `${heading('采购申请 · 服务器扩容', '申请人：林晓 · 金额：¥86,400 · 发起于 09:12', '处理任务')}${flow([['已提交','申请数据已冻结'],['直属上级','王宁 · 09:26 通过'],['财务复核','赵敏 · 当前待办'],['部门负责人','金额超过 5 万'],['结束','写入业务结果']])}<div class="project-grid project-grid--equal" style="margin-top:16px">${panel('当前任务', `<div class="metric-grid" style="grid-template-columns:repeat(2,1fr)">${metric('任务状态','待处理')}${metric('剩余时限','01:42')}</div>${list([['处理人：赵敏（财务 BP）'],['允许动作：同意 / 驳回 / 转交'],['版本条件：task_version = 4']])}`, badge('处理中','warn'))}${panel('审批记录', list([['09:12 林晓发起申请','',badge('提交')],['09:26 王宁同意','',badge('通过')],['09:26 系统创建财务任务','',badge('自动')],['10:01 赵敏打开详情','',badge('已读','neutral')]]), badge('完整审计'))}</div><div class="project-callout">审批动作必须在事务中校验任务状态与版本；并发提交时只能有一个请求成功。</div>`
+        },
+        'analytics-dashboard-overview': {
+          k: '综合项目 · 数据看板', m: '数', a: '经营分析', meta: '口径版本：GMV-v3 · T+5min', t: '看板的可信度来自指标口径、筛选上下文和数据时效', s: '图表不仅要显示数字，还要让用户知道统计范围、更新时间、异常变化和可追溯口径。',
+          render: () => `${heading('销售经营看板', '2026-07-01 至 2026-07-21 · 华东大区 · 全渠道', '导出当前口径')}<div class="metric-grid">${metric('成交额','¥8.42M')}${metric('订单量','38,621')}${metric('转化率','4.82%')}${metric('退款率','1.36%')}</div><div class="project-grid">${panel('成交额趋势', `<div class="bar-chart"><span class="bar-chart__bar" data-label="14" style="height:43%"></span><span class="bar-chart__bar" data-label="15" style="height:58%"></span><span class="bar-chart__bar" data-label="16" style="height:47%"></span><span class="bar-chart__bar" data-label="17" style="height:70%"></span><span class="bar-chart__bar" data-label="18" style="height:64%"></span><span class="bar-chart__bar" data-label="19" style="height:88%"></span><span class="bar-chart__bar" data-label="20" style="height:76%"></span><span class="bar-chart__bar" data-label="21" style="height:94%"></span></div>`, badge('同比 +12.8%'))}${panel('渠道排行', `<table class="project-table"><thead><tr><th>渠道</th><th>成交额</th><th>转化</th></tr></thead><tbody><tr><td>官方商城</td><td>¥3.42M</td><td>5.8%</td></tr><tr><td>企业采购</td><td>¥2.16M</td><td>8.3%</td></tr><tr><td>合作渠道</td><td>¥1.74M</td><td>3.9%</td></tr><tr><td>线下门店</td><td>¥1.10M</td><td>4.2%</td></tr></tbody></table>`, badge('已校验'))}</div><div class="project-callout">成交额口径：支付成功金额减已完成退款；跨日退款归入退款完成日，而不是原订单日。</div>`
+        },
+        'workflow-builder-canvas': {
+          k: '综合项目 · 工作流配置器', m: '流', a: '流程设计器', meta: '报销审批 · 草稿 v7', t: '设计态可以修改，运行态必须固定到已发布版本', s: '画布只是入口，真正可靠的设计器还要提供节点配置、连线规则、校验结果和发布版本。',
+          render: () => `${heading('报销审批流程', '自动保存于 10:28 · 当前有 1 项发布阻断', '校验并发布')}<div class="project-grid">${panel('流程画布', `<div class="workflow-canvas"><span class="workflow-line" style="width:120px;top:102px;left:170px"></span><span class="workflow-line" style="width:130px;top:102px;left:438px"></span><span class="workflow-line" style="width:125px;top:224px;left:305px;transform:rotate(24deg)"></span><div class="workflow-node workflow-node--active" style="top:65px;left:20px"><span class="workflow-node__type">START</span><span class="workflow-node__name">提交申请</span></div><div class="workflow-node" style="top:65px;left:290px"><span class="workflow-node__type">APPROVAL</span><span class="workflow-node__name">直属上级</span></div><div class="workflow-node workflow-node--condition" style="top:65px;left:570px"><span class="workflow-node__type">CONDITION</span><span class="workflow-node__name">金额 > 5000</span></div><div class="workflow-node" style="top:245px;left:445px"><span class="workflow-node__type">APPROVAL</span><span class="workflow-node__name">财务复核</span></div></div>`, badge('4 个节点'))}${panel('配置与校验', `${list([['直属上级：按发起人组织关系'],['金额条件：CNY > 5000'],['财务复核：角色 finance_reviewer'],['未连接结束节点','danger',badge('阻断','danger')]])}<div class="project-callout">发布后生成不可变 version 8；正在运行的实例继续使用原版本。</div>`, badge('1 个错误','danger'))}</div>`
+        },
+        'file-center-task': {
+          k: '综合项目 · 文件中心', m: '文', a: '企业文件中心', meta: '存储区域：cn-east-1 · 私有桶', t: '上传成功不等于业务附件已经可用', s: '完整任务包含校验、直传、确认元数据、病毒扫描、业务绑定和访问权限。',
+          render: () => `${heading('合同附件', '业务单据：CT-2026-0718 · 仅项目成员可访问', '上传文件')}<div class="project-grid">${panel('上传任务', `<div class="file-item"><span class="file-item__icon">PDF</span><div><p class="file-item__name">采购合同-v3.pdf</p><p class="file-item__meta">12.8 MB · 分片 7 / 10</p><div class="progress"><div class="progress__fill" style="width:72%"></div></div></div>${badge('上传 72%')}</div><div class="file-item"><span class="file-item__icon">XLS</span><div><p class="file-item__name">设备清单.xlsx</p><p class="file-item__meta">826 KB · 已校验 SHA-256</p></div>${badge('扫描中','warn')}</div><div class="file-item"><span class="file-item__icon">PNG</span><div><p class="file-item__name">机房布局.png</p><p class="file-item__meta">2.4 MB · 绑定业务成功</p></div>${badge('可用')}</div>` , badge('3 个任务'))}${panel('访问与生命周期', list([['下载前校验租户、业务单据与成员关系'],['签名地址有效期 5 分钟'],['未绑定临时文件 24 小时后回收','warn'],['删除操作保留审计与对象版本']]), badge('私有访问'))}</div><div class="project-callout">浏览器直传对象存储后，仍必须调用确认接口；只有元数据保存并绑定业务成功，附件才算完成。</div>`
+        },
+        'notification-center-unread': {
+          k: '综合项目 · 消息通知', m: '信', a: '消息中心', meta: '用户 10018 · 未读 7', t: '站内信、实时未读数和外部通道需要共享同一业务事实', s: '用户消息记录负责读状态，发送任务负责渠道重试，两者不能混成一个 status 字段。',
+          render: () => `${heading('消息与待办', '全部 24 · 未读 7 · 失败通道 1', '全部标为已读')}<div class="project-grid">${panel('消息列表', `<div class="message-item"><span class="message-item__dot"></span><div><p class="message-item__title">采购申请等待你审批</p><p class="message-item__text">申请单 PA-20281 · 金额 ¥86,400</p></div>${badge('2 分钟前')}</div><div class="message-item"><span class="message-item__dot"></span><div><p class="message-item__title">月度报表导出完成</p><p class="message-item__text">文件将在 24 小时后过期</p></div>${badge('下载')}</div><div class="message-item message-item--read"><span class="message-item__dot"></span><div><p class="message-item__title">角色权限已更新</p><p class="message-item__text">你的数据范围调整为华东大区</p></div>${badge('已读','neutral')}</div>`, badge('未读 7'))}${panel('通道任务', `<table class="project-table"><thead><tr><th>通道</th><th>状态</th><th>下一步</th></tr></thead><tbody><tr><td>站内信</td><td>${badge('已送达')}</td><td>等待阅读</td></tr><tr><td>WebSocket</td><td>${badge('已推送')}</td><td>徽标 +1</td></tr><tr><td>邮件</td><td>${badge('重试中','warn')}</td><td>10:36</td></tr><tr><td>短信</td><td>${badge('未启用','neutral')}</td><td>-</td></tr></tbody></table>`, badge('event: approval.created'))}</div><div class="project-callout">相同 event_id + user_id + template_code 只能生成一条用户消息，消费者重试不能造成重复提醒。</div>`
+        },
+        'multi-tenant-permission-scope': {
+          k: '综合项目 · 多租户权限', m: '租', a: '租户与权限中心', meta: 'tenant_id: t_2048 · request_id: req_7e31', t: '租户上下文要贯穿登录、权限、查询、缓存与审计', s: '页面切换租户后不仅要换菜单，后端查询、缓存 key、文件路径和审计字段都必须同步隔离。',
+          render: () => `${heading('远山科技 · 权限范围', '成员：林晓 · 角色：运营管理员 · 当前租户不可跨域', '切换租户')}<div class="project-grid">${panel('请求范围映射', `<div class="scope-map"><div class="scope-column"><div class="scope-box">Session<br><small>user_id = 10018</small></div><div class="scope-box">Tenant Header<br><small>t_2048</small></div><div class="scope-box">Permission<br><small>orders:read</small></div></div><div class="scope-arrow">→</div><div class="scope-column"><div class="scope-box">SQL<br><small>tenant_id = t_2048</small></div><div class="scope-box">Cache Key<br><small>t_2048:orders:...</small></div><div class="scope-box">Audit Log<br><small>tenant + user + action</small></div></div></div>`, badge('隔离已生效'))}${panel('权限检查', `<table class="project-table"><thead><tr><th>资源</th><th>操作</th><th>数据范围</th></tr></thead><tbody><tr><td>订单</td><td>${badge('查看')}</td><td>华东大区</td></tr><tr><td>客户</td><td>${badge('编辑')}</td><td>本部门</td></tr><tr><td>角色</td><td>${badge('拒绝','danger')}</td><td>无</td></tr><tr><td>导出</td><td>${badge('允许')}</td><td>继承查询范围</td></tr></tbody></table>`, badge('策略 v12'))}</div><div class="project-callout">超级管理员也必须显式选择目标租户；“平台级身份”不能默认取消所有业务数据过滤。</div>`
+        },
+        'finance-reconciliation-exception': {
+          k: '综合项目 · 财务对账', m: '账', a: '资金对账中心', meta: '支付宝 · 2026-07-20 · batch #RC-842', t: '差异单需要固定账期快照，并保留解释与处理证据', s: '对账页面不能只给“金额不一致”，还要呈现渠道、本地、退款、手续费和跨日状态。',
+          render: () => `${heading('渠道账单对账', '批次金额 ¥2,842,631.28 · 已匹配 99.72%', '导出差异单')}<div class="metric-grid">${metric('账单记录','18,426')}${metric('已平账','18,374')}${metric('差异记录','52')}${metric('差异金额','¥3,218.40')}</div>${panel('待处理差异', `<table class="project-table"><thead><tr><th>渠道流水</th><th>差异类型</th><th>渠道 / 本地</th><th>处理建议</th></tr></thead><tbody><tr><td>ALI-842109</td><td>${badge('金额差异','danger')}</td><td>¥128.00 / ¥125.00</td><td>核对手续费</td></tr><tr><td>ALI-842118</td><td>${badge('本地缺失','warn')}</td><td>¥86.00 / -</td><td>查支付回调</td></tr><tr><td>ALI-842126</td><td>${badge('跨日退款','warn')}</td><td>-¥39.90 / 待入账</td><td>次日复核</td></tr><tr><td>ALI-842133</td><td>${badge('状态差异','neutral')}</td><td>成功 / 关闭</td><td>人工确认</td></tr></tbody></table>`, badge('冻结快照 v1'))}<div class="project-callout">任何人工调平都必须记录原始值、调整值、原因、操作人和审批证据，不能直接改掉历史流水。</div>`
+        },
+        'risk-control-case-review': {
+          k: '综合项目 · 风控中心', m: '控', a: '风险决策中心', meta: 'case #RK-20260721-038 · 策略 v23', t: '风险决策必须可解释、可复核、可回放', s: '复核人员需要看到命中规则、关键特征、模型分数和业务上下文，而不是只有一个“高风险”标签。',
+          render: () => `${heading('提现风险复核', '用户 100862 · ¥18,000 · 决策：进入人工审核', '提交复核结论')}<div class="project-grid">${panel('风险结论', `<div style="display:flex;align-items:center;gap:24px"><div class="risk-score">82</div><div>${list([['新设备首次大额提现','danger',badge('+35','danger')],['IP 归属地快速变化','warn',badge('+22','warn')],['收款账户进入观察名单','danger',badge('+30','danger')],['完成短信二次验证','',badge('-5')]])}</div></div>`, badge('高风险','danger'))}${panel('处置与证据', `<table class="project-table"><thead><tr><th>时间</th><th>事件</th><th>结果</th></tr></thead><tbody><tr><td>10:21:08</td><td>业务请求决策</td><td>REVIEW</td></tr><tr><td>10:21:09</td><td>冻结提现</td><td>成功</td></tr><tr><td>10:24:12</td><td>用户补充验证</td><td>通过</td></tr><tr><td>10:31:40</td><td>人工复核</td><td>待处理</td></tr></tbody></table>`, badge('证据 12 项'))}</div><div class="project-callout">风控中心返回决策与原因，提现服务执行冻结；两边都要记录同一个 decision_id 以便追踪。</div>`
+        },
+        'disaster-recovery-switch': {
+          k: '综合项目 · 跨区域灾备', m: '灾', a: '灾备控制台', meta: '演练 DR-2026-Q3-02 · RTO 30m · RPO 5m', t: '故障切换是有门禁、有证据、可回退的操作流程', s: '控制台同时显示主备健康、复制延迟、流量方向和切换清单，避免只改 DNS 就宣布恢复。',
+          render: () => `${heading('订单系统区域切换', '故障：主区域数据库不可写 · 已用时 12m 34s', '执行流量切换')}<div class="project-grid">${panel('区域与流量', `<div class="region-map"><div class="region"><h4 class="region__name">上海主区域 ${badge('异常','danger')}</h4><div class="region__service">API：只读降级</div><div class="region__service">DB：写入失败</div><div class="region__service">最后位点：10:18:42</div></div><div class="switch-path"><span>流量 0%</span><span>→</span><span>复制延迟 38s</span></div><div class="region region--standby"><h4 class="region__name">北京备区域 ${badge('就绪')}</h4><div class="region__service">API：健康</div><div class="region__service">DB：等待提升</div><div class="region__service">演练容量：120%</div></div></div>`, badge('步骤 4 / 7','warn'))}${panel('切换检查清单', list([['确认故障影响与指挥人','',badge('完成')],['冻结主区域写入','',badge('完成')],['校验复制位点与 RPO','',badge('完成')],['提升备库为主库','warn',badge('进行中','warn')],['切换流量并验证核心交易','',badge('待执行','neutral')],['通知与复盘记录','',badge('待执行','neutral')]]), badge('RPO 38s'))}</div><div class="project-callout">切换后必须执行登录、下单、支付回调与数据一致性检查；“健康检查返回 200”不是完整恢复证据。</div>`
+        }
+      };
+      const sceneName = new URLSearchParams(location.search).get('scene') || 'vue-admin-overview';
+      const scene = scenes[sceneName] || scenes['vue-admin-overview'];
+      document.getElementById('kicker').textContent = scene.k;
+      document.getElementById('title').textContent = scene.t;
+      document.getElementById('subtitle').textContent = scene.s;
+      document.getElementById('mark').textContent = scene.m;
+      document.getElementById('appName').textContent = scene.a;
+      document.getElementById('meta').textContent = scene.meta;
+      document.getElementById('content').innerHTML = scene.render();
+    </script>
+  </body>
+</html>

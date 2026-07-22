@@ -22,7 +22,7 @@
   { title: 'React', description: 'React 稳定模块，覆盖 19 组核心图解、JSX、state、Effect、表单、请求、Data Router、可运行管理台项目、12 个专项练习、16 类真实问题和快速排错。', link: '/react/introduction', level: '框架' },
   { title: 'Nuxt / Next 元框架', description: '覆盖图解核心概念、SSR、文件路由、数据获取、课程平台从零到项目、部署缓存、服务端鉴权、SEO、国际化、专项练习和问题库。', link: '/meta-frameworks/introduction', level: '框架生态' },
   { title: 'Node.js', description: '后端 JavaScript 稳定模块，覆盖 27 组核心图解、运行时、HTTP、鉴权、数据库、测试、可运行权限 API、缓存队列项目、12 个专项练习和 16 类真实问题。', link: '/node/introduction', level: '后端' },
-  { title: 'Java', description: '企业后端语言模块，覆盖图解入门、JDK、面向对象、集合泛型、异常日志、并发虚拟线程、JVM、Spring Boot、从零到项目、Spring Security 权限认证、事务、测试和排错。', link: '/java/introduction', level: '后端' },
+  { title: 'Java', description: '企业后端稳定模块，覆盖 29 组核心图解、JDK、JVM、Spring Boot、可运行用户角色 API、Spring Security、事务、12 个专项练习和 16 类真实问题。', link: '/java/introduction', level: '后端' },
   { title: 'Go', description: '云原生后端语言模块，覆盖图解入门、Go Modules、类型函数、接口组合、错误处理、并发、Context、HTTP、从零到项目、gRPC 服务间通信、数据库、测试、部署和性能诊断。', link: '/go/introduction', level: '后端' },
   { title: '数据库', description: '稳定数据模块，覆盖图解入门、MySQL、PostgreSQL、Redis、权限系统数据层落地、建模、索引、事务、迁移、ORM、备份恢复、安全审计、脱敏和排错。', link: '/database/introduction', level: '数据' },
   { title: 'AI 工程', description: '稳定 AI 工程模块，覆盖图解入门、LLM API、提示词、结构化输出、函数调用、多模态、RAG、MCP、Agent、文档问答项目、评测、上线治理和问题排查。', link: '/ai-engineering/introduction', level: 'AI' },
@@ -71,6 +71,7 @@ Vue Admin 实战
 | 做前端综合项目 | [前端综合实战练习](/roadmap/frontend-capstone-lab) |
 | 做后端 API 综合练习 | [学习路径练习包：后端 API 综合项目](/roadmap/practice-labs#练习-65后端-api-综合项目) |
 | 系统训练 Node.js 运行时 | [Node.js 专项练习](/roadmap/node-practice)、[Node.js 真实项目问题库](/projects/issues-node) |
+| 系统训练 Java 工程与 JVM | [Java 专项练习](/roadmap/java-practice)、[Java 真实项目问题库](/projects/issues-java) |
 | 做 Vue Admin 练习 | [Vue Admin 专项练习](/roadmap/vue-admin-practice) |
 | 做 Vue Admin 消息通知练习 | [学习路径练习包](/roadmap/practice-labs)、[Vue Admin 专项练习](/roadmap/vue-admin-practice) |
 | 系统完成 Vue Admin 项目 | [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map) |
@@ -130,9 +131,11 @@ Vue Admin 实战
 | 学 Java 后端 | [Java 学习导览](/java/introduction) |
 | 做 Java Spring Boot API | [Spring Boot 从零到项目落地](/java/spring-boot-project-from-zero) |
 | 做 Java 权限认证模块 | [Spring Security 权限认证项目](/java/spring-security-permission) |
+| 做 Java 故障注入与排障 | [Java 专项练习](/roadmap/java-practice)、[Java 真实项目问题库](/projects/issues-java) |
 | 学 Go 后端 | [Go 学习导览](/go/introduction) |
 | 做 Go HTTP API | [Go HTTP API 从零到项目落地](/go/http-api-project-from-zero) |
 | 做 Go gRPC 服务通信 | [Go gRPC 与服务间通信项目](/go/grpc-service-communication) |
+| 练习和排查 Go | [Go 专项实战练习](/roadmap/go-practice)、[Go 真实项目问题库](/projects/issues-go) |
 | 学数据库 | [数据库学习导览](/database/introduction) |
 | 入门 AI 工程 | [AI 工程学习导览](/ai-engineering/introduction) |
 | 做 AI 文档问答 | [AI 文档问答从零到项目](/ai-engineering/doc-qa-project) |
@@ -400,7 +403,7 @@ resources         延伸资料
 3. `React` 模块：组件、Hooks、状态、路由、Next.js。
 4. `Node.js` 模块：运行时、包管理、API、鉴权、数据库、测试、安全和部署。
 5. `Java` 模块：JDK、JVM、Spring Boot、并发、事务、测试和排错。
-6. `Go` 模块：Go Modules、并发、Context、HTTP、数据库、测试、部署和性能诊断。
+6. `Go` 模块：26 组图解、可运行任务 API、Go Modules、并发、Context、HTTP、PostgreSQL、race/Fuzz/Testcontainers、容器交付、12 个练习和 16 类真实问题。
 7. `数据库` 模块：MySQL、PostgreSQL、Redis、建模、性能、ORM、备份和安全。
 8. `DevOps` 模块：Linux、Docker、Nginx、CI/CD、观测、Kubernetes 和云部署。
 9. `AI 工程` 模块：LLM API、结构化输出、函数调用、多模态、RAG、MCP、Agent、评测和上线。
@@ -431,7 +434,7 @@ resources         延伸资料
 - JavaScript 已成为独立模块，覆盖语言基础、运行机制、错误处理和工程实践。
 - 前端工程化已经扩展为稳定学习路径。
 - Nuxt / Next 元框架模块已补齐图解核心概念、课程内容平台从零到项目、专项练习和真实项目问题库。
-- Java 和 Go 已作为独立后端语言模块接入，分别覆盖企业后端和云原生后端的核心学习链路。
+- Java 和 Go 已作为独立后端语言模块接入；Go 已形成“导览 → 26 组图解 → 可运行 HTTP API → 12 个练习 → 16 类问题”的完整链路。
 - AI 工程模块已经覆盖 LLM API、结构化输出、函数调用、多模态、RAG、MCP、Agent、产品协作、评测和上线治理。
 - 实战项目模块已经补齐项目阶段任务、联调排查、权限案例、权限运营、组织架构、审批流、文件中心、数据看板、多租户权限、消息通知、数据导入导出、支付订单、会员订阅、搜索中心、任务调度、消息队列、开放平台、工作流配置器、低代码流程平台、审计中心、运营活动、财务对账、渠道结算、渠道费用稽核、渠道费用 ROI 复盘、渠道费用预算优化、渠道费用异常预警、渠道费用策略灰度、渠道策略效果复盘、渠道策略对照实验、渠道策略版本治理、渠道策略审批矩阵、渠道策略发布审计、渠道策略回滚治理、渠道策略异常仲裁、渠道策略仲裁复盘、渠道策略裁决标准库、渠道策略标准效果监控、渠道策略标准灰度发布、渠道策略标准版本回滚、渠道策略标准回滚演练、渠道价格稽核、渠道窜货监控、渠道信用评级、主数据管理、客户主数据、低代码表单、报表配置器、智能报表与 BI、客服工单、客服质检、客服知识运营、集团系统集成、国际化后台、数据治理平台、数据质量专项、数据资产运营、数据安全运营、规则引擎、灰度发布后台、跨区域灾备、风控中心、合同管理、合同履约、合同付款、合同变更、知识库平台、统一配置中心、行业合规审计、客户成功平台、客户生命周期价值分析、客户流失预警、客户分群运营、客户触达自动化、工单自动化、计费中台、数据交换平台、企业门户、资产管理、预算管理、资金计划、费用报销、员工借款、税务管理、采购管理、采购寻源、供应商绩效、供应链计划、项目管理、研发需求池、报价中心、上线事故案例库、运维值班、库存管理、备件库存、备件补货、售后备件周转分析、仓储物流、售后服务、售后知识自动推荐、售后知识质量治理、售后知识智能检索优化、售后知识问答助手、售后知识自动质检、售后知识专家审核、售后知识发布灰度、售后知识回滚治理、售后知识影响追踪、售后知识客户通知治理、售后知识外部服务商通知协同、售后知识服务商培训闭环、售后知识培训效果复盘、售后知识培训认证治理、售后知识认证派单联动、售后知识认证质量稽核、售后知识认证风险画像、售后结算、售后 SLA 赔付分析、售后服务商评级、售后维修质量复盘、报修派单、服务网点、数据权限审计、门店零售管理、CRM 销售管理、客户账期、客户回款风险预测、客户坏账处置策略、客户应收催收自动化、销售回款预测调度、销售现金流预警、销售回款策略模拟、销售风险动作编排、销售风险处置复盘、销售风险预案演练、销售风险指标治理、销售风险指标血缘审计、销售风险指标异常根因、销售风险指标自动修复、销售风险指标治理成熟度、销售风险指标治理运营看板、销售风险指标治理成本收益评估、会员营销、生产制造、生产排程、产能负荷预测、生产计划达成分析、生产现场安全隐患、生产安全培训闭环、生产安全考试认证、生产安全风险画像、生产安全应急演练、生产安全事故复盘、生产安全风险整改复查、生产安全整改看板、生产安全整改 SLA、生产安全整改成本复盘、生产安全整改预算预测、生产安全整改资源排期、生产安全整改产线影响评估、生产安全整改多方案决策、生产安全整改决策复盘、生产安全整改决策知识库、生产安全整改决策智能推荐、质量追溯、生产瓶颈分析、生产换型损失分析、IoT 设备管理、设备维保、教育培训平台、交付检查清单、故障复盘和分类问题库。
 - 速查手册已经覆盖前端开发、工程部署、联调协作、Linux、Redis、正则、调试工具和 SQL 高频回查场景。

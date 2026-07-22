@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>后端项目运行证据</title>
+    <link rel="stylesheet" href="../shared/demo.css" />
+    <style>
+      .evidence-stage {
+        max-width: 1180px;
+        margin: 38px auto 0;
+      }
+
+      .runtime-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .runtime-badge {
+        display: inline-flex;
+        min-height: 34px;
+        align-items: center;
+        border: 1px solid #adc1ba;
+        border-radius: 5px;
+        padding: 5px 12px;
+        background: #fff;
+        color: #40534c;
+        font: 750 13px ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .runtime-badge--primary {
+        border-color: #68a895;
+        background: #eaf8f3;
+        color: #087f68;
+      }
+
+      .run-card {
+        overflow: hidden;
+        border: 1px solid #b7c8c2;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 20px 50px rgb(34 64 54 / 10%);
+      }
+
+      .run-card__head {
+        display: flex;
+        min-height: 66px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        border-bottom: 1px solid #d7e1dd;
+        padding: 0 24px;
+        background: #f5f8f7;
+      }
+
+      .run-card__service {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .run-card__mark {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        flex: 0 0 36px;
+        place-items: center;
+        border-radius: 7px;
+        background: #087f68;
+        color: #fff;
+        font-weight: 950;
+      }
+
+      .run-card__name {
+        overflow: hidden;
+        font-size: 18px;
+        font-weight: 900;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .run-card__address {
+        color: #6a7b75;
+        font: 13px ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .run-card__body {
+        display: grid;
+        grid-template-columns: 1.05fr .95fr;
+      }
+
+      .run-panel {
+        min-width: 0;
+        padding: 26px;
+      }
+
+      .run-panel:first-child { border-right: 1px solid #d7e1dd; }
+
+      .run-panel__title {
+        margin: 0 0 18px;
+        font-size: 19px;
+        letter-spacing: 0;
+      }
+
+      .startup-flow {
+        display: grid;
+        gap: 12px;
+      }
+
+      .startup-step {
+        display: grid;
+        grid-template-columns: 34px 1fr auto;
+        gap: 12px;
+        align-items: center;
+        border: 1px solid #d6e0dc;
+        border-radius: 6px;
+        padding: 13px 14px;
+        background: #fbfdfc;
+      }
+
+      .startup-step__index {
+        display: grid;
+        width: 32px;
+        height: 32px;
+        place-items: center;
+        border-radius: 50%;
+        background: #e8f8f3;
+        color: #087f68;
+        font-weight: 900;
+      }
+
+      .startup-step__name {
+        min-width: 0;
+        font-weight: 850;
+      }
+
+      .startup-step__detail {
+        display: block;
+        margin-top: 3px;
+        color: #64756f;
+        font: 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .startup-step__state {
+        color: #087f68;
+        font-size: 13px;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+
+      .json-block {
+        min-height: 246px;
+        margin: 0;
+        border: 1px solid #cad7d2;
+        border-radius: 6px;
+        padding: 22px;
+        background: #17221e;
+        color: #d9eee6;
+        font: 14px/1.75 ui-monospace, SFMono-Regular, Menlo, monospace;
+        white-space: pre-wrap;
+      }
+
+      .json-key { color: #8fd8c1; }
+      .json-value { color: #ffd27c; }
+      .json-ok { color: #8ee6a8; }
+      .json-error { color: #ff9ca4; }
+
+      .proof-note {
+        display: grid;
+        grid-template-columns: 42px 1fr;
+        gap: 12px;
+        margin-top: 16px;
+        border-left: 4px solid #e19a22;
+        padding: 14px 16px;
+        background: #fff8e9;
+      }
+
+      .proof-note__icon {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 50%;
+        background: #e19a22;
+        color: #fff;
+        font-weight: 950;
+      }
+
+      .proof-note__text { margin: 2px 0 0; color: #5f4a1c; line-height: 1.55; }
+
+      .conflict-card {
+        overflow: hidden;
+        border: 1px solid #bacac4;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 20px 50px rgb(34 64 54 / 10%);
+      }
+
+      .conflict-head {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-bottom: 1px solid #d7e1dd;
+      }
+
+      .conflict-client {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 18px 24px;
+        background: #f7faf9;
+      }
+
+      .conflict-client:first-child { border-right: 1px solid #d7e1dd; }
+
+      .conflict-client__mark {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        border-radius: 50%;
+        background: #7952a5;
+        color: #fff;
+        font-weight: 950;
+      }
+
+      .conflict-client:nth-child(2) .conflict-client__mark { background: #d88720; }
+      .conflict-client__name { font-weight: 900; }
+      .conflict-client__version { display: block; margin-top: 3px; color: #667770; font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+      .conflict-flow {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 120px minmax(0, 1fr);
+        gap: 18px;
+        align-items: center;
+        padding: 28px;
+      }
+
+      .conflict-request {
+        border: 1px solid #cbd8d3;
+        border-radius: 7px;
+        padding: 18px;
+        background: #fbfdfc;
+      }
+
+      .conflict-request--stale {
+        border-color: #e1a1a8;
+        background: #fff3f4;
+      }
+
+      .conflict-request__method {
+        display: inline-flex;
+        border-radius: 4px;
+        padding: 5px 9px;
+        background: #e7f7f1;
+        color: #087f68;
+        font: 900 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .conflict-request--stale .conflict-request__method { background: #fde6e8; color: #ab2e39; }
+
+      .conflict-request__title { margin: 12px 0 0; font-size: 17px; }
+      .conflict-request__payload { margin: 10px 0 0; color: #586a63; font: 13px/1.7 ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+
+      .version-store {
+        display: grid;
+        place-items: center;
+        gap: 8px;
+        min-height: 140px;
+        border: 2px solid #78a999;
+        border-radius: 8px;
+        background: #effaf6;
+        text-align: center;
+      }
+
+      .version-store__label { color: #5f7069; font-size: 13px; font-weight: 800; }
+      .version-store__value { color: #087f68; font-size: 34px; font-weight: 950; }
+
+      .result-strip {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-top: 1px solid #d7e1dd;
+      }
+
+      .result-box {
+        min-width: 0;
+        padding: 22px 26px;
+      }
+
+      .result-box:first-child { border-right: 1px solid #d7e1dd; background: #f1faf7; }
+      .result-box:nth-child(2) { background: #fff3f4; }
+      .result-box__status { font-size: 26px; font-weight: 950; }
+      .result-box__status--ok { color: #087f68; }
+      .result-box__status--error { color: #ab2e39; }
+      .result-box__code { display: block; margin-top: 7px; color: #566860; font: 13px ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+
+      @media (max-width: 760px) {
+        .demo-frame { padding: 22px; }
+        .demo-frame::before { inset: 10px; }
+        .evidence-stage { margin-top: 28px; }
+        .run-card__head { align-items: flex-start; flex-direction: column; padding: 16px; }
+        .run-card__body { grid-template-columns: 1fr; }
+        .run-panel { padding: 18px; }
+        .run-panel:first-child { border-right: 0; border-bottom: 1px solid #d7e1dd; }
+        .startup-step { grid-template-columns: 32px 1fr; }
+        .startup-step__state { grid-column: 2; }
+        .conflict-head { grid-template-columns: 1fr; }
+        .conflict-client:first-child { border-right: 0; border-bottom: 1px solid #d7e1dd; }
+        .conflict-client:nth-child(2) { display: none; }
+        .conflict-flow { grid-template-columns: 1fr; padding: 18px; }
+        .version-store { min-height: 96px; }
+        .result-strip { grid-template-columns: 1fr; }
+        .result-box:first-child { border-right: 0; border-bottom: 1px solid #d7e1dd; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="demo-frame">
+      <section data-scene="java-admin-api-ready" hidden>
+        <p class="demo-kicker">真实运行证据 · Java Admin API</p>
+        <h1 class="demo-title">数据库、迁移、应用和 Readiness 全部就绪</h1>
+        <p class="demo-subtitle">同一次容器验收使用 Java 25.0.1、Spring Boot 4.1.0、PostgreSQL 18.4，并由 Actuator 返回最终就绪状态。</p>
+        <div class="evidence-stage"><div class="runtime-strip"><span class="runtime-badge runtime-badge--primary">Java 25.0.1</span><span class="runtime-badge">Spring Boot 4.1.0</span><span class="runtime-badge">PostgreSQL 18.4</span><span class="runtime-badge">container user 10001</span></div><article class="run-card"><header class="run-card__head"><div class="run-card__service"><span class="run-card__mark">J</span><strong class="run-card__name">java-admin-api</strong></div><span class="run-card__address">GET /actuator/health/readiness</span></header><div class="run-card__body"><section class="run-panel"><h2 class="run-panel__title">启动证据链</h2><div class="startup-flow"><div class="startup-step"><span class="startup-step__index">1</span><div class="startup-step__name">PostgreSQL 健康<span class="startup-step__detail">pg_isready · java_admin</span></div><span class="startup-step__state">healthy</span></div><div class="startup-step"><span class="startup-step__index">2</span><div class="startup-step__name">Flyway 完成迁移<span class="startup-step__detail">V1 schema → V2 seed roles</span></div><span class="startup-step__state">version 2</span></div><div class="startup-step"><span class="startup-step__index">3</span><div class="startup-step__name">API 非 root 运行<span class="startup-step__detail">Spring Boot · port 8080</span></div><span class="startup-step__state">user 10001</span></div></div></section><section class="run-panel"><h2 class="run-panel__title">探针响应</h2><pre class="json-block">HTTP/1.1 <span class="json-ok">200 OK</span>
+Content-Type: application/json
+
+{
+  <span class="json-key">"status"</span>: <span class="json-value">"UP"</span>
+}</pre><div class="proof-note"><span class="proof-note__icon">✓</span><p class="proof-note__text">Readiness 只有在连接池建立、Flyway 完成且 Spring Context 启动后才返回 UP。</p></div></section></div></article></div>
+      </section>
+
+      <section data-scene="java-admin-version-conflict" hidden>
+        <p class="demo-kicker">真实运行证据 · Java 乐观锁</p>
+        <h1 class="demo-title">旧 expectedVersion 被稳定拒绝为 409</h1>
+        <p class="demo-subtitle">两个客户端都读取 version 1；客户端 A 先把状态改为 DISABLED 并得到 version 2，客户端 B 的旧意图不能覆盖新数据。</p>
+        <div class="evidence-stage conflict-card"><header class="conflict-head"><div class="conflict-client"><span class="conflict-client__mark">A</span><div><strong class="conflict-client__name">客户端 A</strong><span class="conflict-client__version">读取 version = 1</span></div></div><div class="conflict-client"><span class="conflict-client__mark">B</span><div><strong class="conflict-client__name">客户端 B</strong><span class="conflict-client__version">仍持有 version = 1</span></div></div></header><div class="conflict-flow"><article class="conflict-request"><span class="conflict-request__method">PATCH</span><h2 class="conflict-request__title">A 禁用用户</h2><p class="conflict-request__payload">status: DISABLED<br>expectedVersion: 1</p></article><div class="version-store"><span class="version-store__label">数据库当前版本</span><strong class="version-store__value">2</strong></div><article class="conflict-request conflict-request--stale"><span class="conflict-request__method">PATCH</span><h2 class="conflict-request__title">B 启用旧页面</h2><p class="conflict-request__payload">status: ACTIVE<br>expectedVersion: 1</p></article></div><footer class="result-strip"><div class="result-box"><strong class="result-box__status result-box__status--ok">200 · version 2</strong><span class="result-box__code">request: java-evidence-update</span></div><div class="result-box"><strong class="result-box__status result-box__status--error">409 · STALE_VERSION</strong><span class="result-box__code">数据已被其他请求修改，请刷新后重试</span></div></footer></div>
+      </section>
+
+      <section data-scene="go-task-api-ready" hidden>
+        <p class="demo-kicker">真实运行证据 · Go Task API</p>
+        <h1 class="demo-title">迁移成功后启动 API，Readiness 实际检查数据库</h1>
+        <p class="demo-subtitle">Compose 按 PostgreSQL healthy → migration exit 0 → API healthy 的顺序启动，最终镜像以 distroless nonroot 用户运行。</p>
+        <div class="evidence-stage"><div class="runtime-strip"><span class="runtime-badge runtime-badge--primary">Go 1.26.5</span><span class="runtime-badge">PostgreSQL 18.4</span><span class="runtime-badge">migration version 1</span><span class="runtime-badge">nonroot:nonroot</span></div><article class="run-card"><header class="run-card__head"><div class="run-card__service"><span class="run-card__mark">G</span><strong class="run-card__name">go-task-api</strong></div><span class="run-card__address">GET /health/ready</span></header><div class="run-card__body"><section class="run-panel"><h2 class="run-panel__title">Compose 启动证据链</h2><div class="startup-flow"><div class="startup-step"><span class="startup-step__index">1</span><div class="startup-step__name">PostgreSQL 健康<span class="startup-step__detail">pg_isready · taskdb</span></div><span class="startup-step__state">healthy</span></div><div class="startup-step"><span class="startup-step__index">2</span><div class="startup-step__name">Migration 独立执行<span class="startup-step__detail">000001_create_users_tasks</span></div><span class="startup-step__state">exit 0</span></div><div class="startup-step"><span class="startup-step__index">3</span><div class="startup-step__name">API 通过健康检查<span class="startup-step__detail">distroless · port 8080</span></div><span class="startup-step__state">healthy</span></div></div></section><section class="run-panel"><h2 class="run-panel__title">探针响应</h2><pre class="json-block">HTTP/1.1 <span class="json-ok">200 OK</span>
+Content-Type: application/json
+
+{
+  <span class="json-key">"success"</span>: true,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"status"</span>: <span class="json-value">"ready"</span>
+  },
+  <span class="json-key">"requestId"</span>: <span class="json-value">"req_..."</span>
+}</pre><div class="proof-note"><span class="proof-note__icon">✓</span><p class="proof-note__text">该探针实际执行数据库 PingContext；只要数据库不可用或应用正在关闭，就会返回 503。</p></div></section></div></article></div>
+      </section>
+
+      <section data-scene="go-task-version-conflict" hidden>
+        <p class="demo-kicker">真实运行证据 · Go 乐观锁</p>
+        <h1 class="demo-title">UPDATE WHERE version = 0 只允许成功一次</h1>
+        <p class="demo-subtitle">任务创建时 version 为 0；第一个 PUT 更新为 1，随后使用旧版本 0 的覆盖请求返回可机器处理的冲突码。</p>
+        <div class="evidence-stage conflict-card"><header class="conflict-head"><div class="conflict-client"><span class="conflict-client__mark">A</span><div><strong class="conflict-client__name">客户端 A</strong><span class="conflict-client__version">读取 task 1 · version = 0</span></div></div><div class="conflict-client"><span class="conflict-client__mark">B</span><div><strong class="conflict-client__name">客户端 B</strong><span class="conflict-client__version">仍持有 task 1 · version = 0</span></div></div></header><div class="conflict-flow"><article class="conflict-request"><span class="conflict-request__method">PUT</span><h2 class="conflict-request__title">A 完成验收更新</h2><p class="conflict-request__payload">title: 完成 Go API 验收<br>expectedVersion: 0</p></article><div class="version-store"><span class="version-store__label">任务当前版本</span><strong class="version-store__value">1</strong></div><article class="conflict-request conflict-request--stale"><span class="conflict-request__method">PUT</span><h2 class="conflict-request__title">B 尝试旧页面覆盖</h2><p class="conflict-request__payload">title: 旧页面覆盖<br>expectedVersion: 0</p></article></div><footer class="result-strip"><div class="result-box"><strong class="result-box__status result-box__status--ok">200 · version 1</strong><span class="result-box__code">requestId: go-evidence-update</span></div><div class="result-box"><strong class="result-box__status result-box__status--error">409 · TASK_VERSION_CONFLICT</strong><span class="result-box__code">requestId: go-evidence-conflict</span></div></footer></div>
+      </section>
+    </main>
+    <script>
+      const params = new URLSearchParams(window.location.search)
+      const requestedScene = params.get('scene') || 'java-admin-api-ready'
+      const fallback = document.querySelector('[data-scene="java-admin-api-ready"]')
+      const scene = document.querySelector(`[data-scene="${requestedScene}"]`) || fallback
+      scene.hidden = false
+      document.title = `${requestedScene} · 后端项目运行证据`
+    </script>
+  </body>
+</html>

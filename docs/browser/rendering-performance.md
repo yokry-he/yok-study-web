@@ -10,6 +10,18 @@
 
 浏览器渲染一个页面大致经历：
 
+先用全景图建立阶段位置：HTML、CSS 和 JavaScript 形成结构与规则，浏览器计算可见节点的几何位置，生成绘制指令，最后由合成阶段把图层变成屏幕像素。
+
+<DocFigure
+  src="/images/browser/browser-rendering-pipeline.webp"
+  alt="HTML CSS 和 JavaScript 依次经过 DOM 与 CSSOM、渲染树、布局、绘制和图层合成成为像素"
+  caption="这是阶段地图；实际页面可能跳过某些工作或重复其中一段，准确成本要结合 Performance 录制判断。"
+  :width="1440"
+  :height="900"
+/>
+
+看图时不要形成“任何样式修改都会完整重跑所有阶段”的误解：改变尺寸通常影响 Layout，改变颜色通常影响 Paint，`transform` 等属性可能主要由 Composite 处理，但最终仍以浏览器实际生成的图层和录制结果为准。
+
 ```text
 HTML
 ↓
@@ -160,6 +172,18 @@ items.forEach((item, index) => {
 - 是否频繁 Layout。
 - 点击后多久有响应。
 - 哪些脚本执行最久。
+
+下图中 `filterAndRender` 连续占用主线程 121 ms，输入事件虽然已经发生，却只能等长任务结束后处理。红色长任务是“主线程被占用”的证据，还需要展开调用栈才能判断成本来自业务计算、Vue 更新还是 Layout。
+
+<DocFigure
+  src="/images/browser/performance-long-task.webp"
+  alt="浏览器 Performance 主线程轨道显示 121 毫秒长任务并推迟输入响应"
+  caption="先定位超过 50 ms 的长任务，再向下展开调用栈；颜色提示耗时位置，不直接等于根因。"
+  :width="1440"
+  :height="900"
+/>
+
+不依赖图片的读取路径：Performance → 开始录制 → 执行一次卡顿操作 → 停止 → 在 Main 轨道寻找带红色角标或超过 50 ms 的 Task → 展开 Bottom-up 与 Call tree，记录最耗时函数及其调用来源。
 
 ### Lighthouse
 

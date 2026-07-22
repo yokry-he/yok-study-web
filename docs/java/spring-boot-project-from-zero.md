@@ -2,617 +2,787 @@
 
 ## 这个页面解决什么
 
-学 Java 后端最容易卡在两个极端：只学语法不知道项目怎么组织，或者直接复制一个 Spring Boot 项目但不知道每层为什么这样写。
+本章不是再写一遍“Hello World”或只展示 Controller 的 CRUD。我们会完成一个可运行的用户角色管理 API，并把真实项目最容易遗漏的环节一起做完：
 
-这篇用一个“用户与角色 API”项目，把 Spring Boot 后端从创建、分层、数据库、接口、异常、测试到部署串成完整闭环。读完后，你应该能回答：
+- Java、Spring Boot、Maven 和 PostgreSQL 版本固定。
+- Controller、Service、Repository、DTO、Entity 的职责分离。
+- Flyway 从空数据库创建表、约束、索引和种子角色。
+- 统一成功/失败响应、字段校验和 request id。
+- 邮箱业务唯一性、角色有效性和乐观锁并发保护。
+- 列表查询避免 N+1，详情查询显式加载角色。
+- 单元测试与真实 PostgreSQL 集成测试。
+- Docker 多阶段构建、健康检查、readiness 和优雅停机。
 
-- 一个 Spring Boot 后端项目应该怎么分目录。
-- Controller、Service、Repository、DTO、Entity 分别负责什么。
-- 为什么不能把数据库 Entity 直接返回给前端。
-- 如何设计列表分页、新增、编辑、启停和角色绑定接口。
-- 事务、参数校验、统一错误、日志和测试应该放在哪里。
-- 项目出问题时应该从启动、请求、SQL、事务还是部署层排查。
+完整源码位于仓库的 `examples/java-admin-api`，本页展示的代码直接从该目录导入。这样正文、测试和可运行示例不会各自维护一份。
 
-这不是 Spring Boot API 速查，而是项目落地手册。你可以把它当作 Java 后端第一个可交付项目的实施路线。
+## 完成后能交付什么
 
-## 适合谁看
-
-- 已经学过 Java 基础语法，准备进入 Spring Boot 项目的人。
-- 前端或 Node.js 开发者想补一个企业后端 API 项目的人。
-- 会写 `@RestController`，但 Controller、Service、Repository 经常混在一起的人。
-- 想做一个能给 Vue Admin 或 React 管理台对接的后端 API 的人。
-- 想理解 Java 后端项目如何测试、打包、配置和排错的人。
-
-## 最终项目
-
-项目建议命名为 `java-admin-api`。它不是完整权限系统，但要覆盖后台管理系统的核心后端能力。
-
-```text
-java-admin-api/
-  README.md
-  TROUBLESHOOTING.md
-  API_CONTRACT.md
-  src/
-    main/
-      java/com/example/admin/
-        AdminApiApplication.java
-        common/
-          error/
-          response/
-          trace/
-        config/
-        user/
-          api/
-          application/
-          domain/
-          infrastructure/
-        role/
-          api/
-          application/
-          domain/
-          infrastructure/
-      resources/
-        application.yml
-        application-dev.yml
-        db/migration/
-    test/
-      java/com/example/admin/
-```
-
-最终至少交付：
-
-| 模块 | 必须完成 |
+| 能力 | 接口或证据 |
 | --- | --- |
-| 用户管理 | 用户列表、详情、新增、编辑、启停、绑定角色 |
-| 角色管理 | 角色列表、新增、编辑、启停、权限码示例 |
-| 参数校验 | 必填、邮箱、长度、枚举、分页参数 |
-| 统一响应 | 成功响应、错误响应、traceId、分页结构 |
-| 异常处理 | 参数错误、业务错误、资源不存在、系统错误 |
-| 数据库 | 用户表、角色表、用户角色关系表、迁移脚本 |
-| 事务 | 创建用户并绑定角色、启停用户、批量绑定 |
-| 测试 | Service 单元测试、Controller 接口测试、Repository 基础测试 |
-| 运行配置 | dev/test/prod 配置分层，敏感值走环境变量 |
-| 交付文档 | README、API_CONTRACT、TROUBLESHOOTING |
+| 查询角色 | `GET /api/roles` |
+| 创建用户 | `POST /api/users` |
+| 搜索分页 | `GET /api/users?q=ada&page=0&pageSize=20` |
+| 查看详情 | `GET /api/users/{id}` |
+| 修改资料 | `PUT /api/users/{id}` |
+| 修改状态 | `PATCH /api/users/{id}/status` |
+| 替换角色 | `PUT /api/users/{id}/roles` |
+| 并发保护 | 旧 `expectedVersion` 返回 409 |
+| 错误追踪 | 响应头、响应体和日志使用同一个 request id |
+| 数据验证 | Testcontainers 启动 PostgreSQL 18 并执行 Flyway |
+| 生产探针 | `/actuator/health/liveness` 与 `readiness` |
+| 容器交付 | `docker compose up --build` |
+
+本项目只管理用户资料和角色，不包含密码与登录。完成后再进入 [Spring Security 权限认证项目](/java/spring-security-permission)，不要把密码明文或临时 Token 塞进本章。
+
+## 技术基线
+
+| 组件 | 本项目版本 | 为什么这样选 |
+| --- | --- | --- |
+| Java | 25 LTS | 当前 LTS，适合长期项目基线 |
+| Spring Boot | 4.1.0 | 当前稳定版本，要求 Java 17+，兼容到 Java 26 |
+| 构建 | Maven 3.9.11 | 依赖管理、测试、打包和插件生命周期明确 |
+| 数据库 | PostgreSQL 18 | 使用 UUID、约束、表达式唯一索引和事务 |
+| ORM | Spring Data JPA / Hibernate | 演示实体状态、脏检查、懒加载和乐观锁 |
+| 迁移 | Flyway | 数据结构跟随代码版本演进 |
+| 测试 | JUnit 5、MockMvc、Testcontainers 2 | 同时覆盖业务分支、HTTP 和真实数据库 |
+| 运行 | Docker Compose | 一条命令启动 API 与数据库 |
 
 ## 项目总图
 
 ```mermaid
-flowchart TD
-  A["前端管理台"] --> B["Spring Boot API"]
-  B --> C["Controller 参数校验"]
-  C --> D["Application Service"]
-  D --> E["Domain Model / Rule"]
-  D --> F["Repository / Mapper"]
-  F --> G[("MySQL / PostgreSQL")]
-  D --> H["Transaction"]
-  B --> I["Global Exception Handler"]
-  B --> J["TraceId / Log"]
-  B --> K["Actuator / Health"]
+flowchart LR
+  UI["前端管理台 / curl"] --> F["RequestIdFilter"]
+  F --> C["UserController / RoleController"]
+  C --> S["UserService / RoleService"]
+  S --> R["JPA Repository"]
+  R --> H["HikariCP"]
+  H --> DB[("PostgreSQL 18")]
+  M["Flyway"] --> DB
+  E["GlobalExceptionHandler"] --> UI
+  A["Actuator"] --> P["Liveness / Readiness / Metrics"]
 ```
 
-这张图说明三件事：
+一次写请求的关键路径是：协议校验进入 Controller，Service 开启事务并验证业务规则，Repository 在同一连接上执行 SQL，`flush` 提前暴露约束或版本冲突，事务提交后连接归还池。
 
-1. Controller 是 HTTP 边界，不是业务规则集中地。
-2. Service 是业务流程和事务边界，不能只做简单转发。
-3. Repository 只负责数据访问，不应该决定业务是否允许执行。
+## 第一阶段：创建可复现工程
 
-## 技术选择
-
-Spring Boot 官方文档把 Spring Boot 定位为创建可独立运行、生产级 Spring 应用的工具；官方入门指南也推荐通过 Spring Initializr 创建项目，并要求 Java 17 或更高版本。实际团队里可以根据长期维护策略选择 Java 17、21 或更高版本，但项目结构和分层原则不依赖具体小版本。
-
-| 项目 | 推荐选择 | 原因 |
-| --- | --- | --- |
-| JDK | Java 17+，企业项目优先按团队基线 | Spring Boot 新版本要求至少 Java 17 |
-| 构建工具 | Maven 或 Gradle，初学优先 Maven | 依赖树、插件和企业项目示例更多 |
-| Web | Spring Web | 提供 REST API、嵌入式 Servlet 容器 |
-| Validation | Spring Validation | 处理请求参数基础校验 |
-| 数据访问 | Spring Data JPA 或 MyBatis | JPA 适合领域模型，MyBatis 适合 SQL 可控 |
-| 数据库迁移 | Flyway 或 Liquibase | 让表结构变更可追踪、可回滚 |
-| 测试 | JUnit 5、Spring Boot Test | 覆盖业务、接口和数据访问 |
-| 运行监控 | Actuator | 健康检查、指标和运行状态 |
-
-初学建议先选 Maven + Spring Web + Validation + JPA + Flyway + Actuator。等你理解分层后，再切换 MyBatis、Redis、Spring Security、消息队列和微服务治理。
-
-## 创建项目
-
-可以用 Spring Initializr 创建项目，也可以在 IDE 里创建。推荐依赖：
+### 1. 目录结构
 
 ```text
-Spring Web
-Validation
-Spring Data JPA
-Flyway Migration
-PostgreSQL Driver 或 MySQL Driver
-Spring Boot Actuator
-Spring Boot Test
+examples/java-admin-api
+├── pom.xml
+├── Dockerfile
+├── compose.yaml
+├── src
+│   ├── main
+│   │   ├── java/com/example/admin
+│   │   │   ├── JavaAdminApiApplication.java
+│   │   │   ├── common
+│   │   │   │   ├── api
+│   │   │   │   ├── error
+│   │   │   │   └── web
+│   │   │   ├── role
+│   │   │   └── user
+│   │   └── resources
+│   │       ├── application.yml
+│   │       └── db/migration
+│   └── test/java/com/example/admin
+└── target
 ```
 
-Maven 项目核心结构：
+按业务模块组织 `user` 和 `role`，共享响应、异常和 Web 横切能力放在 `common`。没有建立“所有 Controller 一个目录、所有 Service 一个目录”的横向大杂烩。
 
-```text
-src/main/java        Java 源码
-src/main/resources   配置、迁移、静态资源
-src/test/java        测试源码
-pom.xml              依赖和插件
+### 2. Maven 依赖
+
+完整 `pom.xml`：
+
+<<< ../../examples/java-admin-api/pom.xml{xml}
+
+重点理解：
+
+- Boot 4 使用更细分的 `spring-boot-starter-webmvc` 等 starter。
+- `spring-boot-starter-data-jpa` 提供 JPA、Hibernate 和 HikariCP 集成。
+- `spring-boot-starter-flyway` 加 `flyway-database-postgresql` 让迁移支持 PostgreSQL。
+- PostgreSQL 驱动只在运行时需要。
+- `spring-boot-testcontainers` 提供 `@ServiceConnection`。
+- Testcontainers 2 的 PostgreSQL 模块和类包名与旧教程不同，不要混用 1.x 示例。
+
+### 3. 入口类
+
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/JavaAdminApiApplication.java{java}
+
+`@SpringBootApplication` 所在包是 `com.example.admin`，因此其子包会被组件扫描。入口类不要放到 `com.example.bootstrap` 后又期待平级业务包自动被扫描。
+
+### 4. 先验证环境
+
+```bash
+java -version
+mvn -version
+docker version
+docker compose version
 ```
 
-启动类：
+验收标准：
 
-```java
-@SpringBootApplication
-public class AdminApiApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(AdminApiApplication.class, args);
-    }
+- Java 主版本是 25。
+- Maven 实际使用的 Java 也是 25。
+- Docker daemon 可连接。
+- 不依赖 IDE 内置 JDK 或全局隐藏配置。
+
+## 第二阶段：先设计契约，不从 Entity 开始
+
+### API 契约
+
+| 方法 | 路径 | 成功 | 典型失败 |
+| --- | --- | --- | --- |
+| GET | `/api/roles` | 200 + 有效角色 | 500 |
+| GET | `/api/users` | 200 + 分页数据 | 400 查询参数错误 |
+| GET | `/api/users/{id}` | 200 + 用户详情 | 404 用户不存在 |
+| POST | `/api/users` | 201 + Location | 400 校验/角色无效，409 邮箱重复 |
+| PUT | `/api/users/{id}` | 200 + 新版本 | 404，409 邮箱/版本冲突 |
+| PATCH | `/api/users/{id}/status` | 200 + 新状态 | 404，409 版本冲突 |
+| PUT | `/api/users/{id}/roles` | 200 + 新角色 | 400 角色无效，409 版本冲突 |
+
+### 成功响应
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "9fa6...",
+    "email": "ada@example.com",
+    "displayName": "Ada",
+    "status": "ACTIVE",
+    "roleCodes": ["ADMIN"],
+    "version": 1
+  },
+  "error": null,
+  "requestId": "2ad1..."
 }
 ```
 
-第一次运行只要确认三件事：
+### 失败响应
 
-1. 应用能启动。
-2. `/actuator/health` 能返回 UP。
-3. 日志里能看到当前环境、端口和数据库连接状态。
-
-## 分层设计
-
-推荐从业务模块切包，而不是按技术类型把所有 Controller、Service、Repository 分开放。
-
-```mermaid
-flowchart TD
-  A["user 模块"] --> B["api"]
-  A --> C["application"]
-  A --> D["domain"]
-  A --> E["infrastructure"]
-  B --> B1["Controller / Request / Response"]
-  C --> C1["UseCase / Service / Command / Query"]
-  D --> D1["Entity / Value Object / Domain Rule"]
-  E --> E1["Repository / JpaEntity / Mapper"]
+```json
+{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "请求参数不正确",
+    "fields": {
+      "email": "must be a well-formed email address"
+    }
+  },
+  "requestId": "2ad1..."
+}
 ```
 
-### 每层职责
+协议层提供稳定结构，前端不需要解析异常类名或数据库错误文本。
 
-| 层 | 放什么 | 不放什么 |
-| --- | --- | --- |
-| `api` | Controller、请求 DTO、响应 VO | 复杂业务、事务、SQL |
-| `application` | 用例服务、事务、业务编排 | HTTP 注解、数据库细节 |
-| `domain` | 业务实体、业务规则、值对象 | Spring MVC、Repository 细节 |
-| `infrastructure` | JPA/MyBatis、外部接口、技术适配 | 业务决策 |
-| `common` | 统一响应、异常、trace、基础工具 | 具体业务逻辑 |
+## 第三阶段：用迁移定义数据事实
 
-分层的目的不是增加目录，而是让你知道代码该放哪里。一个函数如果同时处理 HTTP、业务判断、SQL 和错误响应，后续一定难维护。
-
-## 数据模型
-
-先用最小权限后台建模：
+### 数据模型
 
 ```mermaid
 erDiagram
-  USERS ||--o{ USER_ROLES : owns
+  USERS ||--o{ USER_ROLES : has
   ROLES ||--o{ USER_ROLES : assigned
-
   USERS {
-    bigint id
-    varchar username
+    uuid id PK
     varchar email
+    varchar display_name
     varchar status
-    datetime created_at
-    datetime updated_at
+    bigint version
+    timestamptz created_at
+    timestamptz updated_at
   }
-
   ROLES {
-    bigint id
-    varchar code
+    uuid id PK
+    varchar code UK
     varchar name
     varchar status
-    datetime created_at
-    datetime updated_at
   }
-
   USER_ROLES {
-    bigint user_id
-    bigint role_id
-    datetime created_at
+    uuid user_id PK
+    uuid role_id PK
+    timestamptz created_at
   }
 ```
 
-### 迁移脚本示例
+### 第一版迁移
 
-下面以 PostgreSQL 为例。MySQL 可以把 `bigserial` 换成 `bigint auto_increment`，并使用字段 `comment` 或单独的数据字典文档记录说明。
+<<< ../../examples/java-admin-api/src/main/resources/db/migration/V1__create_user_role_schema.sql{sql}
 
-```sql
-create table users (
-  id bigserial primary key,
-  username varchar(64) not null,
-  email varchar(128) not null,
-  status varchar(20) not null,
-  created_at timestamp not null,
-  updated_at timestamp not null,
-  constraint uk_users_username unique (username),
-  constraint uk_users_email unique (email)
-);
+这份迁移明确了：
 
-create table roles (
-  id bigserial primary key,
-  code varchar(64) not null,
-  name varchar(64) not null,
-  status varchar(20) not null,
-  created_at timestamp not null,
-  updated_at timestamp not null,
-  constraint uk_roles_code unique (code)
-);
+- UUID 主键没有业务含义，接口可以安全暴露。
+- `lower(email)` 唯一索引表达“不区分大小写的邮箱唯一性”。
+- check constraint 让非法状态无法绕过应用写入。
+- `user_roles` 复合主键阻止重复授权。
+- 删除用户级联删除授权；删除仍被使用的角色被限制。
+- `version` 服务于乐观锁，不是展示字段。
+- 数据库注释记录字段业务语义、索引原因和删除行为。
 
-create table user_roles (
-  user_id bigint not null,
-  role_id bigint not null,
-  created_at timestamp not null,
-  primary key (user_id, role_id),
-  constraint fk_user_roles_user foreign key (user_id) references users(id),
-  constraint fk_user_roles_role foreign key (role_id) references roles(id)
-);
+### 种子角色
 
-comment on table users is '后台用户主表。保存可以登录或被授权访问后台系统的用户基础资料。';
-comment on column users.id is '用户主键。由数据库生成，不承载业务含义。';
-comment on column users.username is '登录名或后台显示用户名。全局唯一，避免同名账号导致审计和权限归属混乱。';
-comment on column users.email is '用户邮箱。全局唯一，可用于登录、通知和找回账号。';
-comment on column users.status is '用户状态。建议取值 ACTIVE、DISABLED；停用用户不能继续登录或执行后台操作。';
-comment on column users.created_at is '用户创建时间。用于审计、排序和问题追踪。';
-comment on column users.updated_at is '用户最后更新时间。用于判断数据是否被修改以及排查缓存旧值。';
+<<< ../../examples/java-admin-api/src/main/resources/db/migration/V2__seed_roles.sql{sql}
 
-comment on table roles is '后台角色主表。角色是一组菜单、按钮、接口或数据权限的业务集合。';
-comment on column roles.code is '角色编码。全局唯一，供程序判断和权限配置引用，创建后不要随意改名。';
-comment on column roles.name is '角色名称。给管理员阅读的展示文本，可以随业务调整。';
-comment on column roles.status is '角色状态。建议取值 ACTIVE、DISABLED；停用角色不应再参与授权判断。';
+种子数据使用固定 UUID，方便测试和本地联调。生产中角色编码 `ADMIN`、`VIEWER` 是稳定程序引用，展示名称可以国际化或修改。
 
-comment on table user_roles is '用户和角色的多对多关系表。用于表达一个用户拥有多个角色、一个角色分配给多个用户。';
-comment on column user_roles.user_id is '用户主键，引用 users.id。';
-comment on column user_roles.role_id is '角色主键，引用 roles.id。';
-comment on column user_roles.created_at is '绑定创建时间。用于审计授权来源和排查权限残留问题。';
-```
+### 为什么不使用 ddl-auto=create
 
-真实项目中，迁移脚本必须写清楚字段含义、约束原因和变更背景。比如 `status` 应说明取值范围，唯一索引应说明业务唯一性，关系表应说明是否允许重复绑定。上面的唯一约束是为了防止账号、邮箱和角色编码重复；关系表复合主键是为了防止同一用户重复绑定同一角色；外键是为了避免孤儿授权记录。
+`ddl-auto=create` 只能让当前实体“生成一份表”，不能可靠表达：
 
-## API 设计
+- 已有生产数据如何迁移。
+- 表达式唯一索引和数据库注释。
+- 约束为什么存在。
+- 多版本应用如何兼容。
+- 失败后如何回滚。
 
-不要一开始设计几十个接口。先完成用户管理闭环。
+项目使用 `ddl-auto=validate`：Flyway 负责改变结构，Hibernate 只验证映射。
 
-| 方法 | 路径 | 用途 |
+## 第四阶段：配置运行边界
+
+<<< ../../examples/java-admin-api/src/main/resources/application.yml{yaml}
+
+### 配置逐项解释
+
+| 配置 | 作用 | 错误做法 |
 | --- | --- | --- |
-| `GET` | `/api/users` | 用户分页列表 |
-| `GET` | `/api/users/{id}` | 用户详情 |
-| `POST` | `/api/users` | 新增用户 |
-| `PUT` | `/api/users/{id}` | 编辑用户 |
-| `PATCH` | `/api/users/{id}/status` | 启用或停用 |
-| `PUT` | `/api/users/{id}/roles` | 绑定角色 |
+| `server.shutdown=graceful` | 收到终止信号后排空请求 | 直接 kill 进程 |
+| `maximum-pool-size=10` | 限制每实例数据库连接 | 按 HTTP 并发设置几百个连接 |
+| `connection-timeout=3000` | 池耗尽时快速暴露 | 无限等待造成请求堆积 |
+| `open-in-view=false` | 事务外禁止隐式懒查询 | 在 JSON 序列化时偷偷查库 |
+| `ddl-auto=validate` | 验证实体与迁移一致 | 生产自动 update 表 |
+| UTC | 数据库存储统一时区 | 不同容器用本地时区 |
+| readiness 包含 db | 数据库不可用时摘流量 | liveness 也依赖数据库导致重启风暴 |
+| 日志 requestId | 串联响应和日志 | 只打印一段自然语言 |
 
-统一分页响应：
+环境变量覆盖默认值，默认密码仅用于本地示例。生产密钥必须由部署平台注入，不能提交真实密码。
 
-```json
-{
-  "code": "OK",
-  "message": "success",
-  "traceId": "8c2f3b9d",
-  "data": {
-    "items": [],
-    "page": 1,
-    "pageSize": 20,
-    "total": 0
-  }
-}
-```
+## 第五阶段：Entity 只维护持久化状态
 
-错误响应：
+### 用户状态
 
-```json
-{
-  "code": "USER_EMAIL_EXISTS",
-  "message": "邮箱已存在",
-  "traceId": "8c2f3b9d"
-}
-```
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/user/UserStatus.java{java}
 
-前后端联调时最怕响应结构漂移。建议把请求、响应、错误码和分页格式写入 `API_CONTRACT.md`。
+### 用户实体
 
-## DTO、Entity 和 ViewModel
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/user/UserEntity.java{java}
 
-不要把数据库 Entity 直接返回给前端。
+重点：
 
-```mermaid
-flowchart LR
-  A["HTTP Request"] --> B["Request DTO"]
-  B --> C["Command / Query"]
-  C --> D["Domain / Entity"]
-  D --> E["Repository"]
-  E --> F["Database"]
-  D --> G["Response View"]
-  G --> H["HTTP Response"]
-```
+- `@Version` 让 Hibernate 在更新 SQL 中检查旧版本。
+- 角色使用懒加载，查询策略由用例决定，而不是每次都把角色全部加载。
+- 修改方法集中维护对象状态，不把字段 setter 暴露给所有调用方。
+- `@PrePersist`、`@PreUpdate` 统一维护时间。
+- `getRoles()` 返回只读副本，外部不能绕过 `replaceRoles` 修改集合。
+
+### 角色实体
+
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/role/RoleEntity.java{java}
+
+JPA Entity 的 `equals/hashCode` 要谨慎。这里 UUID 在创建时就稳定，因此按 id 判断。不要把可修改的 `name`、`status` 放进哈希计算，否则对象加入 Set 后再修改会破坏集合行为。
+
+## 第六阶段：DTO 和 View 隔离外部契约
 
 ### 请求 DTO
 
-```java
-public record CreateUserRequest(
-    @NotBlank(message = "用户名不能为空")
-    @Size(max = 64, message = "用户名不能超过 64 个字符")
-    String username,
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/user/UserRequests.java{java}
 
-    @NotBlank(message = "邮箱不能为空")
-    @Email(message = "邮箱格式不正确")
-    String email,
+校验分两层：
 
-    List<Long> roleIds
-) {
-}
-```
+1. Bean Validation 检查格式：非空、邮箱、长度、集合大小和非负版本。
+2. Service 检查业务：邮箱是否已存在、角色是否有效、版本是否仍然新鲜。
 
-### 响应 VO
+只做第一层无法发现重复邮箱；只做第二层会让 Service 充斥基础格式判断。
 
-```java
-public record UserView(
-    Long id,
-    String username,
-    String email,
-    String status,
-    List<String> roleCodes
-) {
-}
-```
+### 响应 View
 
-DTO 和 VO 的作用是保护边界。数据库字段可以变，前端展示字段也可以变，但不要让两边直接互相牵连。
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/user/UserView.java{java}
 
-## Service 和事务边界
+View 只返回前端需要的数据，不序列化 Entity。这样可以：
 
-创建用户并绑定角色是一个典型事务场景：用户创建成功但角色绑定失败时，不能留下半成品。
+- 避免懒加载在序列化阶段触发。
+- 不意外暴露未来添加的密码哈希或内部字段。
+- 自由排序角色编码。
+- 让接口契约与表结构独立演进。
+
+### 通用响应和分页
+
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/common/api/ApiError.java{java}
+
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/common/api/ApiResponse.java{java}
+
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/common/api/PageData.java{java}
+
+Record 适合不可变传输对象。紧凑构造器对集合执行 `copyOf`，避免调用方随后修改列表或错误字段。
+
+## 第七阶段：Repository 明确查询意图
+
+### 用户仓储
+
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/user/UserRepository.java{java}
+
+列表查询没有直接 fetch join 角色，而是分两步：
 
 ```mermaid
 sequenceDiagram
-  participant API as UserController
   participant S as UserService
   participant U as UserRepository
-  participant R as RoleRepository
-  participant UR as UserRoleRepository
-  API->>S: createUser(request)
-  S->>U: check username/email
-  S->>R: load roles
-  S->>U: save user
-  S->>UR: save user-role relations
-  S-->>API: UserView
+  participant DB as PostgreSQL
+  S->>U: search(query, pageable)
+  U->>DB: 1. 查询一页 users + count
+  DB-->>S: 用户页
+  S->>U: findRoleCodes(userIds)
+  U->>DB: 2. 批量查询本页角色
+  DB-->>S: userId-roleCode 行
+  S->>S: 在内存按 userId 分组
 ```
 
-Service 示例：
+这避免了“每个用户再查一次角色”的 N+1，也避免集合 fetch join 与分页组合产生行膨胀。详情用 `@EntityGraph` 显式加载角色，因为详情只有一个用户。
 
-```java
-@Service
-public class UserService {
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+### 角色仓储和服务
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-    }
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/role/RoleRepository.java{java}
 
-    @Transactional
-    public UserView create(CreateUserCommand command) {
-        if (userRepository.existsByEmail(command.email())) {
-            throw new BusinessException("USER_EMAIL_EXISTS", "邮箱已存在");
-        }
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/role/RoleService.java{java}
 
-        User user = User.create(command.username(), command.email());
-        List<Role> roles = roleRepository.findAllById(command.roleIds());
-        user.bindRoles(roles);
-        userRepository.save(user);
+只读事务仍然放在 Service，不放在 Controller。Controller 不应该知道 Repository，也不应该决定事务。
 
-        return UserViewMapper.toView(user);
-    }
-}
-```
+## 第八阶段：Service 承载业务与事务
 
-事务建议：
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/user/UserService.java{java}
 
-- 事务放在应用服务层，不放在 Controller。
-- 同一个业务闭环只有一个主要事务入口。
-- 不要在事务里做慢外部 HTTP 调用。
-- 业务失败抛异常，不要 catch 后继续提交。
-- 只读查询使用只读事务或明确查询边界。
-
-## 统一异常和 traceId
-
-接口错误不能只返回 500。前端需要知道错误类型，后端需要能从响应定位日志。
+### 创建用户的执行顺序
 
 ```mermaid
-flowchart TD
-  A["请求进入"] --> B["生成 traceId"]
-  B --> C["Controller 参数校验"]
-  C --> D{"是否通过"}
-  D -- "否" --> E["参数错误响应"]
-  D -- "是" --> F["Service 业务处理"]
-  F --> G{"是否业务失败"}
-  G -- "是" --> H["业务错误响应"]
-  G -- "否" --> I["成功响应"]
-  E --> J["日志记录 traceId"]
-  H --> J
-  I --> J
+sequenceDiagram
+  participant C as Controller
+  participant P as Transaction Proxy
+  participant S as UserService
+  participant R as Repositories
+  participant DB as PostgreSQL
+  C->>P: create(request)
+  P->>DB: BEGIN
+  P->>S: 进入业务方法
+  S->>R: 检查邮箱与角色
+  S->>R: saveAndFlush
+  R->>DB: INSERT user + user_roles
+  DB-->>S: version / timestamps
+  S-->>P: UserView
+  P->>DB: COMMIT
+  P-->>C: 返回响应
 ```
 
-统一异常处理：
+### 一个真实的 merge 陷阱
+
+项目使用应用生成 UUID。Spring Data 看到 id 非空时可能调用 EntityManager `merge`。JPA 的规则是：
+
+- 传入 `merge` 的对象不自动变成 Managed。
+- `merge` 返回的对象才是 Managed 实例。
+- flush 后的 `@Version`、创建时间等最终值写在 Managed 实例上。
+
+因此必须写：
 
 ```java
-@RestControllerAdvice
-public class GlobalExceptionHandler {
-    @ExceptionHandler(BusinessException.class)
-    public ApiResponse<Void> handleBusiness(BusinessException exception) {
-        return ApiResponse.error(exception.code(), exception.getMessage());
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ApiResponse<Void> handleValidation(MethodArgumentNotValidException exception) {
-        return ApiResponse.error("VALIDATION_ERROR", "请求参数不正确");
-    }
-}
+user = userRepository.saveAndFlush(user);
+return UserView.from(user, roleCodes);
 ```
 
-日志建议：
+如果忽略返回值，接口可能返回 `version=0`，数据库提交后却已经是 `version=1`。客户端拿刚收到的 0 立即更新，就会被错误地判定为旧版本。本项目的集成测试曾真实捕获这个问题。
 
-- 每个请求都有 traceId。
-- 业务错误记录 warn，系统错误记录 error。
-- 日志里不要打印密码、token、身份证、银行卡等敏感值。
-- 慢接口记录耗时、用户、路径和关键业务参数。
+### 为什么主动 flush
 
-## 测试策略
+JPA 通常在提交前自动 flush，但接口需要在离开 Service 前知道：
 
-不要等整个项目写完才测试。每一层都有自己的测试重点。
+- 唯一约束是否冲突。
+- 乐观锁是否失败。
+- 返回给客户端的版本和时间戳是什么。
 
-```mermaid
-flowchart TD
-  A["测试"] --> B["单元测试"]
-  A --> C["接口测试"]
-  A --> D["数据访问测试"]
-  A --> E["构建和启动检查"]
-  B --> B1["业务规则、状态流转"]
-  C --> C1["参数校验、状态码、响应结构"]
-  D --> D1["Repository、迁移脚本、约束"]
-  E --> E1["profile、配置、健康检查"]
+`flush` 不等于 commit；之后抛异常仍会回滚。
+
+### 预检查不能替代数据库约束
+
+两个请求可能同时执行：
+
+```text
+请求 A：邮箱不存在
+请求 B：邮箱不存在
+请求 A：INSERT 成功
+请求 B：INSERT 触发唯一约束
 ```
 
-| 测试类型 | 重点 | 示例 |
-| --- | --- | --- |
-| Service 单元测试 | 业务规则和异常分支 | 邮箱重复时抛业务异常 |
-| Controller 测试 | 参数校验和响应结构 | 缺少 email 返回 `VALIDATION_ERROR` |
-| Repository 测试 | 查询、唯一索引、关系表 | username 唯一约束生效 |
-| 启动测试 | 配置和 Bean 是否完整 | test profile 能启动 |
+`existsByEmailIgnoreCase` 用于给大多数请求更清晰的业务错误，数据库唯一索引负责最终一致性，`DataIntegrityViolationException` 负责处理竞态。
 
-最小验收命令：
+## 第九阶段：Controller 只做协议适配
 
-```bash
-./mvnw test
-./mvnw package
-java -jar target/java-admin-api.jar --spring.profiles.active=dev
-```
+### 用户接口
 
-## 配置和环境
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/user/UserController.java{java}
 
-配置要分层：默认配置、环境配置、敏感配置不能混在一起。
+Controller 的职责只有：
 
-```yaml
-server:
-  port: 8080
+- 把路径、查询和 JSON 绑定为 Java 类型。
+- 触发 Bean Validation。
+- 调用一个明确 Service 用例。
+- 设置 201、Location 等 HTTP 语义。
+- 包装统一响应和 request id。
 
-spring:
-  application:
-    name: java-admin-api
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-  jpa:
-    open-in-view: false
-  flyway:
-    enabled: true
+它不写事务、不访问 Repository、不拼业务错误。
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics
-```
+### 角色接口
 
-配置检查清单：
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/role/RoleController.java{java}
 
-- `DB_URL`、`DB_USERNAME`、`DB_PASSWORD` 不写死在仓库。
-- README 写清本地开发需要哪些环境变量。
-- `dev`、`test`、`prod` 配置差异明确。
-- 生产环境不要暴露过多 actuator 端点。
-- 日志级别和 SQL 日志按环境区分。
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/role/RoleView.java{java}
 
-## 本地运行流程
+## 第十阶段：统一错误和 request id
+
+### 业务异常
+
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/common/error/AppException.java{java}
+
+### 全局异常映射
+
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/common/error/GlobalExceptionHandler.java{java}
+
+异常映射保留四条原则：
+
+1. 可预期错误返回稳定状态码和业务 code。
+2. 字段错误返回 `fields`，便于前端定位表单项。
+3. 未预期异常完整记录服务端堆栈，但客户端只看到安全文本。
+4. 不存在的 API 路由也使用同一错误契约。
+
+### 请求 ID 过滤器
+
+<<< ../../examples/java-admin-api/src/main/java/com/example/admin/common/web/RequestIdFilter.java{java}
 
 ```mermaid
 flowchart LR
-  A["安装 JDK"] --> B["克隆项目"]
-  B --> C["配置环境变量"]
-  C --> D["启动数据库"]
-  D --> E["运行迁移"]
-  E --> F["启动 Spring Boot"]
-  F --> G["访问 health"]
-  G --> H["用 API 工具联调"]
+  A["请求进入"] --> B["生成 UUID"]
+  B --> C["request attribute"]
+  B --> D["X-Request-Id 响应头"]
+  B --> E["MDC requestId"]
+  E --> F["Service / Repository 日志"]
+  F --> G["finally 清理 MDC"]
 ```
 
-建议 README 写成这样：
+`finally` 清理非常重要。Servlet 平台线程会复用；若 MDC 不清理，后续请求可能继承前一条 request id。
 
-```md
-# java-admin-api
+## 第十一阶段：运行和手工联调
 
-## 环境要求
+### 1. 只启动数据库
 
-- Java 17+
-- Maven Wrapper
-- PostgreSQL 或 MySQL
-
-## 本地启动
-
-1. 创建数据库
-2. 设置 DB_URL、DB_USERNAME、DB_PASSWORD
-3. 执行 ./mvnw spring-boot:run
-4. 访问 /actuator/health
-
-## 常用命令
-
-## 接口文档
-
-## 常见问题
+```bash
+cd examples/java-admin-api
+docker compose up -d postgres
 ```
 
-## 交付验收
+### 2. 在 Java 25 环境启动 API
 
-| 项目 | 验收标准 |
-| --- | --- |
-| 项目能启动 | 本地和 test profile 都能启动 |
-| 迁移能执行 | 空库启动后自动创建表 |
-| 用户 CRUD | 新增、编辑、查询、启停能闭环 |
-| 角色绑定 | 创建用户时能绑定角色，失败能回滚 |
-| 参数校验 | 必填、格式、长度错误返回统一响应 |
-| 错误处理 | 业务错误和系统错误能区分 |
-| traceId | 响应和日志能对齐 |
-| 测试 | 核心 Service、Controller、Repository 有测试 |
-| 文档 | README、API_CONTRACT、TROUBLESHOOTING 完整 |
-| 部署 | 能打包成 jar，能通过环境变量运行 |
+```bash
+mvn spring-boot:run
+```
 
-## 常见问题和排查
+也可以一次启动完整容器：
 
-| 问题 | 先查什么 | 对应章节 |
-| --- | --- | --- |
-| 启动失败 | 最底层 `Caused by`、端口、数据源、Bean | [Java 常见问题](/java/troubleshooting) |
-| 接口 400 | DTO 校验、请求 JSON、字段类型 | 参数校验 |
-| 接口 500 | 异常栈、traceId、Service 日志 | 统一异常和 traceId |
-| 新增用户后角色没绑定 | 事务、关系表、角色 ID 是否存在 | Service 和事务边界 |
-| 事务不回滚 | 异常是否被 catch、是否同类内部调用 | [数据库、事务与 ORM](/java/persistence-transaction) |
-| 本地能跑线上失败 | 环境变量、profile、数据库迁移、端口 | 配置和环境 |
-| 查询很慢 | SQL、索引、分页、N+1 查询 | [数据库与缓存问题](/projects/issues-database) |
+```bash
+docker compose up --build
+```
 
-## 练习任务
+下面是 2026-07-21 使用 Java 25.0.1 容器实际执行后的状态。先看启动链：PostgreSQL 通过健康检查，Flyway 从 V1 执行到 V2，API 以 uid 10001 运行，最后 readiness 返回 `UP`。
 
-按下面顺序做，不要一开始就堆复杂功能。
+<DocFigure
+  src="/images/java/java-admin-api-ready.webp"
+  alt="Java Admin API 容器依次完成 PostgreSQL 健康检查、Flyway V2 迁移、非 root 启动并返回 readiness UP"
+  caption="Readiness 是数据库、迁移和 Spring Context 都可服务的证据，不等同于 Java 进程还活着。"
+  :width="1440"
+  :height="900"
+/>
 
-1. 创建项目并让 health 接口可访问。
-2. 建 users、roles、user_roles 三张表和迁移脚本。
-3. 写用户分页列表接口。
-4. 写新增用户接口和参数校验。
-5. 加邮箱唯一性业务校验。
-6. 加角色绑定和事务。
-7. 加统一错误响应和 traceId。
-8. 写 Service 和 Controller 测试。
-9. 写 README、API_CONTRACT、TROUBLESHOOTING。
-10. 打包 jar，用环境变量启动一次。
+对应文本证据：测试使用 Java 25.0.1、Spring Boot 4.1.0 与 PostgreSQL 18.4；`mvn -B -ntp test` 共运行 9 个测试且无失败；`docker inspect` 显示运行用户为 `10001`；readiness 响应为 `{"status":"UP"}`。
 
-完成后，把这个后端接给一个 Vue Admin 用户管理页面。前端如果出现 401、403、分页字段、错误响应或旧数据问题，回到 [前端项目排障图谱](/projects/frontend-debugging-map) 和 [前后端联调排查](/projects/integration-debugging)。
+### 3. 检查角色
+
+```bash
+curl -i http://127.0.0.1:8080/api/roles
+```
+
+记录 ADMIN 角色 id，示例种子值是 `00000000-0000-0000-0000-000000000001`。
+
+### 4. 创建用户
+
+```bash
+curl -i -X POST http://127.0.0.1:8080/api/users \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "email": "Ada@Example.com",
+    "displayName": "Ada",
+    "roleIds": ["00000000-0000-0000-0000-000000000001"]
+  }'
+```
+
+检查四件事：
+
+- 状态码是 201。
+- Location 指向新用户。
+- 邮箱被规范化为小写。
+- 响应中的 `version`、`createdAt` 不为空。
+
+### 5. 搜索用户
+
+```bash
+curl 'http://127.0.0.1:8080/api/users?q=ada&page=0&pageSize=20'
+```
+
+### 6. 乐观锁实验
+
+先从创建响应记录 `id` 和 `version`：
+
+```bash
+curl -i -X PATCH http://127.0.0.1:8080/api/users/USER_ID/status \
+  -H 'Content-Type: application/json' \
+  -d '{"status":"DISABLED","expectedVersion":CURRENT_VERSION}'
+```
+
+再次使用旧版本发送修改，应得到：
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "STALE_VERSION",
+    "message": "数据已被其他请求修改，请刷新后重试"
+  }
+}
+```
+
+实际冒烟流程中，创建用户返回 `version=1`，第一次状态更新成功并返回 `version=2`；再次携带旧 `expectedVersion=1` 时，服务稳定返回 `409 STALE_VERSION`。
+
+<DocFigure
+  src="/images/java/java-admin-version-conflict.webp"
+  alt="Java Admin API 两个客户端同时持有 version 1，第一个更新到 version 2，第二个收到 409 STALE_VERSION"
+  caption="乐观锁保护的是“不要用旧页面覆盖新数据”；收到 409 后要重新读取并让用户决定，而不是自动重放旧请求。"
+  :width="1440"
+  :height="900"
+/>
+
+## 第十二阶段：测试真实边界
+
+### Testcontainers 配置
+
+<<< ../../examples/java-admin-api/src/test/java/com/example/admin/TestcontainersConfiguration.java{java}
+
+`@ServiceConnection` 会把容器生成的 JDBC 连接信息注入 DataSource，优先于普通连接配置。测试不需要硬编码随机端口。
+
+### Service 单元测试
+
+<<< ../../examples/java-admin-api/src/test/java/com/example/admin/user/UserServiceTest.java{java}
+
+单元测试快速证明重复邮箱会在访问角色和写库前停止，以及无效角色会返回明确业务错误。Mock 只验证分支，不用它证明数据库约束。
+
+### API 集成测试
+
+<<< ../../examples/java-admin-api/src/test/java/com/example/admin/UserApiIntegrationTest.java{java}
+
+集成测试启动完整 Spring Context 和 PostgreSQL 18，真实执行两条 Flyway 迁移，并覆盖：
+
+- 角色种子。
+- 创建、搜索、状态修改完整链路。
+- 创建响应中的最终版本和时间戳。
+- 旧版本冲突。
+- 邮箱重复。
+- 字段校验。
+- 缺失 `expectedVersion` 的更新被字段校验拒绝。
+- 非法 UUID、查询参数类型、HTTP 方法和 Content-Type 返回稳定 4xx 错误码。
+- 未知路由统一 404 契约。
+
+### 数据库并发与约束测试
+
+<<< ../../examples/java-admin-api/src/test/java/com/example/admin/UserPersistenceIntegrationTest.java{java}
+
+这组测试绕过业务层的预检查，直接证明两条最终防线：PostgreSQL 的 `lower(email)` 唯一索引拒绝大小写不同的重复邮箱，JPA `@Version` 拒绝第二个基于旧快照提交的更新。只有业务预检查测试通过，不能证明并发请求下数据库仍然安全。
+
+运行：
+
+```bash
+mvn test
+```
+
+在没有 Java 25 的机器上，可以使用与项目一致的构建镜像：
+
+```bash
+docker run --rm \
+  -v "$PWD":/workspace \
+  -w /workspace \
+  -v "$HOME/.m2":/root/.m2 \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  maven:3.9.11-eclipse-temurin-25 \
+  mvn -B -ntp test
+```
+
+Docker Desktop 上从容器内部运行 Testcontainers 时，可能还需要设置 `TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal`。这是测试执行环境的 Docker 网络问题，不应改写应用数据库配置来绕过。
+
+## 第十三阶段：容器和部署
+
+### Dockerfile
+
+<<< ../../examples/java-admin-api/Dockerfile{dockerfile}
+
+设计要点：
+
+- build stage 使用 JDK 25 和 Maven。
+- 先复制 pom 下载依赖，提高源码变更后的缓存命中率。
+- runtime stage 使用 JRE 25，不携带 Maven 和源码。
+- UID 10001 非 root 运行。
+- `MaxRAMPercentage` 让 JVM 依据容器内存预算设置堆上限。
+
+### Compose
+
+<<< ../../examples/java-admin-api/compose.yaml{yaml}
+
+PostgreSQL 18 的持久化目录是 `/var/lib/postgresql`。本地端口只绑定 `127.0.0.1`，避免示例凭据和未认证 API 暴露到局域网；部署到真实环境时应交给平台网络、密钥和认证策略。API 等数据库健康后才启动，但这不替代应用自身的连接重试、readiness 和发布策略。`stop_grace_period: 25s` 比应用 20 秒排空预算更长，确保普通 Compose 停止流程不会提前强杀进程。
+
+### 构建与启动
+
+```bash
+docker compose build --no-cache
+docker compose up -d
+docker compose ps
+docker compose logs -f api
+```
+
+### 健康检查
+
+```bash
+curl -i http://127.0.0.1:8080/actuator/health/liveness
+curl -i http://127.0.0.1:8080/actuator/health/readiness
+```
+
+正常时两者都返回 200。停止 PostgreSQL 后，预期：
+
+- liveness 仍是 200：Java 进程没有死，不应被重启风暴放大故障。
+- readiness 变为 503：当前实例不能正常服务，应停止接收新流量。
+
+### 优雅停机时间线
+
+```mermaid
+sequenceDiagram
+  participant P as Docker / 平台
+  participant A as Spring Boot
+  participant LB as 负载均衡
+  participant H as HikariCP
+  P->>A: SIGTERM
+  A->>LB: readiness DOWN
+  LB-->>A: 停止新请求
+  A->>A: 等待在途请求，最长 20s
+  A->>H: 关闭连接池
+  A-->>P: 退出
+```
+
+```bash
+docker compose stop -t 25 api
+docker compose logs api
+```
+
+日志中应出现 Web Server 和 HikariPool 的关闭过程，不应直接以 137 被强制终止。
+
+## 第十四阶段：必须亲手做的故障注入
+
+### 故障 1：重复邮箱
+
+并发发送两个相同邮箱的创建请求。一个成功，另一个必须返回 409。证明数据库唯一索引是最终防线。
+
+### 故障 2：无效角色
+
+传入随机 UUID，必须返回 400 `INVALID_ROLE`，且用户表没有新增记录。
+
+### 故障 3：旧页面覆盖
+
+两个客户端读取同一个版本，先后提交。第二个必须收到 409，而不是静默覆盖第一个人的修改。
+
+### 故障 4：N+1
+
+临时把列表角色组装改为逐个调用 `getRoles()`，打开 SQL 日志观察查询数量随用户数增长；恢复批量 projection 后，查询数量应保持固定级别。
+
+### 故障 5：连接池耗尽
+
+在事务内加入短暂等待并并发压测，观察 active/pending 和 connection timeout。删除等待后回归。不要通过无限放大池来掩盖长事务。
+
+### 故障 6：数据库中断
+
+服务运行时停止 PostgreSQL，验证业务请求失败、readiness 503、liveness 200；恢复数据库后 readiness 应恢复。
+
+## 第十五阶段：上线前验收
+
+### 功能
+
+- [ ] 角色列表只返回 ACTIVE 角色。
+- [ ] 邮箱入库前统一小写和去空格。
+- [ ] 重复邮箱稳定返回 409。
+- [ ] 无效或停用角色稳定返回 400。
+- [ ] 搜索、分页和稳定排序正确。
+- [ ] 更新资料、状态和角色都要求 `expectedVersion`。
+
+### 数据
+
+- [ ] 空数据库可按 V1、V2 成功迁移。
+- [ ] 实体映射通过 `ddl-auto=validate`。
+- [ ] 唯一、check、外键和删除行为有测试或手工证据。
+- [ ] 列表没有 N+1。
+- [ ] 事务内不执行长时间远程调用。
+
+### API 与安全
+
+- [ ] Entity 不直接作为响应。
+- [ ] 字段校验错误可以定位到字段。
+- [ ] 未知路由也使用统一错误结构。
+- [ ] 500 不向客户端暴露堆栈、SQL 或配置。
+- [ ] request id 同时存在于响应头、响应体和日志。
+
+### 测试与部署
+
+- [ ] `mvn test` 在 Java 25 上通过。
+- [ ] Testcontainers 使用真实 PostgreSQL 18。
+- [ ] Docker 镜像从干净源码构建。
+- [ ] 运行容器不是 root。
+- [ ] liveness 和 readiness 语义不同。
+- [ ] SIGTERM 能在超时内排空并退出。
+- [ ] 数据库备份、迁移回滚和应用回滚顺序已写入发布单。
+
+## 常见疑问
+
+### 为什么没有 Lombok
+
+本项目重点是理解实体、构造器和边界，手写的代码量仍可控。引入 Lombok 会增加编译期处理器和 IDE 配置，不是完成目标所必需。
+
+### 为什么不用 H2 测试
+
+H2 无法等价证明 PostgreSQL 的表达式索引、类型、约束、事务和 SQL 行为。Testcontainers 让测试与生产数据库家族一致。
+
+### 为什么 Service 返回 View，而不是 Entity
+
+事务结束后 Entity 的懒关联不可再随意访问；View 在事务内组装好公开字段，协议稳定且不会泄露内部状态。
+
+### 为什么不把事务放在 Controller
+
+Controller 是 HTTP 边界，业务用例可能还会被任务、消息消费者或其他服务调用。事务属于应用服务用例，放在 Controller 会让非 HTTP 调用失去一致性。
+
+### 为什么创建后版本可能不是 0
+
+用户与角色集合在首次持久化时也可能触发实体版本推进。客户端不应假设初始值，只应使用服务端实际返回的版本。项目显式 flush 并保留 merge 返回实例，就是为了保证响应与数据库一致。
 
 ## 参考资料
 
 - [Spring Boot Documentation](https://docs.spring.io/spring-boot/documentation.html)
-- [Spring Boot Getting Started Guide](https://spring.io/guides/gs/spring-boot)
-- [Spring Initializr](https://start.spring.io/)
 - [Spring Boot System Requirements](https://docs.spring.io/spring-boot/system-requirements.html)
+- [Spring Data JPA Reference](https://docs.spring.io/spring-data/jpa/reference/)
+- [Spring Transaction Management](https://docs.spring.io/spring-framework/reference/data-access/transaction.html)
+- [Spring Boot Testcontainers](https://docs.spring.io/spring-boot/reference/testing/testcontainers.html)
+- [PostgreSQL 18 Documentation](https://www.postgresql.org/docs/18/)
 
-## 下一步学习
+## 下一步
 
-继续学习 [数据库、事务与 ORM](/java/persistence-transaction)，再进入 [测试、打包与部署](/java/testing-deployment)。如果你正在做全栈项目，把本页接口接到 [Vue 从零到项目落地](/vue/project-from-zero) 或 [前端综合实战练习](/roadmap/frontend-capstone-lab) 中。
+先运行本章完整示例并完成六个故障注入，再进入 [Java 专项练习](/roadmap/java-practice) 和 [Java 真实项目问题库](/projects/issues-java)。需要加入登录和接口权限时，继续 [Spring Security 权限认证项目](/java/spring-security-permission)。

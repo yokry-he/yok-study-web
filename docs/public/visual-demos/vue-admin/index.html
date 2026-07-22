@@ -1,0 +1,977 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Admin 视觉演示</title>
+    <link rel="stylesheet" href="../shared/demo.css" />
+    <style>
+      body {
+        background: #edf3f0;
+      }
+
+      .admin-app {
+        display: grid;
+        width: 100vw;
+        min-height: 100vh;
+        grid-template-columns: 236px minmax(0, 1fr);
+        grid-template-rows: 68px minmax(0, 1fr);
+      }
+
+      .admin-header {
+        z-index: 4;
+        grid-column: 1 / -1;
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        border-bottom: 1px solid #c8d8d2;
+        background: #ffffff;
+      }
+
+      .admin-header__brand {
+        display: flex;
+        width: 236px;
+        flex: 0 0 236px;
+        align-items: center;
+        gap: 12px;
+        padding: 0 24px;
+        color: #17221e;
+        font-size: 20px;
+        font-weight: 900;
+      }
+
+      .admin-header__logo {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        place-items: center;
+        border-radius: 8px;
+        background: #087f68;
+        color: #ffffff;
+      }
+
+      .admin-header__menu {
+        display: none;
+        width: 44px;
+        height: 44px;
+        border: 1px solid #b9cbc4;
+        border-radius: 6px;
+        background: #ffffff;
+        font-size: 22px;
+      }
+
+      .admin-header__search {
+        width: min(420px, 36vw);
+        min-height: 42px;
+        margin-left: 28px;
+        border: 1px solid #c0d0ca;
+        border-radius: 6px;
+        padding: 0 14px;
+        background: #f7faf8;
+        color: #52645d;
+      }
+
+      .admin-header__actions {
+        display: flex;
+        min-width: 0;
+        align-items: center;
+        gap: 14px;
+        margin-left: auto;
+        padding-right: 24px;
+      }
+
+      .admin-header__icon {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        flex: 0 0 42px;
+        place-items: center;
+        border: 1px solid #c0d0ca;
+        border-radius: 50%;
+        background: #ffffff;
+        color: #41524c;
+        font-weight: 900;
+      }
+
+      .admin-header__avatar {
+        background: #2d7390;
+        color: #ffffff;
+      }
+
+      .admin-sidebar {
+        padding: 22px 14px;
+        border-right: 1px solid #c8d8d2;
+        background: #f7faf8;
+      }
+
+      .admin-sidebar__group {
+        margin: 12px 12px 8px;
+        color: #7a8a84;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .admin-sidebar__nav {
+        display: grid;
+        gap: 6px;
+      }
+
+      .admin-sidebar__item {
+        display: flex;
+        min-height: 44px;
+        align-items: center;
+        gap: 12px;
+        border-radius: 6px;
+        padding: 0 14px;
+        color: #41524c;
+        font-size: 14px;
+        font-weight: 750;
+      }
+
+      .admin-sidebar__item--active {
+        background: #e5f5ef;
+        color: #087f68;
+      }
+
+      .admin-sidebar__mark {
+        display: grid;
+        width: 24px;
+        height: 24px;
+        flex: 0 0 24px;
+        place-items: center;
+        border: 1px solid currentColor;
+        border-radius: 5px;
+        font-size: 12px;
+      }
+
+      .admin-main {
+        position: relative;
+        min-width: 0;
+        padding: 28px 30px 36px;
+        overflow: hidden;
+      }
+
+      .admin-page-head {
+        display: flex;
+        min-width: 0;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .admin-page-head__copy {
+        min-width: 0;
+      }
+
+      .admin-page-head__title {
+        margin: 0;
+        font-size: 28px;
+        line-height: 1.25;
+      }
+
+      .admin-page-head__subtitle {
+        margin: 8px 0 0;
+        color: #64766f;
+        font-size: 14px;
+      }
+
+      .admin-section {
+        margin-top: 22px;
+        border: 1px solid #c8d8d2;
+        border-radius: 8px;
+        background: #ffffff;
+      }
+
+      .admin-section__head {
+        display: flex;
+        min-height: 58px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        border-bottom: 1px solid #dde6e2;
+        padding: 0 20px;
+      }
+
+      .admin-section__title {
+        margin: 0;
+        font-size: 17px;
+      }
+
+      .admin-section__body {
+        padding: 20px;
+      }
+
+      .admin-filter {
+        display: grid;
+        grid-template-columns: minmax(180px, 1.4fr) minmax(140px, 0.8fr) minmax(210px, 1fr) auto;
+        gap: 14px;
+        align-items: end;
+      }
+
+      .admin-filter__actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .admin-result-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin: 20px 0 10px;
+        color: #64766f;
+        font-size: 14px;
+      }
+
+      .admin-pagination {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        padding: 16px 18px;
+      }
+
+      .admin-pagination__item {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border: 1px solid #c0d0ca;
+        border-radius: 5px;
+        background: #ffffff;
+        color: #41524c;
+      }
+
+      .admin-pagination__item--active {
+        border-color: #087f68;
+        background: #087f68;
+        color: #ffffff;
+      }
+
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 22px;
+      }
+
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.7fr) minmax(290px, 0.8fr);
+        gap: 18px;
+      }
+
+      .bar-chart {
+        display: flex;
+        height: 250px;
+        align-items: flex-end;
+        justify-content: space-around;
+        gap: 16px;
+        padding: 26px 20px 14px;
+        border-bottom: 1px solid #b9cbc4;
+      }
+
+      .bar-chart__item {
+        display: flex;
+        height: 100%;
+        flex: 1 1 0;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 8px;
+        color: #64766f;
+        font-size: 12px;
+        text-align: center;
+      }
+
+      .bar-chart__bar {
+        width: 100%;
+        min-height: 20px;
+        border-radius: 5px 5px 0 0;
+        background: #09a17f;
+      }
+
+      .bar-chart__bar--alt {
+        background: #2d7390;
+      }
+
+      .activity-list {
+        display: grid;
+        gap: 18px;
+      }
+
+      .activity-item {
+        display: grid;
+        grid-template-columns: 10px minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .activity-item__dot {
+        width: 10px;
+        height: 10px;
+        margin-top: 5px;
+        border-radius: 50%;
+        background: #09a17f;
+      }
+
+      .activity-item__title {
+        margin: 0;
+        color: #2b3a35;
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .activity-item__time {
+        display: block;
+        margin-top: 5px;
+        color: #82918c;
+        font-size: 12px;
+      }
+
+      .empty-state {
+        display: grid;
+        min-height: 360px;
+        place-items: center;
+        text-align: center;
+      }
+
+      .empty-state__mark {
+        display: grid;
+        width: 90px;
+        height: 90px;
+        margin: 0 auto;
+        place-items: center;
+        border: 2px dashed #9fb3ac;
+        border-radius: 50%;
+        color: #64766f;
+        font-size: 34px;
+      }
+
+      .empty-state__title {
+        margin: 22px 0 8px;
+        font-size: 20px;
+      }
+
+      .empty-state__copy {
+        margin: 0 0 20px;
+        color: #64766f;
+      }
+
+      .drawer-mask {
+        position: absolute;
+        z-index: 8;
+        inset: 0;
+        background: rgb(23 34 30 / 24%);
+      }
+
+      .admin-drawer {
+        position: absolute;
+        z-index: 9;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(520px, 92%);
+        border-left: 1px solid #aebfb9;
+        background: #ffffff;
+      }
+
+      .admin-drawer__head {
+        display: flex;
+        min-height: 68px;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #dde6e2;
+        padding: 0 24px;
+      }
+
+      .admin-drawer__title {
+        margin: 0;
+        font-size: 21px;
+      }
+
+      .admin-drawer__close {
+        width: 42px;
+        height: 42px;
+        border: 0;
+        background: transparent;
+        color: #52645d;
+        font-size: 25px;
+      }
+
+      .admin-drawer__body {
+        display: grid;
+        gap: 20px;
+        padding: 24px;
+      }
+
+      .admin-drawer__footer {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        border-top: 1px solid #dde6e2;
+        padding: 16px 24px;
+        background: #ffffff;
+      }
+
+      .detail-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 380px;
+        gap: 18px;
+      }
+
+      .detail-summary {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px 30px;
+      }
+
+      .detail-summary__item {
+        min-width: 0;
+      }
+
+      .detail-summary__label {
+        display: block;
+        color: #7a8a84;
+        font-size: 13px;
+      }
+
+      .detail-summary__value {
+        display: block;
+        margin-top: 7px;
+        color: #263630;
+        font-weight: 750;
+        overflow-wrap: anywhere;
+      }
+
+      .audit-timeline {
+        display: grid;
+        gap: 0;
+      }
+
+      .audit-item {
+        position: relative;
+        display: grid;
+        grid-template-columns: 18px minmax(0, 1fr);
+        gap: 12px;
+        min-height: 82px;
+      }
+
+      .audit-item::before {
+        position: absolute;
+        top: 18px;
+        bottom: -2px;
+        left: 5px;
+        width: 2px;
+        background: #c8d8d2;
+        content: "";
+      }
+
+      .audit-item:last-child::before {
+        display: none;
+      }
+
+      .audit-item__dot {
+        z-index: 1;
+        width: 12px;
+        height: 12px;
+        border: 3px solid #ffffff;
+        border-radius: 50%;
+        background: #09a17f;
+        box-shadow: 0 0 0 2px #09a17f;
+      }
+
+      .audit-item__title {
+        margin: -3px 0 5px;
+        font-size: 14px;
+      }
+
+      .audit-item__meta {
+        color: #7a8a84;
+        font-size: 12px;
+      }
+
+      .approval-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        border-left: 5px solid #cf8410;
+        padding: 20px 22px;
+        background: #fff8e9;
+      }
+
+      .approval-banner__title {
+        margin: 0;
+        color: #7d5000;
+        font-size: 18px;
+      }
+
+      .approval-banner__copy {
+        margin: 7px 0 0;
+        color: #8f6a28;
+        font-size: 14px;
+      }
+
+      .approval-actions {
+        display: flex;
+        gap: 12px;
+      }
+
+      .approval-flow {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+
+      .approval-step {
+        position: relative;
+        min-width: 0;
+        border: 1px solid #c8d8d2;
+        border-radius: 6px;
+        padding: 18px;
+        background: #f7faf8;
+      }
+
+      .approval-step--current {
+        border: 2px solid #cf8410;
+        background: #fff8e9;
+      }
+
+      .approval-step__name {
+        margin: 0;
+        font-size: 15px;
+      }
+
+      .approval-step__meta {
+        margin: 8px 0 0;
+        color: #7a8a84;
+        font-size: 12px;
+      }
+
+      .notification-layout {
+        display: grid;
+        grid-template-columns: 210px minmax(0, 1fr);
+        min-height: 570px;
+      }
+
+      .notification-tabs {
+        border-right: 1px solid #dde6e2;
+        padding: 18px 14px;
+      }
+
+      .notification-tab {
+        display: flex;
+        min-height: 46px;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 6px;
+        padding: 0 14px;
+        color: #41524c;
+        font-weight: 750;
+      }
+
+      .notification-tab--active {
+        background: #e5f5ef;
+        color: #087f68;
+      }
+
+      .notification-count {
+        display: grid;
+        min-width: 24px;
+        height: 24px;
+        place-items: center;
+        border-radius: 999px;
+        padding: 0 7px;
+        background: #b43a44;
+        color: #ffffff;
+        font-size: 12px;
+      }
+
+      .notification-list {
+        padding: 8px 22px;
+      }
+
+      .notification-item {
+        display: grid;
+        grid-template-columns: 12px minmax(0, 1fr) auto;
+        gap: 14px;
+        align-items: start;
+        border-bottom: 1px solid #e1e9e5;
+        padding: 20px 4px;
+      }
+
+      .notification-item__dot {
+        width: 10px;
+        height: 10px;
+        margin-top: 6px;
+        border-radius: 50%;
+        background: #b43a44;
+      }
+
+      .notification-item--read .notification-item__dot {
+        background: transparent;
+      }
+
+      .notification-item__title {
+        margin: 0;
+        font-size: 15px;
+      }
+
+      .notification-item__copy {
+        margin: 7px 0 0;
+        color: #64766f;
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .notification-item__time {
+        color: #82918c;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .denied-state {
+        display: grid;
+        min-height: 650px;
+        place-items: center;
+        text-align: center;
+      }
+
+      .denied-state__mark {
+        display: grid;
+        width: 104px;
+        height: 104px;
+        margin: 0 auto;
+        place-items: center;
+        border: 4px solid #b43a44;
+        border-radius: 50%;
+        color: #b43a44;
+        font-size: 40px;
+        font-weight: 900;
+      }
+
+      .denied-state__title {
+        margin: 24px 0 8px;
+        font-size: 25px;
+      }
+
+      .denied-state__copy {
+        max-width: 470px;
+        margin: 0 auto 22px;
+        color: #64766f;
+        line-height: 1.65;
+      }
+
+      .upload-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .upload-item {
+        display: grid;
+        grid-template-columns: 54px minmax(0, 1fr) 130px;
+        gap: 16px;
+        align-items: center;
+        border: 1px solid #d4e0dc;
+        border-radius: 7px;
+        padding: 16px;
+      }
+
+      .upload-item__type {
+        display: grid;
+        width: 54px;
+        height: 54px;
+        place-items: center;
+        border-radius: 7px;
+        background: #e9f7f2;
+        color: #087f68;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .upload-item__name {
+        margin: 0;
+        font-size: 15px;
+      }
+
+      .upload-item__meta {
+        margin: 6px 0 0;
+        color: #7a8a84;
+        font-size: 12px;
+      }
+
+      .upload-progress {
+        height: 8px;
+        margin-top: 12px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #e2eae7;
+      }
+
+      .upload-progress__value {
+        display: block;
+        width: 68%;
+        height: 100%;
+        background: #09a17f;
+      }
+
+      .upload-item__state {
+        text-align: right;
+      }
+
+      .skeleton-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 22px;
+      }
+
+      .skeleton-card {
+        min-height: 150px;
+        border: 1px solid #d4e0dc;
+        border-radius: 8px;
+        padding: 22px;
+        background: #ffffff;
+      }
+
+      .skeleton-line {
+        height: 16px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        background: #e2eae7;
+      }
+
+      .skeleton-line--short { width: 42%; }
+      .skeleton-line--medium { width: 72%; }
+      .skeleton-line--large { height: 52px; width: 55%; }
+
+      .permission-loading {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 20px;
+        border-left: 4px solid #2d7390;
+        padding: 13px 16px;
+        background: #edf7fb;
+        color: #2d6073;
+        font-weight: 750;
+      }
+
+      .permission-loading__dot {
+        width: 12px;
+        height: 12px;
+        border: 3px solid #2d7390;
+        border-top-color: transparent;
+        border-radius: 50%;
+      }
+
+      @media (max-width: 700px) {
+        .admin-app {
+          grid-template-columns: 1fr;
+          grid-template-rows: 60px minmax(0, 1fr);
+        }
+
+        .admin-header__brand {
+          width: auto;
+          flex-basis: auto;
+          padding: 0 14px;
+        }
+
+        .admin-header__logo,
+        .admin-header__search,
+        .admin-header__icon:not(.admin-header__avatar) {
+          display: none;
+        }
+
+        .admin-header__menu {
+          display: block;
+          margin-left: 10px;
+        }
+
+        .admin-header__actions {
+          padding-right: 12px;
+        }
+
+        .admin-sidebar {
+          display: none;
+        }
+
+        .admin-main {
+          padding: 20px 14px 28px;
+        }
+
+        .admin-page-head {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .admin-page-head__title {
+          font-size: 23px;
+        }
+
+        .admin-filter,
+        .metric-grid,
+        .dashboard-grid,
+        .detail-grid,
+        .approval-flow,
+        .skeleton-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .admin-filter__actions {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .metric-grid .demo-metric:nth-child(n + 3),
+        .activity-list,
+        .approval-step:nth-child(n + 3),
+        .skeleton-card:nth-child(n + 2) {
+          display: none;
+        }
+
+        .dashboard-grid {
+          gap: 0;
+        }
+
+        .detail-summary {
+          grid-template-columns: 1fr;
+        }
+
+        .notification-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .notification-tabs {
+          display: flex;
+          overflow-x: auto;
+          border-right: 0;
+          border-bottom: 1px solid #dde6e2;
+        }
+
+        .notification-tab {
+          flex: 0 0 auto;
+        }
+
+        .notification-item {
+          grid-template-columns: 12px minmax(0, 1fr);
+        }
+
+        .notification-item__time {
+          grid-column: 2;
+        }
+
+        .approval-banner {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .approval-actions {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .upload-item {
+          grid-template-columns: 46px minmax(0, 1fr);
+        }
+
+        .upload-item__type {
+          width: 46px;
+          height: 46px;
+        }
+
+        .upload-item__state {
+          grid-column: 2;
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-app">
+      <header class="admin-header">
+        <button class="admin-header__menu" type="button" aria-label="打开导航">☰</button>
+        <div class="admin-header__brand"><span class="admin-header__logo">Y</span><span>Yok Admin</span></div>
+        <input class="admin-header__search" aria-label="全局搜索" placeholder="搜索用户、审批单或功能" />
+        <div class="admin-header__actions"><button class="admin-header__icon" type="button" aria-label="通知">●</button><span class="admin-header__icon admin-header__avatar">林</span></div>
+      </header>
+      <aside class="admin-sidebar">
+        <p class="admin-sidebar__group">工作台</p>
+        <nav class="admin-sidebar__nav" aria-label="后台导航">
+          <span class="admin-sidebar__item admin-sidebar__item--active"><b class="admin-sidebar__mark">⌂</b>数据概览</span>
+          <span class="admin-sidebar__item"><b class="admin-sidebar__mark">人</b>用户管理</span>
+          <span class="admin-sidebar__item"><b class="admin-sidebar__mark">审</b>审批中心</span>
+          <span class="admin-sidebar__item"><b class="admin-sidebar__mark">文</b>文件任务</span>
+          <span class="admin-sidebar__item"><b class="admin-sidebar__mark">信</b>消息通知</span>
+        </nav>
+        <p class="admin-sidebar__group">系统</p>
+        <nav class="admin-sidebar__nav" aria-label="系统导航"><span class="admin-sidebar__item"><b class="admin-sidebar__mark">权</b>角色权限</span><span class="admin-sidebar__item"><b class="admin-sidebar__mark">日</b>操作日志</span></nav>
+      </aside>
+      <main class="admin-main">
+        <section data-scene="dashboard" hidden>
+          <header class="admin-page-head"><div class="admin-page-head__copy"><h1 class="admin-page-head__title">数据工作台</h1><p class="admin-page-head__subtitle">更新时间 2026-07-21 16:30 · 统计口径：当前租户</p></div><button class="demo-button" type="button">刷新数据</button></header>
+          <div class="metric-grid"><article class="demo-metric demo-panel"><span class="demo-metric__label">今日活跃用户</span><strong class="demo-metric__value">2,684</strong><span class="demo-metric__trend">较昨日 +12.8%</span></article><article class="demo-metric demo-panel"><span class="demo-metric__label">待处理审批</span><strong class="demo-metric__value">38</strong><span class="demo-metric__trend">高优先级 6 条</span></article><article class="demo-metric demo-panel"><span class="demo-metric__label">文件任务成功率</span><strong class="demo-metric__value">98.6%</strong><span class="demo-metric__trend">最近 24 小时</span></article><article class="demo-metric demo-panel"><span class="demo-metric__label">接口异常</span><strong class="demo-metric__value">7</strong><span class="demo-metric__trend">已恢复 5 条</span></article></div>
+          <div class="dashboard-grid"><section class="admin-section"><header class="admin-section__head"><h2 class="admin-section__title">近 7 日业务趋势</h2><span class="demo-status">实时口径</span></header><div class="admin-section__body"><div class="bar-chart"><span class="bar-chart__item"><i class="bar-chart__bar" style="height:48%"></i>周一</span><span class="bar-chart__item"><i class="bar-chart__bar bar-chart__bar--alt" style="height:66%"></i>周二</span><span class="bar-chart__item"><i class="bar-chart__bar" style="height:58%"></i>周三</span><span class="bar-chart__item"><i class="bar-chart__bar bar-chart__bar--alt" style="height:82%"></i>周四</span><span class="bar-chart__item"><i class="bar-chart__bar" style="height:74%"></i>周五</span><span class="bar-chart__item"><i class="bar-chart__bar bar-chart__bar--alt" style="height:54%"></i>周六</span><span class="bar-chart__item"><i class="bar-chart__bar" style="height:70%"></i>周日</span></div></div></section><section class="admin-section"><header class="admin-section__head"><h2 class="admin-section__title">最近动态</h2></header><div class="admin-section__body activity-list"><article class="activity-item"><i class="activity-item__dot"></i><div><p class="activity-item__title">王宁提交了采购额度审批</p><time class="activity-item__time">5 分钟前</time></div></article><article class="activity-item"><i class="activity-item__dot"></i><div><p class="activity-item__title">用户导入任务完成，共 286 条</p><time class="activity-item__time">18 分钟前</time></div></article><article class="activity-item"><i class="activity-item__dot"></i><div><p class="activity-item__title">角色“运营专员”权限已更新</p><time class="activity-item__time">42 分钟前</time></div></article></div></section></div>
+        </section>
+
+        <section data-scene="list-default" hidden>
+          <header class="admin-page-head"><div class="admin-page-head__copy"><h1 class="admin-page-head__title">用户管理</h1><p class="admin-page-head__subtitle">管理账号状态、角色和所属部门</p></div><button class="demo-button demo-button--primary" type="button">＋ 新建用户</button></header>
+          <section class="admin-section"><div class="admin-section__body"><div class="admin-filter"><label class="demo-field"><span class="demo-label">关键词</span><input class="demo-input" placeholder="姓名或邮箱" /></label><label class="demo-field"><span class="demo-label">状态</span><select class="demo-select"><option>全部状态</option></select></label><label class="demo-field"><span class="demo-label">部门</span><select class="demo-select"><option>全部部门</option></select></label><div class="admin-filter__actions"><button class="demo-button demo-button--primary" type="button">查询</button><button class="demo-button" type="button">重置</button></div></div><div class="admin-result-meta"><span>共 128 位用户</span><span>每页 20 条</span></div></div><div class="demo-table-wrap"><table class="demo-table"><thead class="demo-table__head"><tr><th class="demo-table__header">用户</th><th class="demo-table__header">部门</th><th class="demo-table__header">角色</th><th class="demo-table__header">状态</th><th class="demo-table__header">最近登录</th><th class="demo-table__header">操作</th></tr></thead><tbody><tr><td class="demo-table__cell">张敏 · zhangmin@example.com</td><td class="demo-table__cell">产品中心</td><td class="demo-table__cell">产品经理</td><td class="demo-table__cell"><span class="demo-status">启用</span></td><td class="demo-table__cell">今天 15:42</td><td class="demo-table__cell">详情 · 编辑</td></tr><tr><td class="demo-table__cell">陈浩 · chenhao@example.com</td><td class="demo-table__cell">研发中心</td><td class="demo-table__cell">前端工程师</td><td class="demo-table__cell"><span class="demo-status">启用</span></td><td class="demo-table__cell">今天 14:08</td><td class="demo-table__cell">详情 · 编辑</td></tr><tr><td class="demo-table__cell">李文 · liwen@example.com</td><td class="demo-table__cell">财务部</td><td class="demo-table__cell">财务复核</td><td class="demo-table__cell"><span class="demo-status demo-status--warning">待激活</span></td><td class="demo-table__cell">尚未登录</td><td class="demo-table__cell">详情 · 重发邀请</td></tr><tr><td class="demo-table__cell">周悦 · zhouyue@example.com</td><td class="demo-table__cell">运营中心</td><td class="demo-table__cell">运营专员</td><td class="demo-table__cell"><span class="demo-status demo-status--danger">停用</span></td><td class="demo-table__cell">07-18 11:20</td><td class="demo-table__cell">详情 · 启用</td></tr></tbody></table></div><footer class="admin-pagination"><span class="admin-pagination__item">‹</span><span class="admin-pagination__item admin-pagination__item--active">1</span><span class="admin-pagination__item">2</span><span class="admin-pagination__item">3</span><span class="admin-pagination__item">›</span></footer></section>
+        </section>
+
+        <section data-scene="list-filtered" hidden>
+          <header class="admin-page-head"><div class="admin-page-head__copy"><h1 class="admin-page-head__title">用户管理</h1><p class="admin-page-head__subtitle">当前条件与结果总数来自同一份查询状态</p></div><button class="demo-button demo-button--primary" type="button">＋ 新建用户</button></header>
+          <section class="admin-section"><div class="admin-section__body"><div class="admin-filter"><label class="demo-field"><span class="demo-label">关键词</span><input class="demo-input" value="产品" /></label><label class="demo-field"><span class="demo-label">状态</span><select class="demo-select"><option>启用</option></select></label><label class="demo-field"><span class="demo-label">部门</span><select class="demo-select"><option>产品中心</option></select></label><div class="admin-filter__actions"><button class="demo-button demo-button--primary" type="button">查询</button><button class="demo-button" type="button">重置</button></div></div><div class="admin-result-meta"><span>筛选结果 2 位用户</span><span class="demo-status">条件已生效</span></div></div><div class="demo-table-wrap"><table class="demo-table"><thead class="demo-table__head"><tr><th class="demo-table__header">用户</th><th class="demo-table__header">部门</th><th class="demo-table__header">角色</th><th class="demo-table__header">状态</th><th class="demo-table__header">最近登录</th><th class="demo-table__header">操作</th></tr></thead><tbody><tr><td class="demo-table__cell">张敏 · zhangmin@example.com</td><td class="demo-table__cell">产品中心</td><td class="demo-table__cell">产品经理</td><td class="demo-table__cell"><span class="demo-status">启用</span></td><td class="demo-table__cell">今天 15:42</td><td class="demo-table__cell">详情 · 编辑</td></tr><tr><td class="demo-table__cell">罗嘉 · luojia@example.com</td><td class="demo-table__cell">产品中心</td><td class="demo-table__cell">产品运营</td><td class="demo-table__cell"><span class="demo-status">启用</span></td><td class="demo-table__cell">今天 13:16</td><td class="demo-table__cell">详情 · 编辑</td></tr></tbody></table></div><footer class="admin-pagination"><span class="admin-pagination__item">‹</span><span class="admin-pagination__item admin-pagination__item--active">1</span><span class="admin-pagination__item">›</span></footer></section>
+        </section>
+
+        <section data-scene="list-empty" hidden>
+          <header class="admin-page-head"><div class="admin-page-head__copy"><h1 class="admin-page-head__title">用户管理</h1><p class="admin-page-head__subtitle">空状态保留当前条件，并提供下一步操作</p></div><button class="demo-button demo-button--primary" type="button">＋ 新建用户</button></header>
+          <section class="admin-section"><div class="admin-section__body"><div class="admin-filter"><label class="demo-field"><span class="demo-label">关键词</span><input class="demo-input" value="不存在的账号" /></label><label class="demo-field"><span class="demo-label">状态</span><select class="demo-select"><option>停用</option></select></label><label class="demo-field"><span class="demo-label">部门</span><select class="demo-select"><option>产品中心</option></select></label><div class="admin-filter__actions"><button class="demo-button demo-button--primary" type="button">查询</button><button class="demo-button" type="button">重置</button></div></div><div class="empty-state"><div><span class="empty-state__mark">0</span><h2 class="empty-state__title">没有符合条件的用户</h2><p class="empty-state__copy">当前 3 个筛选条件未命中数据，请调整条件或重置筛选。</p><button class="demo-button" type="button">清除全部条件</button></div></div></div></section>
+        </section>
+
+        <section data-scene="form-create" hidden>
+          <header class="admin-page-head"><div class="admin-page-head__copy"><h1 class="admin-page-head__title">用户管理</h1><p class="admin-page-head__subtitle">列表保持原状态，抽屉承载新建流程</p></div></header><section class="admin-section"><div class="admin-section__body"><div class="skeleton-line skeleton-line--medium"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div></section><div class="drawer-mask"></div><aside class="admin-drawer" aria-label="新建用户"><header class="admin-drawer__head"><h2 class="admin-drawer__title">新建用户</h2><button class="admin-drawer__close" type="button" aria-label="关闭">×</button></header><form class="admin-drawer__body"><label class="demo-field"><span class="demo-label">姓名</span><input class="demo-input" placeholder="请输入姓名" /></label><label class="demo-field"><span class="demo-label">邮箱</span><input class="demo-input" type="email" placeholder="name@example.com" /></label><label class="demo-field"><span class="demo-label">所属部门</span><select class="demo-select"><option>请选择部门</option></select></label><label class="demo-field"><span class="demo-label">角色</span><select class="demo-select"><option>请选择角色</option></select><span class="demo-field__hint">角色决定菜单和按钮权限，保存后可以调整。</span></label></form><footer class="admin-drawer__footer"><button class="demo-button" type="button">取消</button><button class="demo-button demo-button--primary" type="button">创建用户</button></footer></aside>
+        </section>
+
+        <section data-scene="form-validation" hidden>
+          <header class="admin-page-head"><div class="admin-page-head__copy"><h1 class="admin-page-head__title">用户管理</h1><p class="admin-page-head__subtitle">提交失败后保留输入，并聚焦第一个错误字段</p></div></header><section class="admin-section"><div class="admin-section__body"><div class="skeleton-line skeleton-line--medium"></div><div class="skeleton-line"></div></div></section><div class="drawer-mask"></div><aside class="admin-drawer" aria-label="新建用户校验失败"><header class="admin-drawer__head"><h2 class="admin-drawer__title">新建用户</h2><button class="admin-drawer__close" type="button" aria-label="关闭">×</button></header><form class="admin-drawer__body"><div class="form-card__alert" role="alert">有 3 个字段需要修改。</div><label class="demo-field"><span class="demo-label">姓名</span><input class="demo-input" value="李" aria-invalid="true" aria-describedby="admin-name-error" /><span id="admin-name-error" class="demo-field__error">姓名至少需要 2 个字符</span></label><label class="demo-field"><span class="demo-label">邮箱</span><input class="demo-input" value="li@" aria-invalid="true" aria-describedby="admin-email-error" /><span id="admin-email-error" class="demo-field__error">请输入完整邮箱地址</span></label><label class="demo-field"><span class="demo-label">所属部门</span><select class="demo-select"><option>产品中心</option></select></label><label class="demo-field"><span class="demo-label">角色</span><select class="demo-select" aria-invalid="true" aria-describedby="admin-role-error"><option>请选择角色</option></select><span id="admin-role-error" class="demo-field__error">至少选择一个角色</span></label></form><footer class="admin-drawer__footer"><button class="demo-button" type="button">取消</button><button class="demo-button demo-button--primary" type="button">重新提交</button></footer></aside>
+        </section>
+
+        <section data-scene="detail-audit" hidden>
+          <header class="admin-page-head"><div class="admin-page-head__copy"><h1 class="admin-page-head__title">用户详情 · 张敏</h1><p class="admin-page-head__subtitle">用户 ID U-1024 · 数据版本 8</p></div><div class="demo-toolbar"><button class="demo-button" type="button">编辑资料</button><button class="demo-button demo-button--danger" type="button">停用账号</button></div></header><div class="detail-grid"><section class="admin-section"><header class="admin-section__head"><h2 class="admin-section__title">基础信息</h2><span class="demo-status">启用</span></header><div class="admin-section__body detail-summary"><div class="detail-summary__item"><span class="detail-summary__label">姓名</span><strong class="detail-summary__value">张敏</strong></div><div class="detail-summary__item"><span class="detail-summary__label">邮箱</span><strong class="detail-summary__value">zhangmin@example.com</strong></div><div class="detail-summary__item"><span class="detail-summary__label">部门</span><strong class="detail-summary__value">产品中心 / 产品一组</strong></div><div class="detail-summary__item"><span class="detail-summary__label">角色</span><strong class="detail-summary__value">产品经理、报表查看</strong></div><div class="detail-summary__item"><span class="detail-summary__label">创建时间</span><strong class="detail-summary__value">2026-05-12 09:30</strong></div><div class="detail-summary__item"><span class="detail-summary__label">最近登录</span><strong class="detail-summary__value">2026-07-21 15:42</strong></div></div></section><section class="admin-section"><header class="admin-section__head"><h2 class="admin-section__title">操作记录</h2><span class="demo-status demo-status--neutral">倒序</span></header><div class="admin-section__body audit-timeline"><article class="audit-item"><i class="audit-item__dot"></i><div><h3 class="audit-item__title">追加“报表查看”角色</h3><span class="audit-item__meta">林管理员 · 07-21 14:26 · request_82f1</span></div></article><article class="audit-item"><i class="audit-item__dot"></i><div><h3 class="audit-item__title">部门调整为产品一组</h3><span class="audit-item__meta">王主管 · 07-18 11:08 · request_19aa</span></div></article><article class="audit-item"><i class="audit-item__dot"></i><div><h3 class="audit-item__title">账号创建成功</h3><span class="audit-item__meta">系统 · 05-12 09:30 · request_00c2</span></div></article></div></section></div>
+        </section>
+
+        <section data-scene="approval-pending" hidden>
+          <header class="admin-page-head"><div class="admin-page-head__copy"><h1 class="admin-page-head__title">采购额度调整审批</h1><p class="admin-page-head__subtitle">审批单 AP-20260721-0086 · 版本 3</p></div><span class="demo-status demo-status--warning">待当前节点处理</span></header><section class="admin-section approval-banner"><div><h2 class="approval-banner__title">当前节点：财务复核</h2><p class="approval-banner__copy">你拥有本节点处理权限。提交前必须填写审批意见，操作后不可撤销。</p></div><div class="approval-actions"><button class="demo-button demo-button--danger" type="button">驳回</button><button class="demo-button demo-button--primary" type="button">同意</button></div></section><section class="admin-section"><header class="admin-section__head"><h2 class="admin-section__title">流程进度</h2></header><div class="admin-section__body approval-flow"><article class="approval-step"><h3 class="approval-step__name">1. 发起申请</h3><p class="approval-step__meta">王宁 · 10:02 · 已完成</p></article><article class="approval-step"><h3 class="approval-step__name">2. 部门负责人</h3><p class="approval-step__meta">赵主管 · 11:18 · 已同意</p></article><article class="approval-step approval-step--current"><h3 class="approval-step__name">3. 财务复核</h3><p class="approval-step__meta">当前节点 · 等待处理</p></article><article class="approval-step"><h3 class="approval-step__name">4. 归档生效</h3><p class="approval-step__meta">等待前置节点</p></article></div></section><section class="admin-section"><header class="admin-section__head"><h2 class="admin-section__title">申请内容</h2></header><div class="admin-section__body detail-summary"><div class="detail-summary__item"><span class="detail-summary__label">申请部门</span><strong class="detail-summary__value">华东销售部</strong></div><div class="detail-summary__item"><span class="detail-summary__label">调整额度</span><strong class="detail-summary__value">¥ 500,000 → ¥ 800,000</strong></div><div class="detail-summary__item"><span class="detail-summary__label">生效日期</span><strong class="detail-summary__value">2026-08-01</strong></div><div class="detail-summary__item"><span class="detail-summary__label">风险等级</span><strong class="detail-summary__value">中风险 · 需财务复核</strong></div></div></section>
+        </section>
+
+        <section data-scene="notification-unread" hidden>
+          <header class="admin-page-head"><div class="admin-page-head__copy"><h1 class="admin-page-head__title">消息中心</h1><p class="admin-page-head__subtitle">未读总数 5，与当前账号和租户绑定</p></div><button class="demo-button" type="button">全部标为已读</button></header><section class="admin-section notification-layout"><nav class="notification-tabs" aria-label="消息分类"><span class="notification-tab notification-tab--active">全部消息 <b class="notification-count">5</b></span><span class="notification-tab">审批 <b class="notification-count">2</b></span><span class="notification-tab">系统 <b class="notification-count">3</b></span></nav><div class="notification-list"><article class="notification-item"><i class="notification-item__dot"></i><div><h2 class="notification-item__title">采购额度审批等待你处理</h2><p class="notification-item__copy">华东销售部申请将额度调整为 ¥800,000，当前节点为财务复核。</p></div><time class="notification-item__time">5 分钟前</time></article><article class="notification-item"><i class="notification-item__dot"></i><div><h2 class="notification-item__title">用户导入任务已完成</h2><p class="notification-item__copy">成功 286 条，失败 4 条。可下载错误明细并修正后重新导入。</p></div><time class="notification-item__time">18 分钟前</time></article><article class="notification-item"><i class="notification-item__dot"></i><div><h2 class="notification-item__title">角色权限变更将在下次登录生效</h2><p class="notification-item__copy">运营专员新增“活动发布”权限，当前会话保持原权限快照。</p></div><time class="notification-item__time">42 分钟前</time></article><article class="notification-item notification-item--read"><i class="notification-item__dot"></i><div><h2 class="notification-item__title">系统维护已完成</h2><p class="notification-item__copy">报表服务已恢复，积压任务处理完成。</p></div><time class="notification-item__time">昨天 22:10</time></article></div></section>
+        </section>
+
+        <section data-scene="permission-denied" hidden>
+          <header class="admin-page-head"><div class="admin-page-head__copy"><h1 class="admin-page-head__title">财务对账</h1><p class="admin-page-head__subtitle">权限校验完成 · requestId: perm_d871</p></div></header><section class="admin-section denied-state"><div><span class="denied-state__mark">!</span><h2 class="denied-state__title">你没有查看财务对账的权限</h2><p class="denied-state__copy">本页面包含敏感结算数据，当前角色“运营专员”不在允许范围内。页面未加载任何业务数据。</p><div class="demo-toolbar"><button class="demo-button" type="button">返回工作台</button><button class="demo-button demo-button--primary" type="button">申请访问权限</button></div></div></section>
+        </section>
+
+        <section data-scene="file-upload-progress" hidden>
+          <header class="admin-page-head"><div class="admin-page-head__copy"><h1 class="admin-page-head__title">文件导入任务</h1><p class="admin-page-head__subtitle">上传进度与服务端解析任务分开显示</p></div><button class="demo-button demo-button--primary" type="button">＋ 新建导入</button></header><section class="admin-section"><header class="admin-section__head"><h2 class="admin-section__title">进行中的任务</h2><span class="demo-status demo-status--warning">2 个</span></header><div class="admin-section__body upload-list"><article class="upload-item"><span class="upload-item__type">XLSX</span><div><h3 class="upload-item__name">2026-07-用户批量导入.xlsx</h3><p class="upload-item__meta">浏览器上传 · 68% · 13.6 MB / 20 MB</p><div class="upload-progress"><span class="upload-progress__value"></span></div></div><div class="upload-item__state"><span class="demo-status">正在上传</span></div></article><article class="upload-item"><span class="upload-item__type">CSV</span><div><h3 class="upload-item__name">产品主数据更新.csv</h3><p class="upload-item__meta">文件已上传 · 服务端校验第 4,280 / 12,600 行</p><div class="upload-progress"><span class="upload-progress__value" style="width:34%"></span></div></div><div class="upload-item__state"><span class="demo-status demo-status--warning">解析中</span></div></article><article class="upload-item"><span class="upload-item__type">XLSX</span><div><h3 class="upload-item__name">供应商档案.xlsx</h3><p class="upload-item__meta">成功 286 条 · 失败 4 条 · 错误报告可下载</p><div class="upload-progress"><span class="upload-progress__value" style="width:100%"></span></div></div><div class="upload-item__state"><span class="demo-status">已完成</span></div></article></div></section>
+        </section>
+
+        <section data-scene="permission-loading" hidden>
+          <header class="admin-page-head"><div class="admin-page-head__copy"><h1 class="admin-page-head__title">组织架构</h1><p class="admin-page-head__subtitle">先恢复会话并加载权限快照，再决定可见内容</p></div></header><div class="permission-loading"><i class="permission-loading__dot"></i>正在校验菜单、按钮和数据范围权限…</div><div class="skeleton-grid"><article class="skeleton-card"><div class="skeleton-line skeleton-line--short"></div><div class="skeleton-line skeleton-line--large"></div><div class="skeleton-line skeleton-line--medium"></div></article><article class="skeleton-card"><div class="skeleton-line skeleton-line--short"></div><div class="skeleton-line skeleton-line--large"></div><div class="skeleton-line skeleton-line--medium"></div></article><article class="skeleton-card"><div class="skeleton-line skeleton-line--short"></div><div class="skeleton-line skeleton-line--large"></div><div class="skeleton-line skeleton-line--medium"></div></article></div><section class="admin-section"><div class="admin-section__body"><div class="skeleton-line skeleton-line--medium"></div><div class="skeleton-line"></div><div class="skeleton-line"></div><div class="skeleton-line"></div></div></section>
+        </section>
+      </main>
+    </div>
+    <script>
+      const params = new URLSearchParams(window.location.search)
+      const requestedScene = params.get('scene') || 'dashboard'
+      const scene = document.querySelector(`[data-scene="${requestedScene}"]`) || document.querySelector('[data-scene="dashboard"]')
+      scene.hidden = false
+      document.title = `${requestedScene} · Vue Admin 视觉演示`
+    </script>
+  </body>
+</html>

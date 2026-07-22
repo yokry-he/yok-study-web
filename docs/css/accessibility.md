@@ -54,6 +54,16 @@ button:focus {
 
 焦点样式应该：
 
+观察下图中的键盘焦点：轮廓位于控件外侧，不会挤压文字或改变布局；颜色同时兼顾亮色背景与操作按钮。
+
+<DocFigure
+  src="/images/frontend/accessible-focus.webp"
+  alt="表单中使用清晰 focus-visible 外轮廓展示键盘焦点"
+  caption="稳定的焦点环既要明显，也不能通过改变边框宽度导致页面抖动。"
+  :width="1440"
+  :height="900"
+/>
+
 - 清晰可见。
 - 不依赖颜色微小变化。
 - 不改变布局尺寸。

@@ -38,6 +38,8 @@
 | TypeScript 类型边界 | DTO 泄漏到页面、表单和提交参数混用、权限码拼错、RouteMeta 未声明、Store 类型污染、typecheck 缺失 | [TypeScript 类型边界问题](/projects/issues-typescript) |
 | 前端工程化专项 | 依赖安装、环境变量、CI、构建、部署缓存、组件库升级、Monorepo、包体积和回滚失败 | [前端工程化真实项目问题库](/projects/issues-engineering) |
 | Node.js 专项 | ESM/CJS、事件循环阻塞、线程池饱和、Stream 背压、异步上下文、进程退出、open handles 和多实例状态 | [Node.js 真实项目问题库](/projects/issues-node) |
+| Java 专项 | 字节码、类路径、Bean、事务代理、JPA、连接池、线程、GC、Metaspace 和优雅停机 | [Java 真实项目问题库](/projects/issues-java) |
+| Go 专项 | typed nil、slice 持有、map 竞态、goroutine 泄漏、channel 关闭、Context、连接池、事务、乐观锁和优雅停机 | [Go 真实项目问题库](/projects/issues-go) |
 | 后端接口与服务 | 参数接收失败、重复提交、接口偶发慢、错误码不清晰、权限半更新、401/403 混乱 | [后端接口与服务问题](/projects/issues-backend) |
 | 前后端联调 | 参数位置、认证信息、分页结构、枚举、文件上传和导出问题 | [前后端联调排查](/projects/integration-debugging) |
 | 数据库与缓存 | 慢查询、事务失效、权限缓存、迁移发布顺序、复合索引、N+1 查询、Redis 内存上涨 | [数据库与缓存问题](/projects/issues-database) |

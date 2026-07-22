@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>技术心智模型</title>
+    <link rel="stylesheet" href="../shared/demo.css" />
+    <style>
+      .concept-stage {
+        max-width: 1210px;
+        margin: 38px auto 0;
+      }
+
+      .concept-flow {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 16px;
+        align-items: stretch;
+      }
+
+      .concept-node {
+        position: relative;
+        display: grid;
+        min-height: 148px;
+        align-content: center;
+        justify-items: center;
+        gap: 10px;
+        border: 1px solid #b7c9c2;
+        border-top: 5px solid #087f68;
+        border-radius: 8px;
+        padding: 20px 14px;
+        background: #fff;
+        text-align: center;
+      }
+
+      .concept-node:not(:last-child)::after {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        right: -22px;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 12px solid #7d9189;
+        content: "";
+        transform: translateY(-50%);
+      }
+
+      .concept-node--purple { border-top-color: #7952a5; }
+      .concept-node--amber { border-top-color: #d78a20; }
+      .concept-node--blue { border-top-color: #2d7895; }
+      .concept-node--red { border-top-color: #b43a44; }
+
+      .concept-node__mark {
+        display: grid;
+        width: 50px;
+        height: 50px;
+        place-items: center;
+        border-radius: 8px;
+        background: #e8f8f3;
+        color: #087f68;
+        font: 900 18px ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .concept-node--purple .concept-node__mark { background: #f0eafb; color: #684490; }
+      .concept-node--amber .concept-node__mark { background: #fff2dc; color: #956000; }
+      .concept-node--blue .concept-node__mark { background: #e9f4f8; color: #296b85; }
+      .concept-node--red .concept-node__mark { background: #fdecee; color: #a32b35; }
+      .concept-node__title { margin: 0; font-size: 17px; }
+      .concept-node__text { margin: 0; color: #62746d; font-size: 13px; line-height: 1.55; }
+
+      .source-trio {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        width: 100%;
+      }
+
+      .source-chip {
+        border: 1px solid #c7d5d0;
+        border-radius: 5px;
+        padding: 7px 4px;
+        background: #f8fbfa;
+        font: 800 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .pipeline-note {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 20px;
+      }
+
+      .pipeline-note__item {
+        border-left: 4px solid #d58a20;
+        padding: 14px 16px;
+        background: #fff8e9;
+        color: #5e4b21;
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .jvm-layout {
+        display: grid;
+        grid-template-columns: .8fr 1.5fr .8fr;
+        gap: 20px;
+        min-height: 470px;
+      }
+
+      .memory-zone {
+        border: 1px solid #b8cac3;
+        border-radius: 8px;
+        padding: 22px;
+        background: #fff;
+      }
+
+      .memory-zone__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+
+      .memory-zone__title { margin: 0; font-size: 20px; }
+
+      .memory-zone__scope {
+        border-radius: 999px;
+        padding: 5px 9px;
+        background: #eef3f1;
+        color: #5c6e67;
+        font-size: 12px;
+        font-weight: 850;
+        white-space: nowrap;
+      }
+
+      .memory-zone__scope--shared { background: #e8f8f3; color: #087f68; }
+
+      .thread-stack {
+        display: grid;
+        gap: 7px;
+        margin-bottom: 14px;
+        border: 1px solid #d4dfdb;
+        border-left: 4px solid #7952a5;
+        border-radius: 6px;
+        padding: 12px;
+        background: #faf8fd;
+      }
+
+      .thread-stack__name { font-size: 13px; font-weight: 900; }
+      .stack-frame { border-radius: 4px; padding: 6px 8px; background: #ede6f7; color: #654886; font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+      .heap-map {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+
+      .heap-object {
+        display: grid;
+        min-height: 76px;
+        place-items: center;
+        border: 2px solid #75aa99;
+        border-radius: 8px;
+        background: #effaf6;
+        color: #087f68;
+        font: 800 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+        text-align: center;
+      }
+
+      .heap-object--garbage {
+        border-style: dashed;
+        border-color: #cf737c;
+        background: #fff2f3;
+        color: #a6313b;
+        opacity: .7;
+      }
+
+      .gc-path {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 12px;
+        align-items: center;
+        margin-top: 22px;
+        border-top: 1px solid #d8e1de;
+        padding-top: 20px;
+      }
+
+      .gc-root,
+      .gc-agent {
+        border-radius: 6px;
+        padding: 10px 12px;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .gc-root { background: #eee7f7; color: #67498a; }
+      .gc-agent { background: #fff0d8; color: #956100; }
+
+      .gc-line {
+        position: relative;
+        height: 4px;
+        background: #7c9189;
+      }
+
+      .gc-line::after {
+        position: absolute;
+        top: -6px;
+        right: -2px;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 12px solid #7c9189;
+        content: "";
+      }
+
+      .meta-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .meta-item {
+        border: 1px solid #d5dfdb;
+        border-radius: 6px;
+        padding: 13px;
+        background: #f8fbfa;
+        color: #52655e;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .event-layout {
+        display: grid;
+        grid-template-columns: 1fr 1.15fr 1fr;
+        gap: 24px;
+        align-items: center;
+      }
+
+      .event-column {
+        display: grid;
+        gap: 16px;
+      }
+
+      .event-card {
+        border: 1px solid #b9cbc4;
+        border-radius: 8px;
+        padding: 18px;
+        background: #fff;
+      }
+
+      .event-card--io { border-left: 5px solid #2d7895; }
+      .event-card--cpu { border-left: 5px solid #b43a44; background: #fff4f5; }
+      .event-card--queue { border-left: 5px solid #d68a20; }
+      .event-card__title { margin: 0; font-size: 17px; }
+      .event-card__text { margin: 8px 0 0; color: #62746d; font-size: 13px; line-height: 1.55; }
+
+      .event-loop {
+        display: grid;
+        aspect-ratio: 1;
+        place-items: center;
+        border: 20px solid #dff3ed;
+        border-top-color: #087f68;
+        border-right-color: #2d7895;
+        border-bottom-color: #d68a20;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: inset 0 0 0 1px #b7cbc4;
+      }
+
+      .event-loop__core {
+        max-width: 190px;
+        text-align: center;
+      }
+
+      .event-loop__title { margin: 0; font-size: 25px; }
+      .event-loop__text { margin: 10px 0 0; color: #62746d; line-height: 1.5; }
+
+      .event-legend {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 24px;
+      }
+
+      .event-legend__item {
+        border-radius: 6px;
+        padding: 13px;
+        background: #eef4f1;
+        color: #52655e;
+        font-size: 13px;
+        text-align: center;
+      }
+
+      .rag-lanes {
+        display: grid;
+        gap: 20px;
+      }
+
+      .rag-lane {
+        display: grid;
+        grid-template-columns: 145px repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        align-items: stretch;
+        border: 1px solid #b8cac3;
+        border-radius: 8px;
+        padding: 20px;
+        background: #fff;
+      }
+
+      .rag-lane__label {
+        display: grid;
+        place-items: center;
+        border-radius: 6px;
+        background: #17221e;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 900;
+        text-align: center;
+      }
+
+      .rag-step {
+        position: relative;
+        display: grid;
+        min-height: 120px;
+        align-content: center;
+        justify-items: center;
+        gap: 9px;
+        border: 1px solid #c6d4cf;
+        border-radius: 7px;
+        padding: 14px;
+        background: #f8fbfa;
+        text-align: center;
+      }
+
+      .rag-step:not(:last-child)::after {
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        right: -20px;
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        border-left: 11px solid #7b9088;
+        content: "";
+        transform: translateY(-50%);
+      }
+
+      .rag-step--accent { border-color: #71aa98; background: #effaf6; }
+      .rag-step--answer { border-color: #d6a356; background: #fff8e9; }
+      .rag-step__icon { font-size: 28px; font-weight: 950; }
+      .rag-step__title { margin: 0; font-size: 16px; }
+      .rag-step__text { margin: 0; color: #62746d; font-size: 12px; line-height: 1.5; }
+
+      .rag-proof {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-top: 20px;
+      }
+
+      .rag-proof__card {
+        border-left: 5px solid #087f68;
+        padding: 16px 18px;
+        background: #eaf8f3;
+        color: #34544a;
+        line-height: 1.6;
+      }
+
+      .rag-proof__card:nth-child(2) { border-left-color: #d68a20; background: #fff8e9; color: #5e4a21; }
+
+      @media (max-width: 760px) {
+        .demo-frame { padding: 22px; }
+        .demo-frame::before { inset: 10px; }
+        .concept-stage { margin-top: 28px; }
+        .concept-flow { grid-template-columns: 1fr; }
+        .concept-node { min-height: 118px; }
+        .concept-node:not(:last-child)::after { top: auto; right: 50%; bottom: -18px; border-top: 11px solid #7d9189; border-right: 7px solid transparent; border-bottom: 0; border-left: 7px solid transparent; transform: translateX(50%); }
+        .pipeline-note,
+        .jvm-layout,
+        .event-layout,
+        .event-legend,
+        .rag-proof { grid-template-columns: 1fr; }
+        .memory-zone:nth-child(1),
+        .memory-zone:nth-child(3) { display: none; }
+        .heap-map { grid-template-columns: 1fr 1fr; }
+        .event-loop { width: min(290px, 90vw); justify-self: center; }
+        .event-column:nth-child(1) .event-card--cpu { display: none; }
+        .rag-lane { grid-template-columns: 1fr; }
+        .rag-lane__label { min-height: 60px; }
+        .rag-step:not(:last-child)::after { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="demo-frame">
+      <section data-scene="browser-rendering-pipeline" hidden>
+        <p class="demo-kicker">浏览器渲染全景图</p>
+        <h1 class="demo-title">源代码经过结构、布局、绘制和合成才成为像素</h1>
+        <p class="demo-subtitle">这是一张阶段地图；准确的先后、跳过条件和性能代价仍以相邻流程图与 DevTools 录制结果为准。</p>
+        <div class="concept-stage"><div class="concept-flow"><article class="concept-node"><div class="source-trio"><span class="source-chip">HTML</span><span class="source-chip">CSS</span><span class="source-chip">JS</span></div><h2 class="concept-node__title">输入资源</h2><p class="concept-node__text">下载、解析和脚本执行</p></article><article class="concept-node concept-node--purple"><span class="concept-node__mark">树</span><h2 class="concept-node__title">DOM + CSSOM</h2><p class="concept-node__text">内容结构与样式规则</p></article><article class="concept-node concept-node--blue"><span class="concept-node__mark">R</span><h2 class="concept-node__title">Render Tree</h2><p class="concept-node__text">只保留需要渲染的节点</p></article><article class="concept-node concept-node--amber"><span class="concept-node__mark">↔</span><h2 class="concept-node__title">Layout</h2><p class="concept-node__text">计算尺寸与几何位置</p></article><article class="concept-node concept-node--red"><span class="concept-node__mark">刷</span><h2 class="concept-node__title">Paint</h2><p class="concept-node__text">生成绘制指令与图层</p></article><article class="concept-node"><span class="concept-node__mark">像</span><h2 class="concept-node__title">Composite</h2><p class="concept-node__text">合成图层并显示像素</p></article></div><div class="pipeline-note"><div class="pipeline-note__item"><strong>改 DOM 或样式：</strong>可能重新计算样式并触发布局。</div><div class="pipeline-note__item"><strong>改颜色或阴影：</strong>通常需要重绘，但不一定重新布局。</div><div class="pipeline-note__item"><strong>合成属性：</strong>在已有图层上处理，仍要验证实际设备成本。</div></div></div>
+      </section>
+
+      <section data-scene="jvm-memory-regions" hidden>
+        <p class="demo-kicker">JVM 内存区域全景图</p>
+        <h1 class="demo-title">线程栈彼此私有，对象堆和类元数据由进程共享</h1>
+        <p class="demo-subtitle">先分清“谁拥有这块内存”，再判断泄漏、栈溢出、类加载增长或 GC 压力属于哪条证据链。</p>
+        <div class="concept-stage jvm-layout"><section class="memory-zone"><header class="memory-zone__head"><h2 class="memory-zone__title">线程栈</h2><span class="memory-zone__scope">线程私有</span></header><div class="thread-stack"><strong class="thread-stack__name">http-worker-1</strong><span class="stack-frame">Controller()</span><span class="stack-frame">Service()</span><span class="stack-frame">Repository()</span></div><div class="thread-stack"><strong class="thread-stack__name">scheduler-1</strong><span class="stack-frame">runJob()</span><span class="stack-frame">loadBatch()</span></div></section><section class="memory-zone"><header class="memory-zone__head"><h2 class="memory-zone__title">对象堆 Heap</h2><span class="memory-zone__scope memory-zone__scope--shared">所有线程共享</span></header><div class="heap-map"><div class="heap-object">User #42</div><div class="heap-object">Order List</div><div class="heap-object">Cache Entry</div><div class="heap-object">byte[]</div><div class="heap-object">HTTP Session</div><div class="heap-object heap-object--garbage">无引用 DTO</div><div class="heap-object">Spring Bean</div><div class="heap-object heap-object--garbage">旧缓冲区</div></div><div class="gc-path"><span class="gc-root">GC Roots</span><span class="gc-line"></span><span class="gc-agent">可达性追踪与回收</span></div></section><section class="memory-zone"><header class="memory-zone__head"><h2 class="memory-zone__title">Metaspace</h2><span class="memory-zone__scope memory-zone__scope--shared">进程共享</span></header><div class="meta-list"><div class="meta-item"><strong>类元数据</strong><br>字段、方法与常量池</div><div class="meta-item"><strong>ClassLoader</strong><br>决定类的命名空间与卸载边界</div><div class="meta-item"><strong>JIT 相关</strong><br>运行时编译和代码缓存另有诊断指标</div></div></section></div>
+      </section>
+
+      <section data-scene="node-event-loop-io-workshop" hidden>
+        <p class="demo-kicker">Node.js 事件循环与 I/O</p>
+        <h1 class="demo-title">主线程负责协调，外部 I/O 完成后把回调送回队列</h1>
+        <p class="demo-subtitle">`await` 暂停当前 async 函数，不会让主线程同步等待网络；长时间 CPU 计算才会直接堵住事件循环。</p>
+        <div class="concept-stage"><div class="event-layout"><div class="event-column"><article class="event-card event-card--io"><h2 class="event-card__title">文件与数据库</h2><p class="event-card__text">交给线程池、驱动或外部服务等待，不占用主线程空转。</p></article><article class="event-card event-card--cpu"><h2 class="event-card__title">CPU 长计算</h2><p class="event-card__text">如果直接运行在主线程，会让后续回调和请求都无法及时处理。</p></article></div><div class="event-loop"><div class="event-loop__core"><h2 class="event-loop__title">Event Loop</h2><p class="event-loop__text">取出任务<br>执行 JS 回调<br>推进事件阶段</p></div></div><div class="event-column"><article class="event-card event-card--queue"><h2 class="event-card__title">完成回调队列</h2><p class="event-card__text">I/O 完成后进入可执行队列，等待当前同步任务结束。</p></article><article class="event-card"><h2 class="event-card__title">HTTP 请求</h2><p class="event-card__text">一个慢 CPU 请求会影响同一进程中的其他连接。</p></article></div></div><div class="event-legend"><div class="event-legend__item"><strong>非阻塞 I/O</strong><br>等待发生在主线程之外</div><div class="event-legend__item"><strong>回调返回</strong><br>进入队列而不是立即抢占</div><div class="event-legend__item"><strong>CPU 隔离</strong><br>拆分、Worker 或独立服务</div></div></div>
+      </section>
+
+      <section data-scene="rag-retrieval-journey" hidden>
+        <p class="demo-kicker">RAG 检索旅程</p>
+        <h1 class="demo-title">先建立可检索知识，再把少量相关证据交给模型回答</h1>
+        <p class="demo-subtitle">入库和问答是两条不同链路；切分、权限过滤、召回、重排、引用与拒答都必须能独立验证。</p>
+        <div class="concept-stage rag-lanes"><section class="rag-lane"><div class="rag-lane__label">知识入库</div><article class="rag-step"><span class="rag-step__icon">文</span><h2 class="rag-step__title">来源文档</h2><p class="rag-step__text">版本、权限、来源 URL</p></article><article class="rag-step"><span class="rag-step__icon">块</span><h2 class="rag-step__title">清洗与切分</h2><p class="rag-step__text">保留标题与上下文元数据</p></article><article class="rag-step"><span class="rag-step__icon">向</span><h2 class="rag-step__title">Embedding</h2><p class="rag-step__text">把 chunk 映射到向量空间</p></article><article class="rag-step rag-step--accent"><span class="rag-step__icon">库</span><h2 class="rag-step__title">语义索引</h2><p class="rag-step__text">向量、关键词、权限与版本</p></article></section><section class="rag-lane"><div class="rag-lane__label">用户问答</div><article class="rag-step"><span class="rag-step__icon">问</span><h2 class="rag-step__title">问题与身份</h2><p class="rag-step__text">查询、租户、用户权限</p></article><article class="rag-step"><span class="rag-step__icon">检</span><h2 class="rag-step__title">召回与重排</h2><p class="rag-step__text">只保留少量高相关证据</p></article><article class="rag-step"><span class="rag-step__icon">证</span><h2 class="rag-step__title">上下文组装</h2><p class="rag-step__text">问题 + 片段 + 引用元数据</p></article><article class="rag-step rag-step--answer"><span class="rag-step__icon">答</span><h2 class="rag-step__title">回答与引用</h2><p class="rag-step__text">证据不足时明确拒答</p></article></section><div class="rag-proof"><div class="rag-proof__card"><strong>检索质量：</strong>评估相关片段是否进入 top-k，不能只看最终回答语气。</div><div class="rag-proof__card"><strong>回答可信度：</strong>每个关键结论都能定位到来源片段、版本和权限范围。</div></div></div>
+      </section>
+    </main>
+    <script>
+      const params = new URLSearchParams(window.location.search)
+      const requestedScene = params.get('scene') || 'browser-rendering-pipeline'
+      const fallback = document.querySelector('[data-scene="browser-rendering-pipeline"]')
+      const scene = document.querySelector(`[data-scene="${requestedScene}"]`) || fallback
+      scene.hidden = false
+      document.title = `${requestedScene} · 技术心智模型`
+    </script>
+  </body>
+</html>

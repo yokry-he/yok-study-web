@@ -148,6 +148,18 @@ where u.status = 'active';
 
 ## EXPLAIN 怎么看
 
+“已经建索引”不是性能证据。下面的执行计划同时记录访问方式、实际行数、耗时和缓冲命中，才能判断索引是否真的服务当前查询。
+
+<DocFigure
+  src="/images/database/index-explain.webp"
+  alt="PostgreSQL EXPLAIN ANALYZE 报告展示索引扫描、实际 20 行、1.84 毫秒和缓冲命中"
+  caption="比较估算行数与实际行数，并沿最耗时节点向下检查扫描、过滤和排序。"
+  :width="1440"
+  :height="900"
+/>
+
+`EXPLAIN ANALYZE` 会真正执行语句；生产写查询应先在只读副本或等价数据集验证，不能为了看计划直接修改线上数据。
+
 PostgreSQL：
 
 ```sql
