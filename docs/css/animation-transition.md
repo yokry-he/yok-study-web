@@ -166,6 +166,16 @@ transition: all 200ms ease;
 
 用户可能在系统里开启减少动态效果。CSS 可以通过 `prefers-reduced-motion` 检测。
 
+下图对比了正常动效和减少动态效果两种系统偏好。减少动态并不等于删除所有反馈，而是移除大幅位移、持续循环和容易引起不适的过渡。
+
+<DocFigure
+  src="/images/css/reduced-motion.webp"
+  alt="普通动画偏好与 prefers-reduced-motion 减少动态效果模式的对比"
+  caption="保留状态变化，缩短或取消非必要位移动画，让不同感知需求的用户都能顺利操作。"
+  :width="1440"
+  :height="900"
+/>
+
 ```css
 @media (prefers-reduced-motion: reduce) {
   *,

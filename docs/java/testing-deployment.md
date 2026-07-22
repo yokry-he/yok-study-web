@@ -6,6 +6,18 @@ Java 项目不是本地能启动就算完成。需要测试验证行为、构建
 
 ## 测试分层
 
+真实数据库测试的完整链路是 Docker 连接、PostgreSQL 启动、Flyway 迁移、JUnit 执行和资源清理。下面的证据来自本仓库 Java 25 容器实际运行。
+
+<DocFigure
+  src="/images/java/testcontainers-run.webp"
+  alt="Java Testcontainers 使用 PostgreSQL 18.4 执行 Flyway V1 V2 并运行 9 个测试全部通过"
+  caption="真实数据库测试证明约束、JPA 和迁移行为；内存模拟不能替代这条证据链。"
+  :width="1440"
+  :height="900"
+/>
+
+本次结果为 9 tests、0 failures、0 errors；容器环境内运行时使用 `TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal` 访问 Docker 映射端口。
+
 ```mermaid
 flowchart TD
   A[单元测试] --> B[Service 业务规则]

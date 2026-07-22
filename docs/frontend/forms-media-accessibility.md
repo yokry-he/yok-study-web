@@ -199,6 +199,26 @@ function validateEnrollment(values) {
 
 ## 6. 错误不能只靠颜色
 
+先对比同一表单的成功与失败状态。观察四点：标签是否始终可见、提示是否贴近字段、错误是否有文字和符号、顶部摘要是否只在需要时出现。
+
+<DocFigure
+  src="/images/frontend/form-valid.webp"
+  alt="创建学习账号表单的成功状态，邮箱字段下方显示格式正确的文字提示，学习方向已经选择。"
+  caption="成功状态也使用明确文字，不只把输入框边框改成绿色；标签、值和提示保持完整关系。"
+  :width="1440"
+  :height="900"
+/>
+
+<DocFigure
+  src="/images/frontend/form-invalid.webp"
+  alt="创建学习账号表单的错误状态，顶部显示错误摘要，邮箱和学习方向字段旁分别显示具体修正提示。"
+  caption="aria-invalid 表达字段无效，aria-describedby 把具体错误与字段关联；顶部摘要帮助快速定位，但不能替代字段旁提示。"
+  :width="1440"
+  :height="900"
+/>
+
+服务端返回字段错误时也要映射到同一结构，避免页面只弹出“保存失败”却不给修正方法。
+
 ```html
 <div class="form-field form-field--invalid" data-field="email">
   <label for="email">邮箱</label>
@@ -447,6 +467,14 @@ flowchart TD
 - 不自动播放带声音媒体。
 
 ## 13. 键盘验收不是按几次 Tab
+
+<DocFigure
+  src="/images/frontend/accessible-focus.webp"
+  alt="三个操作按钮中，开始第一章按钮具有高对比橙色键盘焦点环，焦点轮廓与按钮边界保持间距。"
+  caption="焦点必须同时可见、唯一且顺序合理；轮廓不能被 overflow 裁切，也不能只依赖轻微颜色变化。"
+  :width="1440"
+  :height="900"
+/>
 
 ```mermaid
 flowchart TD

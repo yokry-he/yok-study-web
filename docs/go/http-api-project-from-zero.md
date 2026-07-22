@@ -2,123 +2,63 @@
 
 ## 这个页面解决什么
 
-Go 很适合写 HTTP API、网关、后台服务和基础设施工具，但初学时常见两个问题：语法看起来简单，项目一大就不知道怎么分包；或者目录分得很复杂，却没有把 context、错误、数据库、测试和部署串起来。
+这是一篇可以照着运行的工程教程。我们只使用一套已经在本仓库验证过的方案：**Go 1.26.5、标准库 `net/http` ServeMux、`database/sql`、pgx v5、golang-migrate、`log/slog`、PostgreSQL 18.4 和 Docker Compose**。
 
-这篇用一个“任务与用户 API”项目，把 Go 后端从 `go mod init`、目录组织、HTTP 路由、中间件、数据库、事务、测试、构建到部署串成完整闭环。读完后，你应该能回答：
-
-- 一个 Go HTTP API 项目应该怎么组织目录。
-- `cmd`、`internal`、handler、service、repository 分别负责什么。
-- 为什么 `context.Context` 要贯穿 Handler、Service、Repository。
-- 如何设计列表分页、新增、编辑、完成任务和用户关联接口。
-- 如何处理错误响应、traceId、日志、数据库迁移和测试。
-- 项目上线后出现超时、连接池耗尽、goroutine 泄漏和配置错误时从哪里查。
-
-这不是语法章节，而是项目落地手册。你可以把它作为 Go 后端第一个可交付 API 的实施路线。
+最终项目位于 `examples/go-task-api`。正文用 `<<<` 直接导入真实源码，示例更新后文档构建会立即发现路径错误，避免“教程代码能看但不能运行”。
 
 ## 适合谁看
 
-- 已经学过 Go 基础语法，准备写第一个后端 API 的人。
-- 前端、Node.js 或 Java 开发者想补一个 Go 服务端项目的人。
-- 会写 `http.HandleFunc`，但不知道 handler、service、repository 怎么拆的人。
-- 想理解 Go 项目如何管理 context、错误、日志、配置和优雅关闭的人。
-- 想做一个能给 Vue Admin、React 管理台或移动端调用的轻量后端 API 的人。
+- 已能读懂函数、结构体、接口和基本 goroutine，准备开发第一个 Go API。
+- 会写 `http.HandleFunc`，但不清楚 Handler、Service、Repository 的职责。
+- 想把 Context、错误契约、数据库、测试、容器和优雅关闭串起来。
+- 需要给 Vue 管理后台提供一套行为稳定、可联调的本地 API。
 
-## 最终项目
+若对 Context、事务或测试还不熟悉，先阅读 [Context 与 HTTP](/go/context-http)、[数据库与事务](/go/database-transaction) 和 [测试](/go/testing)。
 
-项目建议命名为 `go-task-api`。它不是完整微服务平台，但要覆盖真实 Go 后端项目的核心能力。
+## 1. 明确目标与接口
 
-```text
-go-task-api/
-  README.md
-  API_CONTRACT.md
-  TROUBLESHOOTING.md
-  go.mod
-  go.sum
-  cmd/
-    server/
-      main.go
-  internal/
-    app/
-      server.go
-      routes.go
-    config/
-      config.go
-    platform/
-      db/
-      httpx/
-      logx/
-    user/
-      handler.go
-      service.go
-      repository.go
-      model.go
-      dto.go
-    task/
-      handler.go
-      service.go
-      repository.go
-      model.go
-      dto.go
-  migrations/
-    001_create_users_tasks.sql
-  tests/
-```
+项目管理用户和任务，共提供 12 条路由：
 
-最终至少交付：
+| 能力 | 方法与路径 | 关键规则 |
+| --- | --- | --- |
+| 存活 | `GET /health/live` | 不访问数据库，只判断进程能否服务 |
+| 就绪 | `GET /health/ready` | 检查关闭状态和数据库连接 |
+| 用户列表/创建 | `GET/POST /api/users` | 分页、状态过滤、email 唯一 |
+| 用户详情 | `GET /api/users/{id}` | 不存在返回稳定 404 |
+| 用户状态 | `PATCH /api/users/{id}/status` | 使用 `expectedVersion` 乐观锁 |
+| 任务列表/创建 | `GET/POST /api/tasks` | 用户、状态、分页过滤 |
+| 任务详情/替换 | `GET/PUT /api/tasks/{id}` | 更新必须携带旧 version |
+| 任务状态 | `PATCH /api/tasks/{id}/status` | 状态机限制转换方向 |
+| 任务删除 | `DELETE /api/tasks/{id}` | 删除也检查 version |
 
-| 模块 | 必须完成 |
-| --- | --- |
-| 用户 | 用户列表、详情、新增、启停 |
-| 任务 | 任务列表、详情、新增、编辑、完成、删除 |
-| HTTP | 路由、中间件、JSON 请求响应、状态码 |
-| context | 请求超时、取消、数据库调用传递 context |
-| 错误 | 业务错误、参数错误、系统错误、统一响应 |
-| 日志 | request id、traceId、耗时、错误日志 |
-| 数据库 | users、tasks 表和迁移脚本 |
-| 测试 | service 表格测试、handler 测试、repository 集成测试 |
-| 构建 | gofmt、go test、go build、Docker 镜像 |
-| 交付文档 | README、API_CONTRACT、TROUBLESHOOTING |
+成功响应使用 `{ success, data, requestId }`，失败响应使用 `{ success, error, requestId }`。业务冲突不是 500；未知字段、第二个 JSON 值和超过 1 MiB 的 body 都会被拒绝。
 
-## 项目总图
+### 总体架构
 
 ```mermaid
-flowchart TD
-  A["Client / Frontend"] --> B["HTTP Server"]
-  B --> C["Middleware"]
-  C --> D["Handler"]
-  D --> E["Service"]
-  E --> F["Repository"]
-  F --> G[("PostgreSQL / MySQL")]
-  C --> H["request id / log / recover / timeout"]
-  E --> I["Domain Rules"]
-  B --> J["Graceful Shutdown"]
+flowchart LR
+  C["Vue / curl 客户端"] --> M["ServeMux + 中间件"]
+  M --> H["Handler: HTTP 边界"]
+  H --> S["Service: 业务规则"]
+  S --> R["Repository: SQL 边界"]
+  R --> P[("PostgreSQL 18.4")]
+  A["cmd/api"] --> APP["internal/app 依赖装配"]
+  APP --> M
+  APP --> S
+  APP --> R
 ```
 
-这张图说明 Go 后端的三个核心边界：
+依赖只能朝一个方向移动：
 
-1. Handler 只处理 HTTP 协议、参数和响应。
-2. Service 处理业务规则、事务和跨仓储编排。
-3. Repository 只处理 SQL、扫描结果和数据库错误转换。
+```text
+cmd -> app -> handler -> service -> repository -> database/sql -> PostgreSQL
+```
 
-## 技术选择
+Handler 不写 SQL，Repository 不决定 HTTP 状态码，Service 不依赖 `http.ResponseWriter`。这个约束让每一层都能单独测试。
 
-Go 官方文档推荐通过 `go` 命令和 Go Modules 开发包与应用；Go 的官方入门教程也会先安装 Go、创建模块、运行代码，再使用外部模块。这个项目以标准库为主，避免一开始被框架复杂度分散注意力。
+## 2. 创建模块
 
-| 项目 | 推荐选择 | 原因 |
-| --- | --- | --- |
-| Go 版本 | 以团队 CI 和生产镜像为准，学习时用当前稳定版本 | Go 1 兼容承诺让项目升级相对平滑 |
-| 模块管理 | Go Modules | 官方依赖管理方式，`go.mod` 和 `go.sum` 可追踪 |
-| HTTP | 标准库 `net/http` 或轻量路由库 | 先理解请求生命周期，再引入框架 |
-| 数据库 | `database/sql` + 驱动 | 理解连接池、事务、context 和 SQL 边界 |
-| 迁移 | goose、golang-migrate 或团队已有工具 | 让表结构变更可追踪 |
-| 测试 | 标准库 `testing`、`httptest` | 不依赖复杂测试框架也能覆盖关键路径 |
-| 日志 | `log/slog` 或团队日志库 | 结构化日志便于线上排查 |
-
-初学建议先用标准库 `net/http` + `database/sql` + `testing`。等你理解边界后，再引入 Gin、Echo、Chi、sqlc、GORM、OpenTelemetry 或更完整的服务治理组件。
-
-## 创建项目
-
-第一步是创建模块。
+从空目录开始：
 
 ```bash
 mkdir go-task-api
@@ -126,637 +66,511 @@ cd go-task-api
 go mod init example.com/go-task-api
 ```
 
-最小入口：
+示例的完整模块文件如下。`go 1.26.0` 表示模块语言和语义基线；构建、测试和容器验证使用 Go 1.26.5。
 
-```go
-package main
+<<< ../../examples/go-task-api/go.mod{go}
 
-import (
-	"log"
-	"net/http"
-)
+执行第一次依赖检查：
 
-func main() {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write([]byte("ok"))
-	})
-
-	log.Println("server listening on :8080")
-	if err := http.ListenAndServe(":8080", mux); err != nil {
-		log.Fatal(err)
-	}
-}
+```bash
+go mod tidy
+go mod verify
+go list -m all
 ```
 
-第一次验收只看三件事：
+`go.sum` 是依赖内容校验记录，应与 `go.mod` 一起提交。不要手工删除其中“看不懂”的条目；依赖变化后运行 `go mod tidy`，再审查 diff。
 
-1. `go run ./cmd/server` 能启动。
-2. `/health` 返回 200。
-3. `go test ./...` 能执行，即使暂时没有测试。
+## 3. 建立目录与依赖边界
 
-## 分包设计
+最终目录不是按 MVC 机械拆分，而是以 `user`、`task` 领域为主，平台能力集中在 `platform`：
 
-Go 项目不要一开始照搬复杂分层，也不要把所有代码写进 `main.go`。推荐以业务模块为主，技术平台能力放进 `platform`。
-
-```mermaid
-flowchart TD
-  A["cmd/server"] --> B["internal/app"]
-  B --> C["internal/user"]
-  B --> D["internal/task"]
-  B --> E["internal/platform"]
-  C --> C1["handler / service / repository / dto / model"]
-  D --> D1["handler / service / repository / dto / model"]
-  E --> E1["db / httpx / logx"]
+```text
+examples/go-task-api/
+├── cmd/
+│   ├── api/                 # HTTP 服务入口
+│   ├── migrate/             # 独立迁移命令
+│   └── healthcheck/         # 镜像内健康检查程序
+├── internal/
+│   ├── app/                 # 路由、依赖装配、生命周期
+│   ├── config/              # 强类型环境变量
+│   ├── platform/
+│   │   ├── database/        # 连接池和迁移适配
+│   │   └── httpx/           # JSON、错误、响应和中间件
+│   ├── user/                # 用户领域完整闭环
+│   └── task/                # 任务领域完整闭环
+├── migrations/              # 嵌入二进制的版本化 SQL
+├── tests/                   # 真实 PostgreSQL/API 集成测试
+├── API_CONTRACT.md
+├── TROUBLESHOOTING.md
+├── Dockerfile
+└── compose.yaml
 ```
 
-### 每层职责
+`internal` 是 Go 工具链能够理解的可见性边界：模块外部不能直接导入内部包。`cmd` 中只保留“读取配置、创建应用、运行”这种进程级职责，业务代码不能回流到入口。
 
-| 位置 | 放什么 | 不放什么 |
-| --- | --- | --- |
-| `cmd/server` | 程序入口、加载配置、组装依赖、启动服务 | 业务逻辑、SQL |
-| `internal/app` | 路由注册、Server 组装、生命周期 | 具体业务规则 |
-| `internal/platform` | 数据库、日志、HTTP 工具、配置适配 | 业务模块代码 |
-| `internal/user` | 用户业务完整闭环 | 任务业务逻辑 |
-| `handler.go` | HTTP 参数、状态码、JSON | SQL、事务 |
-| `service.go` | 业务规则、事务、跨仓储编排 | HTTP 响应细节 |
-| `repository.go` | SQL、扫描结果、数据库错误转换 | 业务决策 |
+## 4. 先做强类型配置
 
-Go 的包边界应该服务于“可读”和“可测”。如果某个接口只有一个实现且没有测试替换需求，不要为了抽象而抽象。
+配置必须在监听端口前完成解析和校验。否则错误的 duration、连接数或数据库地址会在流量到来后才暴露。
 
-## 数据模型
+<<< ../../examples/go-task-api/internal/config/config.go{go}
 
-先做最小任务系统：
+阅读时重点找四类防线：
+
+1. 默认值只服务于本地开发，关键生产配置仍需显式提供。
+2. duration 使用 `time.ParseDuration`，不能把字符串留到业务层再解析。
+3. 最大空闲连接不能超过最大打开连接。
+4. 错误信息只指出变量名，不回显完整 `DATABASE_URL`。
+
+本地环境模板：
+
+<<< ../../examples/go-task-api/.env.example{dotenv}
+
+推荐加载方式：
+
+```bash
+cp .env.example .env
+set -a
+source .env
+set +a
+```
+
+`.env` 只能放本地非敏感配置，必须由 Git 忽略。生产密钥应由部署平台的 Secret 能力注入。
+
+## 5. 用迁移定义数据库事实
+
+应用不在启动时偷偷建表。独立 migration command 负责 schema，API 只有在迁移成功后才启动。
+
+### 数据模型
 
 ```mermaid
 erDiagram
   USERS ||--o{ TASKS : owns
-
   USERS {
-    bigint id
-    varchar username
-    varchar email
-    varchar status
-    timestamp created_at
-    timestamp updated_at
+    bigint id PK
+    text name
+    text email UK
+    text status
+    bigint version
+    timestamptz created_at
+    timestamptz updated_at
   }
-
   TASKS {
-    bigint id
-    bigint owner_id
-    varchar title
+    bigint id PK
+    bigint user_id FK
+    text title
     text description
-    varchar status
-    timestamp due_at
-    timestamp created_at
-    timestamp updated_at
+    text status
+    bigint version
+    timestamptz created_at
+    timestamptz updated_at
   }
 ```
 
-### 迁移脚本示例
+真实 migration 同时定义字段、约束、索引和中文数据库注释：
 
-下面以 PostgreSQL 为例。MySQL 可以把 `bigserial` 换成 `bigint auto_increment`，并用字段 `comment` 或数据字典文档记录含义。
+<<< ../../examples/go-task-api/migrations/000001_create_users_tasks.up.sql{sql}
 
-```sql
-create table users (
-  id bigserial primary key,
-  username varchar(64) not null,
-  email varchar(128) not null,
-  status varchar(20) not null,
-  created_at timestamp not null,
-  updated_at timestamp not null,
-  constraint uk_users_username unique (username),
-  constraint uk_users_email unique (email)
-);
+需要逐项理解：
 
-create table tasks (
-  id bigserial primary key,
-  owner_id bigint not null,
-  title varchar(128) not null,
-  description text,
-  status varchar(20) not null,
-  due_at timestamp,
-  created_at timestamp not null,
-  updated_at timestamp not null,
-  constraint fk_tasks_owner foreign key (owner_id) references users(id)
-);
+- `lower(email)` 唯一索引把大小写不同的同一邮箱视为冲突。
+- `CHECK` 约束让绕过 API 的非法状态写入也会失败。
+- `(created_at DESC, id DESC)` 为稳定分页提供唯一的次级排序。
+- `version` 从 0 开始，条件更新成功后递增。
+- 外键使用明确删除行为，不能依赖数据库默认值猜测。
 
-create index idx_tasks_owner_status on tasks(owner_id, status);
-create index idx_tasks_due_at on tasks(due_at);
+本地执行：
 
-comment on table users is '任务系统用户表。保存任务负责人和后台访问用户的基础资料。';
-comment on column users.id is '用户主键。由数据库生成，不承载业务含义。';
-comment on column users.username is '用户名。全局唯一，用于展示、审计和任务负责人识别。';
-comment on column users.email is '用户邮箱。全局唯一，可用于通知、登录或找回账号。';
-comment on column users.status is '用户状态。建议取值 ACTIVE、DISABLED；停用用户不能继续创建或认领任务。';
-comment on column users.created_at is '用户创建时间。用于审计和排序。';
-comment on column users.updated_at is '用户最后更新时间。用于排查缓存旧值和同步延迟。';
-
-comment on table tasks is '任务主表。保存任务标题、描述、负责人、状态和截止时间。';
-comment on column tasks.owner_id is '任务负责人，引用 users.id。用于按用户筛选任务和权限判断。';
-comment on column tasks.title is '任务标题。必填，控制长度是为了避免列表页和通知内容被长文本撑破。';
-comment on column tasks.description is '任务描述。可为空，用于补充任务背景。';
-comment on column tasks.status is '任务状态。建议取值 TODO、DOING、DONE、CANCELLED。';
-comment on column tasks.due_at is '截止时间。可为空，用于提醒、排序和逾期统计。';
+```bash
+docker compose up -d postgres
+docker compose exec postgres pg_isready -U app -d taskdb
+go run ./cmd/migrate up
+go run ./cmd/migrate version
 ```
 
-唯一约束是为了防止用户身份冲突；`tasks.owner_id` 外键是为了避免任务指向不存在的负责人；`idx_tasks_owner_status` 支持后台高频“按负责人和状态筛选”；`idx_tasks_due_at` 支持截止时间排序和提醒扫描。
-
-## API 设计
-
-先完成任务管理闭环，不要一开始设计过多接口。
-
-| 方法 | 路径 | 用途 |
-| --- | --- | --- |
-| `GET` | `/api/tasks` | 任务分页列表 |
-| `GET` | `/api/tasks/{id}` | 任务详情 |
-| `POST` | `/api/tasks` | 新增任务 |
-| `PUT` | `/api/tasks/{id}` | 编辑任务 |
-| `PATCH` | `/api/tasks/{id}/status` | 更新任务状态 |
-| `DELETE` | `/api/tasks/{id}` | 删除任务 |
-| `GET` | `/api/users` | 用户列表 |
-
-统一成功响应：
-
-```json
-{
-  "code": "OK",
-  "message": "success",
-  "traceId": "2ad7f9c1",
-  "data": {
-    "id": 1,
-    "title": "整理项目文档"
-  }
-}
-```
-
-统一错误响应：
-
-```json
-{
-  "code": "TASK_NOT_FOUND",
-  "message": "任务不存在",
-  "traceId": "2ad7f9c1"
-}
-```
-
-分页响应：
-
-```json
-{
-  "code": "OK",
-  "message": "success",
-  "traceId": "2ad7f9c1",
-  "data": {
-    "items": [],
-    "page": 1,
-    "pageSize": 20,
-    "total": 0
-  }
-}
-```
-
-把这些约定写进 `API_CONTRACT.md`，避免前端联调时字段名、分页结构和错误码反复漂移。
-
-## Handler、Service、Repository
-
-### Handler
-
-Handler 负责读取 HTTP 请求、校验基础参数、调用 Service、写响应。
-
-```go
-func (h *TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
-	var req CreateTaskRequest
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		httpx.WriteError(w, http.StatusBadRequest, "BAD_REQUEST", "请求 JSON 不正确")
-		return
-	}
-
-	task, err := h.service.Create(ctx, req.ToCommand())
-	if err != nil {
-		httpx.WriteAppError(w, err)
-		return
-	}
-
-	httpx.WriteJSON(w, http.StatusCreated, task)
-}
-```
-
-### Service
-
-Service 负责业务规则和事务边界。
-
-```go
-func (s *TaskService) Create(ctx context.Context, cmd CreateTaskCommand) (*TaskView, error) {
-	if strings.TrimSpace(cmd.Title) == "" {
-		return nil, NewBusinessError("TASK_TITLE_REQUIRED", "任务标题不能为空")
-	}
-
-	owner, err := s.users.FindByID(ctx, cmd.OwnerID)
-	if err != nil {
-		return nil, fmt.Errorf("find task owner: %w", err)
-	}
-	if owner.Disabled() {
-		return nil, NewBusinessError("OWNER_DISABLED", "负责人已停用")
-	}
-
-	task := NewTask(cmd.OwnerID, cmd.Title, cmd.Description, cmd.DueAt)
-	if err := s.tasks.Save(ctx, task); err != nil {
-		return nil, fmt.Errorf("save task: %w", err)
-	}
-
-	return ToTaskView(task), nil
-}
-```
-
-### Repository
-
-Repository 负责 SQL 和扫描结果。
-
-```go
-func (r *TaskRepository) FindByID(ctx context.Context, id int64) (*Task, error) {
-	row := r.db.QueryRowContext(ctx, `
-		select id, owner_id, title, description, status, due_at, created_at, updated_at
-		from tasks
-		where id = $1
-	`, id)
-
-	var task Task
-	if err := row.Scan(
-		&task.ID,
-		&task.OwnerID,
-		&task.Title,
-		&task.Description,
-		&task.Status,
-		&task.DueAt,
-		&task.CreatedAt,
-		&task.UpdatedAt,
-	); err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil, NewBusinessError("TASK_NOT_FOUND", "任务不存在")
-		}
-		return nil, fmt.Errorf("scan task id=%d: %w", id, err)
-	}
-
-	return &task, nil
-}
-```
-
-## context 和请求生命周期
-
-Go HTTP 项目的关键是让请求生命周期可控。请求超时后，数据库查询和外部调用也应该停止。
-
-```mermaid
-sequenceDiagram
-  participant C as Client
-  participant M as Middleware
-  participant H as Handler
-  participant S as Service
-  participant R as Repository
-  participant DB as Database
-  C->>M: HTTP request
-  M->>M: request id + timeout
-  M->>H: r.Context()
-  H->>S: ctx + command
-  S->>R: ctx + query
-  R->>DB: QueryContext / ExecContext
-  DB-->>R: rows / error
-  R-->>S: model / error
-  S-->>H: view / error
-  H-->>C: JSON response
-```
-
-### 必须遵守
-
-- Handler 取 `r.Context()`，不要自己创建孤立的 `context.Background()`。
-- Service 和 Repository 方法都显式接收 `ctx context.Context`。
-- 数据库调用使用 `QueryContext`、`ExecContext`、`BeginTx`。
-- 外部 HTTP 调用设置超时，并使用同一个请求上下文。
-- 不要把 context 保存到结构体字段里。
-
-## 中间件
-
-推荐中间件顺序：
+预期版本：
 
 ```text
-recover
-↓
-request id / trace
-↓
-logging
-↓
-timeout
-↓
-auth
-↓
-handler
+version=1 dirty=false
 ```
+
+不要在生产环境随意运行 `down`。删除表和数据属于破坏性操作，生产迁移通常采用向前修复，并为兼容窗口保留旧字段。
+
+## 6. 先稳定错误与 JSON 契约
+
+在写领域 Handler 前先统一协议边界，否则每条路由会产生不同的错误格式。
+
+### 请求链
 
 ```mermaid
 flowchart LR
-  A["Recover"] --> B["Trace"]
-  B --> C["Logging"]
-  C --> D["Timeout"]
-  D --> E["Auth"]
-  E --> F["Handler"]
+  A["HTTP body"] --> B["大小与 Content-Type"]
+  B --> C["严格 JSON 解码"]
+  C --> D["字段校验"]
+  D --> E["Service 业务规则"]
+  E --> F["Repository 错误映射"]
+  F --> G["统一 AppError"]
+  G --> H["状态码 + JSON envelope"]
 ```
 
-### timeout 示例
+错误模型将公开 message 与内部 cause 分离：
 
-```go
-func Timeout(duration time.Duration, next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ctx, cancel := context.WithTimeout(r.Context(), duration)
-		defer cancel()
-		next.ServeHTTP(w, r.WithContext(ctx))
-	})
-}
+<<< ../../examples/go-task-api/internal/platform/httpx/error.go{go}
+
+严格 JSON 解码器负责 body 上限、媒体类型、未知字段、空 body 和尾随值：
+
+<<< ../../examples/go-task-api/internal/platform/httpx/json.go{go}
+
+为什么要在这里一次做完？
+
+| 情况 | 宽松解码的后果 | 严格契约 |
+| --- | --- | --- |
+| `emali` 拼错 | 字段被忽略，业务收到空 email | `UNKNOWN_FIELD` |
+| body 后追加第二段 JSON | 第一段成功，剩余数据被忽略 | `INVALID_JSON` |
+| 上传数百 MB | 进程内存和带宽被占用 | `BODY_TOO_LARGE` |
+| 数据库异常 | SQL 和连接信息泄露 | 对外统一 `INTERNAL_ERROR` |
+
+## 7. 完成用户领域
+
+一个领域包包含模型、repository 接口与 PostgreSQL 实现、service 和 handler。先从模型与稳定业务码开始：
+
+<<< ../../examples/go-task-api/internal/user/model.go{go}
+
+### Service：规则属于业务层
+
+<<< ../../examples/go-task-api/internal/user/service.go{go}
+
+Service 负责：
+
+- 去除空白、规范化 email、校验 Unicode 字符数。
+- 限制用户状态转换。
+- 把 `context.Context` 原样传给 repository。
+- 不知道 HTTP status，也不操作数据库连接池。
+
+### Repository：SQL 属于持久化边界
+
+<<< ../../examples/go-task-api/internal/user/repository_postgres.go{go}
+
+阅读 Repository 时依次检查：
+
+1. 每个查询都使用 `QueryContext`、`QueryRowContext` 或 `ExecContext`。
+2. `rows.Close()` 与 `rows.Err()` 都被处理。
+3. 参数通过占位符传入，用户值不直接拼进 SQL。
+4. PostgreSQL 唯一约束被转换为领域冲突，而不是泄露驱动错误。
+5. 更新通过 `WHERE id = $1 AND version = $2` 检查旧版本。
+
+### Handler：只翻译 HTTP
+
+<<< ../../examples/go-task-api/internal/user/handler.go{go}
+
+Handler 的职责顺序是：解析 path/query/body，调用 service，把结果映射为 HTTP 响应。它不自行重新实现 email 校验，也不判断 PostgreSQL 错误码。
+
+## 8. 完成任务领域
+
+任务比用户多两个工程问题：状态机和并发修改。
+
+<<< ../../examples/go-task-api/internal/task/model.go{go}
+
+### 状态机
+
+```mermaid
+stateDiagram-v2
+  [*] --> TODO
+  TODO --> DOING
+  TODO --> CANCELLED
+  DOING --> DONE
+  DOING --> CANCELLED
+  DONE --> [*]
+  CANCELLED --> [*]
 ```
 
-### recover 示例
+不能只校验“目标状态是否属于枚举”，还要校验“当前状态能否进入目标状态”。已完成任务不能重新回到处理中，除非产品明确设计恢复流程。
 
-```go
-func Recover(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		defer func() {
-			if recovered := recover(); recovered != nil {
-				httpx.WriteError(w, http.StatusInternalServerError, "INTERNAL_ERROR", "系统错误")
-			}
-		}()
-		next.ServeHTTP(w, r)
-	})
-}
-```
+### Service 与 Repository
 
-recover 只能兜底，不应该替代正常错误处理。业务错误要显式返回，不要靠 panic 控制流程。
+完整业务规则：
 
-## 事务边界
+<<< ../../examples/go-task-api/internal/task/service.go{go}
 
-完成任务时可能需要写任务状态、写操作日志、发送事件。数据库写入必须在事务里保持一致。
+PostgreSQL 实现包含筛选、稳定分页、事务、乐观锁和删除：
+
+<<< ../../examples/go-task-api/internal/task/repository_postgres.go{go}
+
+### 乐观锁为什么必要
 
 ```mermaid
 sequenceDiagram
-  participant S as TaskService
-  participant TX as sql.Tx
-  participant T as TaskRepository
-  participant L as LogRepository
-  S->>TX: BeginTx(ctx)
-  S->>T: update task status
-  S->>L: insert operation log
-  alt success
-    S->>TX: Commit
-  else error
-    S->>TX: Rollback
-  end
+  participant A as 编辑器 A
+  participant B as 编辑器 B
+  participant API
+  participant DB
+  A->>API: GET task
+  B->>API: GET task
+  API-->>A: version=3
+  API-->>B: version=3
+  A->>API: PUT expectedVersion=3
+  API->>DB: UPDATE WHERE version=3
+  DB-->>A: 成功，version=4
+  B->>API: PUT expectedVersion=3
+  API->>DB: UPDATE WHERE version=3
+  DB-->>B: 0 rows
+  API-->>B: 409 VERSION_CONFLICT
 ```
 
-事务建议：
+如果不带 version，B 会静默覆盖 A 的更新。发生 409 后应该重新读取并决定如何合并；自动重试同一份旧数据只会再次表达过时意图。
 
-- 事务边界放在 Service 或专门 transaction helper。
-- 不要在事务里做慢外部 HTTP 调用。
-- `defer tx.Rollback()` 兜底，成功后再 `Commit`。
-- 事务内所有 SQL 使用同一个 `tx`。
-- 事务失败要保留 traceId 和关键业务 ID。
+任务 Handler 直接来自可运行示例：
 
-## 错误和日志
+<<< ../../examples/go-task-api/internal/task/handler.go{go}
 
-Go 的错误处理要保留上下文，但不要把所有错误都暴露给前端。
+## 9. 装配路由与中间件
+
+Go 1.22+ ServeMux 支持 method pattern 和 path value，因此本项目不需要额外路由框架。
+
+<<< ../../examples/go-task-api/internal/app/router.go{go}
+
+### 中间件顺序
 
 ```mermaid
 flowchart TD
-  A["Repository error"] --> B["wrap technical context"]
-  B --> C["Service decide business meaning"]
-  C --> D{"business error?"}
-  D -- "yes" --> E["4xx + business code"]
-  D -- "no" --> F["5xx + generic message"]
-  E --> G["log traceId"]
-  F --> G
+  A["Request"] --> B["Request ID"]
+  B --> C["Recover"]
+  C --> D["Access Log"]
+  D --> E["Request Timeout"]
+  E --> F["ServeMux"]
+  F --> G["Handler"]
+  G --> H["Response"]
 ```
 
-错误设计：
+顺序会改变可观察行为：
 
-| 错误 | HTTP 状态 | 示例 code |
-| --- | ---: | --- |
-| JSON 解析失败 | 400 | `BAD_REQUEST` |
-| 参数校验失败 | 400 | `VALIDATION_ERROR` |
-| 资源不存在 | 404 | `TASK_NOT_FOUND` |
-| 业务冲突 | 409 | `TASK_ALREADY_DONE` |
-| 未认证 | 401 | `UNAUTHORIZED` |
-| 无权限 | 403 | `FORBIDDEN` |
-| 系统错误 | 500 | `INTERNAL_ERROR` |
+- Request ID 必须在日志和错误响应之前生成。
+- Recover 必须包住后续处理，panic 才能被脱敏记录。
+- Access log 要观察最终状态码和耗时。
+- Timeout 通过 Context 传播，不创建一个无法收回的 handler goroutine。
 
-日志建议：
+中间件的真实实现包含 request ID 校验、响应状态记录、panic 恢复和 deadline：
 
-- 每个请求有 request id 或 traceId。
-- 记录 method、path、status、duration、remote ip。
-- 业务错误记录 warn，系统错误记录 error。
-- 不打印 token、密码、身份证、银行卡等敏感数据。
-- 数据库慢查询和外部调用超时要能定位到业务 ID。
+<<< ../../examples/go-task-api/internal/platform/httpx/middleware.go{go}
 
-## 测试策略
+应用装配和关闭生命周期集中在 `internal/app`：
 
-Go 的标准库测试能力足够支撑第一个后端项目。
+<<< ../../examples/go-task-api/internal/app/app.go{go}
 
-```mermaid
-flowchart TD
-  A["测试"] --> B["Service 表格测试"]
-  A --> C["Handler httptest"]
-  A --> D["Repository 集成测试"]
-  A --> E["go test / go vet / go build"]
-  B --> B1["业务规则和错误分支"]
-  C --> C1["状态码、JSON、错误响应"]
-  D --> D1["SQL、迁移、约束"]
-  E --> E1["基础工程门禁"]
-```
+## 10. 用测试证明边界
 
-### Service 表格测试
+不要只测纯函数。不同风险需要不同测试层：
 
-```go
-func TestTaskServiceCreate(t *testing.T) {
-	cases := []struct {
-		name    string
-		command CreateTaskCommand
-		wantErr bool
-	}{
-		{name: "valid task", command: CreateTaskCommand{Title: "整理文档", OwnerID: 1}},
-		{name: "empty title", command: CreateTaskCommand{Title: "", OwnerID: 1}, wantErr: true},
-	}
+| 层级 | 工具 | 证明什么 |
+| --- | --- | --- |
+| Service 单元测试 | fake repository | 校验、状态机、错误传递 |
+| Handler 测试 | `httptest` | 状态码、Header、JSON 契约 |
+| Repository 集成测试 | Testcontainers + PostgreSQL 18.4 | SQL、约束、事务、并发 |
+| API 集成测试 | 真实路由与数据库 | 完整生命周期和协议边界 |
+| Fuzz | Go fuzzing | 解码器面对任意输入不 panic |
+| Race | `-race` | 并发访问没有数据竞争 |
 
-	for _, tc := range cases {
-		t.Run(tc.name, func(t *testing.T) {
-			// arrange service with fake repositories
-			// act
-			// assert
-		})
-	}
-}
-```
+完整 API 集成测试直接启动真实 PostgreSQL，并执行用户与任务生命周期：
 
-### Handler 测试
+<<< ../../examples/go-task-api/tests/api_integration_test.go{go}
 
-```go
-func TestCreateTaskHandlerBadJSON(t *testing.T) {
-	req := httptest.NewRequest(http.MethodPost, "/api/tasks", strings.NewReader("{bad json"))
-	rec := httptest.NewRecorder()
-
-	handler.ServeHTTP(rec, req)
-
-	if rec.Code != http.StatusBadRequest {
-		t.Fatalf("status = %d, want %d", rec.Code, http.StatusBadRequest)
-	}
-}
-```
-
-最小检查命令：
+最小质量检查：
 
 ```bash
-gofmt -w .
 go test ./...
+go test -race ./...
 go vet ./...
-go build -o bin/server ./cmd/server
+test -z "$(gofmt -l .)"
+go build ./cmd/...
 ```
 
-## 配置和运行
+真实数据库检查：
 
-配置来源要清楚，不能把生产配置写死在代码里。
+```bash
+go test -tags=integration ./... -count=1 -v
+go test -race -tags=integration ./... -count=1
+```
+
+集成测试不能在 Docker 不可用时静默标记成功。环境缺失应该明确失败或由 CI job 条件控制，否则绿色结果没有证明数据库行为。
+
+## 11. 构建 Docker 镜像
+
+多阶段构建生成三个静态二进制，最终镜像使用 distroless nonroot：
+
+<<< ../../examples/go-task-api/Dockerfile{dockerfile}
+
+Compose 固定启动依赖：PostgreSQL 健康 → migration 成功退出 → API 启动并通过 readiness。
+
+<<< ../../examples/go-task-api/compose.yaml{yaml}
+
+```mermaid
+flowchart LR
+  A["postgres healthy"] --> B["migrate up"]
+  B -->|"exit 0"| C["API listen"]
+  C --> D["/health/live"]
+  C --> E["/health/ready"]
+  F["SIGTERM"] --> G["readiness=false"]
+  G --> H["等待在途请求"]
+  H --> I["关闭连接池"]
+  I --> J["进程退出"]
+```
+
+`depends_on` 的服务顺序本身不等于可用性。本项目同时使用 PostgreSQL healthcheck、migration `service_completed_successfully` 与 API healthcheck。
+
+## 12. 执行真实 smoke test
+
+从示例目录启动：
+
+```bash
+cd examples/go-task-api
+POSTGRES_PORT=55432 docker compose -p go-task-api up -d --build
+docker compose -p go-task-api ps
+```
+
+如果宿主机 5432 空闲，可以省略 `POSTGRES_PORT=55432`。这个变量只改变宿主机映射，API 容器仍连接 `postgres:5432`。
+
+### 健康检查
+
+```bash
+curl -sS http://127.0.0.1:8080/health/live \
+  -H 'X-Request-ID: docs-smoke-001'
+```
+
+实际响应结构：
+
+```json
+{"success":true,"data":{"status":"alive"},"requestId":"docs-smoke-001"}
+```
+
+```bash
+curl -sS http://127.0.0.1:8080/health/ready \
+  -H 'X-Request-ID: docs-smoke-002'
+```
+
+```json
+{"success":true,"data":{"status":"ready"},"requestId":"docs-smoke-002"}
+```
+
+下面是完整 Compose 链路的实际运行结果。`postgres` 必须先 healthy，独立 migration 必须 `exit 0`，API 才会启动并以 `nonroot:nonroot` 通过健康检查。
+
+<DocFigure
+  src="/images/go/go-task-api-ready.webp"
+  alt="Go Task API 依次完成 PostgreSQL 健康检查、数据库迁移、非 root 启动并返回 ready"
+  caption="Readiness 会实际执行数据库 PingContext；数据库不可用或进程进入关闭阶段时应返回 503。"
+  :width="1440"
+  :height="900"
+/>
+
+对应文本证据：镜像使用 Go 1.26.5 和 PostgreSQL 18.4，迁移版本为 1；`docker inspect` 显示用户 `nonroot:nonroot`、容器状态 `healthy`；ready 响应的 `data.status` 为 `ready`。
+
+### 创建用户和任务
+
+```bash
+curl -i -X POST http://127.0.0.1:8080/api/users \
+  -H 'Content-Type: application/json' \
+  -H 'X-Request-ID: docs-user-001' \
+  -d '{"name":"张三","email":"zhangsan@example.com"}'
+```
+
+记录响应中的用户 `id`，再创建任务：
+
+```bash
+curl -i -X POST http://127.0.0.1:8080/api/tasks \
+  -H 'Content-Type: application/json' \
+  -H 'X-Request-ID: docs-task-001' \
+  -d '{"ownerId":1,"title":"完成 Go API 验收","description":"保留命令和响应证据"}'
+```
+
+继续用返回的 `version` 测试更新。然后故意再次发送旧 `expectedVersion`，应得到 `409 TASK_VERSION_CONFLICT`。
+
+实际冒烟流程中，任务创建为 `version=0`；第一个 `PUT` 成功后变为 `version=1`；第二个请求仍携带 `expectedVersion=0`，服务端的 `UPDATE ... WHERE version=0` 已匹配不到记录，因此返回 409。
+
+<DocFigure
+  src="/images/go/go-task-version-conflict.webp"
+  alt="Go Task API 两个客户端同时持有任务 version 0，第一个更新到 version 1，第二个收到 409 TASK_VERSION_CONFLICT"
+  caption="数据库条件更新保证旧版本最多成功一次，稳定错误码让客户端能够触发刷新与冲突处理。"
+  :width="1440"
+  :height="900"
+/>
+
+### 验证错误边界
+
+未知字段：
+
+```bash
+curl -i -X POST http://127.0.0.1:8080/api/users \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"李四","email":"lisi@example.com","admin":true}'
+```
+
+错误媒体类型：
+
+```bash
+curl -i -X POST http://127.0.0.1:8080/api/users \
+  -H 'Content-Type: text/plain' \
+  -d '{}'
+```
+
+### 优雅关闭与清理
+
+```bash
+docker compose -p go-task-api stop api
+docker compose -p go-task-api logs --no-color api
+docker compose -p go-task-api down -v --remove-orphans
+```
+
+关闭日志必须依次出现：
 
 ```text
-环境变量
-↓
-配置文件
-↓
-默认值
-↓
-启动时打印非敏感配置摘要
+HTTP 服务开始监听
+HTTP 服务开始关闭
+HTTP 服务关闭完成
 ```
 
-建议配置项：
+`down -v` 会删除本练习的数据库卷。执行前确认 Compose project 为 `go-task-api`，不要清理其他项目。
 
-| 配置 | 含义 |
-| --- | --- |
-| `APP_ENV` | 当前环境：dev、test、prod |
-| `HTTP_ADDR` | HTTP 监听地址，例如 `:8080` |
-| `DB_DSN` | 数据库连接串，敏感信息不提交仓库 |
-| `READ_TIMEOUT` | HTTP 读取超时 |
-| `WRITE_TIMEOUT` | HTTP 写入超时 |
-| `SHUTDOWN_TIMEOUT` | 优雅关闭等待时间 |
+## 13. 按证据排障
 
-配置检查清单：
+遇到问题时先固定请求 ID、命令、版本、第一条错误和影响范围，再提出可证伪假设。
 
-- README 写清必需环境变量。
-- 启动时校验 `DB_DSN` 等关键配置。
-- 日志只打印配置摘要，不打印密码。
-- 本地、测试、生产环境的配置差异明确。
-- Docker 和 CI 使用同一套环境变量名称。
-
-## 优雅关闭和部署
-
-Go 服务通常以单个二进制部署。发布时要处理正在执行的请求。
-
-```mermaid
-flowchart TD
-  A["收到 SIGTERM"] --> B["停止接收新请求"]
-  B --> C["等待正在处理的请求"]
-  C --> D{"是否超时"}
-  D -- "否" --> E["关闭数据库和资源"]
-  D -- "是" --> F["强制退出并记录日志"]
-  E --> G["进程退出"]
-  F --> G
-```
-
-Server 示例：
-
-```go
-srv := &http.Server{
-	Addr:         cfg.HTTPAddr,
-	Handler:      router,
-	ReadTimeout:  5 * time.Second,
-	WriteTimeout: 10 * time.Second,
-	IdleTimeout:  60 * time.Second,
-}
-```
-
-构建：
-
-```bash
-go build -ldflags "-X main.version=$COMMIT" -o bin/server ./cmd/server
-```
-
-Dockerfile：
-
-```dockerfile
-FROM golang:1.26 AS build
-WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download
-COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -o /server ./cmd/server
-
-FROM gcr.io/distroless/static-debian12
-COPY --from=build /server /server
-ENTRYPOINT ["/server"]
-```
-
-如果项目依赖 CGO、证书、时区或系统库，运行镜像要按实际依赖调整，不要盲目追求最小镜像。
-
-## 交付验收
-
-| 项目 | 验收标准 |
-| --- | --- |
-| 模块初始化 | `go.mod`、`go.sum` 正确提交 |
-| 本地启动 | `/health` 返回 200 |
-| 任务 CRUD | 列表、详情、新增、编辑、完成、删除闭环 |
-| context | Handler、Service、Repository 都传递 ctx |
-| 数据库 | 迁移脚本可执行，字段和约束有说明 |
-| 错误响应 | 业务错误和系统错误能区分 |
-| 日志 | 请求日志包含 traceId、状态码和耗时 |
-| 测试 | service、handler、repository 有基础测试 |
-| 构建 | `go test ./...` 和 `go build ./cmd/server` 通过 |
-| 部署 | 容器可启动，支持优雅关闭 |
-| 文档 | README、API_CONTRACT、TROUBLESHOOTING 完整 |
-
-## 常见问题和排查
-
-| 问题 | 先查什么 | 对应章节 |
+| 现象 | 第一检查点 | 常见根因 |
 | --- | --- | --- |
-| 请求超时后 SQL 还在跑 | 是否使用 `QueryContext`、`ExecContext` | context 和请求生命周期 |
-| goroutine 数量持续上涨 | 是否启动 goroutine 后没有退出条件 | [Go 常见问题](/go/troubleshooting) |
-| 数据库连接耗尽 | rows 是否关闭、连接池配置、慢 SQL | [数据库、事务与仓储层](/go/database-transaction) |
-| JSON 字段为空 | tag、请求字段名、大小写、零值 | Handler、Service、Repository |
-| 事务没有回滚 | 是否所有写入都用同一个 tx | 事务边界 |
-| 容器里找不到配置 | 工作目录、环境变量、配置来源 | 配置和运行 |
-| 关闭时请求被强杀 | 是否使用 `http.Server.Shutdown` | 优雅关闭和部署 |
-| 线上延迟升高 | pprof、慢 SQL、外部调用、连接池 | [性能分析与线上诊断](/go/performance) |
+| API 启动失败 | 配置错误和 migration 日志 | 环境变量格式、数据库未就绪 |
+| ready 返回 503 | API 日志与数据库 health | 连接串、数据库重启、关闭中 |
+| 请求返回 400 | error code 与 request ID | JSON 语法、未知字段、尾随值 |
+| 请求返回 409 | 当前资源 version | email 冲突或过期写入 |
+| 延迟升高 | `DB.Stats`、慢 SQL、profile | 池等待、事务过长、锁竞争 |
+| 关闭卡住 | goroutine stack、Context | handler 或数据库调用不响应取消 |
+| 集成测试失败 | Testcontainers 日志 | Docker 不可用、镜像拉取、迁移失败 |
 
-## 练习任务
+详细操作命令见示例中的 `TROUBLESHOOTING.md`，也可直接使用 [Go 真实项目问题库](/projects/issues-go) 和 [Go 故障排查](/go/troubleshooting)。不要以无限重试、扩大连接池或吞掉错误来掩盖根因。
 
-按下面顺序做，不要一开始就引入复杂框架。
+## 14. 什么时候再引入框架
 
-1. `go mod init` 并创建 `/health`。
-2. 建立 `cmd/server`、`internal/app`、`internal/task`、`internal/user`。
-3. 增加配置读取和启动时配置校验。
-4. 增加 recover、trace、logging、timeout 中间件。
-5. 建 users、tasks 表和迁移脚本。
-6. 完成任务列表和新增接口。
-7. 增加任务状态更新和业务错误。
-8. 给数据库调用传递 context。
-9. 写 service 表格测试和 handler 测试。
-10. 构建二进制和 Docker 镜像。
-11. 写 README、API_CONTRACT、TROUBLESHOOTING。
+当前方案已经能完成中小型 JSON API。只有出现明确问题时才引入额外工具：
 
-完成后，把这个后端接给一个 Vue 或 React 任务列表页面。联调时如果出现分页字段、错误响应、跨域、旧请求覆盖或部署路径问题，回到 [前端项目排障图谱](/projects/frontend-debugging-map)、[前后端联调排查](/projects/integration-debugging) 和 [部署、缓存与 DevOps 问题](/projects/issues-deployment)。
+| 真实需求 | 可评估方案 | 引入前必须回答 |
+| --- | --- | --- |
+| 大量复杂路由与绑定 | Chi 或 Gin | 标准 ServeMux 的具体阻碍是什么？ |
+| 强类型 SQL 生成 | sqlc | SQL 与生成代码如何评审和升级？ |
+| 复杂对象关系映射 | GORM | 隐式查询、事务和性能如何观察？ |
+| 跨服务调用 | gRPC | 版本兼容、deadline、重试由谁负责？ |
+| 分布式可观测性 | OpenTelemetry | trace 采样、敏感字段和成本如何控制？ |
 
-## 参考资料
+框架不会替你解决 Context 断链、错误泄露、事务过长、乐观锁缺失或测试不真实。先保住这里建立的边界，再替换实现细节。
 
-- [Go Documentation](https://go.dev/doc/)
-- [Tutorial: Get started with Go](https://go.dev/doc/tutorial/getting-started)
-- [Tutorial: Create a Go module](https://go.dev/doc/tutorial/create-module)
-- [How to Write Go Code](https://go.dev/doc/code)
-- [Go Modules Reference](https://go.dev/ref/mod)
+## 验收清单
+
+- [ ] `go test ./...`、`go test -race ./...`、`go vet ./...` 全部通过。
+- [ ] 真实 PostgreSQL integration tests 覆盖迁移、约束、repository 和 API 生命周期。
+- [ ] 未知 JSON 字段、尾随值、错误媒体类型、超大 body 均有回归测试。
+- [ ] 所有数据库调用传递请求 Context，并在取消后退出。
+- [ ] 任务更新和删除使用 `expectedVersion`，过期写返回 409。
+- [ ] 镜像使用非 root 用户，migration 成功后 API 才启动。
+- [ ] live 与 ready 含义不同，数据库失败会关闭 readiness。
+- [ ] SIGTERM 日志证明开始关闭、等待请求和关闭完成。
+- [ ] README、接口契约、排障文档和实际实现一致。
+- [ ] 清理命令不会影响其他 Compose project。
 
 ## 下一步学习
 
-继续学习 [数据库、事务与仓储层](/go/database-transaction)，再进入 [测试、Benchmark 与 Fuzzing](/go/testing) 和 [项目结构、构建与部署](/go/project-deployment)。如果你正在做全栈项目，把本页 API 接到 [前端综合实战练习](/roadmap/frontend-capstone-lab) 或自己的 Vue Admin 页面中。
+按 [Go 专项实战练习](/roadmap/go-practice) 完成 12 次故障注入与验收，再阅读 [Go 图解总览](/go/visual-guide) 串联心智模型。准备扩展项目时，先为新领域写 migration、错误契约和集成测试，再增加 Handler；不要从复制一套路由代码开始。

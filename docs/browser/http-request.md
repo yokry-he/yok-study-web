@@ -130,6 +130,30 @@ await fetch('/api/upload', {
 
 ## Network 面板排查流程
 
+先观察一条已经成功返回的请求，确认五类事实：请求是否发出、目标 URL 是否正确、方法是否正确、身份凭证是否带上、响应类型和 Request ID 是否能与后端日志对应。
+
+<DocFigure
+  src="/images/browser/network-request-headers.webp"
+  alt="浏览器网络请求证据面板展示 URL、GET 方法、200 状态、请求头和响应头"
+  caption="Headers 面板把一次请求的输入和输出放在一起；先核对事实，再解释页面为什么成功或失败。"
+  :width="1440"
+  :height="900"
+/>
+
+不依赖图片的读取路径：打开 DevTools → Network → 选择目标请求 → General 查看 URL、Method、Status → Request Headers 查看身份与内容类型 → Response Headers 查看缓存、跨域、响应类型和链路 ID。
+
+当问题是“请求为什么慢”时，不要只看总耗时。下面的示例把 218 ms 拆成 DNS、连接与 TLS、等待首字节和下载四段，其中 142 ms 都花在 Waiting。
+
+<DocFigure
+  src="/images/browser/network-request-timing.webp"
+  alt="浏览器 Network Timing 将 218 毫秒请求拆成 DNS、连接、等待首字节和下载阶段"
+  caption="Waiting 占比最高时，应先用 Request ID 对齐服务端日志，而不是先优化很小的响应体。"
+  :width="1440"
+  :height="900"
+/>
+
+不依赖图片的读取路径：选择请求 → Timing → 比较 Queueing、DNS、Initial connection、SSL、Waiting 和 Content Download；记录占比最大的阶段与具体毫秒数。
+
 ### 1. 找到请求
 
 按接口路径、方法或 `Fetch/XHR` 过滤。先确认请求有没有发出去。

@@ -439,6 +439,18 @@ flowchart TD
 
 ## 第七阶段：DevTools 证据链
 
+本阶段不是学习“点哪个标签”，而是建立可复用的证据记录。以请求问题为例，截图和排障记录至少要同时包含 URL、Method、Status、关键请求头、关键响应头、Timing 最大阶段和 Request ID。
+
+<DocFigure
+  src="/images/browser/network-request-headers.webp"
+  alt="浏览器网络证据示例同时展示请求概要、请求头、响应头和链路 ID"
+  caption="项目排障记录应保存能复核的请求事实，不能只写“接口有问题”或只截一个红色状态码。"
+  :width="1440"
+  :height="900"
+/>
+
+即使不附图片，也要把同样信息写入 `BROWSER_DEBUG_NOTES`：目标环境、完整请求路径、触发时间、Status、关键 Header、Request ID、耗时最大阶段、预期结果和实际结果。
+
 ### 排障总图
 
 ```mermaid

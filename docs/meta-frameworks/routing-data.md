@@ -90,6 +90,18 @@ app/products/[id]/page.tsx -> /products/:id
 
 ## 数据获取位置
 
+先按边界决定数据放在哪里：路由解析参数，服务端完成鉴权与首屏数据，页面输出可流式内容，客户端组件只接管局部交互。
+
+<DocFigure
+  src="/images/meta-frameworks/route-data-boundaries.webp"
+  alt="全栈框架路由依次完成参数匹配、服务端鉴权、数据加载、页面渲染和客户端交互"
+  caption="redirect、notFound 和业务错误应在最靠近事实来源的边界决定。"
+  :width="1440"
+  :height="900"
+/>
+
+把所有请求都搬到客户端会失去首屏和服务端权限优势；把播放器、拖拽等高频交互都放在服务端也会制造不必要往返。
+
 元框架里最重要的判断是：数据在哪里取？
 
 | 位置 | 适合场景 | 注意 |

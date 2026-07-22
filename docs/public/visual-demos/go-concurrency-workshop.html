@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Go 并发所有权类比</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+        background: #f5f8f7;
+        color: #17221e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 1600px;
+        height: 900px;
+        margin: 0;
+        overflow: hidden;
+        background: #f5f8f7;
+      }
+
+      .canvas {
+        position: relative;
+        width: 1600px;
+        height: 900px;
+        padding: 72px 88px;
+      }
+
+      .canvas::before {
+        position: absolute;
+        inset: 30px;
+        border: 1px solid #c8d8d2;
+        content: "";
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        color: #087f68;
+        font-size: 20px;
+        font-weight: 800;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 44px;
+        line-height: 1.2;
+        letter-spacing: 0;
+      }
+
+      .subtitle {
+        margin: 14px 0 0;
+        color: #52645d;
+        font-size: 22px;
+      }
+
+      .workshop {
+        display: grid;
+        grid-template-columns: 250px 1fr 500px;
+        gap: 62px;
+        align-items: center;
+        margin-top: 76px;
+      }
+
+      .owner {
+        position: relative;
+        display: flex;
+        height: 300px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid #087f68;
+        border-radius: 8px;
+        background: #e8f8f3;
+        text-align: center;
+      }
+
+      .owner::after {
+        position: absolute;
+        right: -65px;
+        width: 65px;
+        height: 5px;
+        background: #09a17f;
+        content: "";
+      }
+
+      .owner__mark {
+        display: grid;
+        width: 88px;
+        height: 88px;
+        place-items: center;
+        border-radius: 50%;
+        background: #087f68;
+        color: #ffffff;
+        font-size: 36px;
+        font-weight: 900;
+      }
+
+      .owner__title {
+        margin-top: 24px;
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .owner__detail {
+        margin-top: 12px;
+        color: #446159;
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .channel {
+        position: relative;
+        padding: 30px 30px 74px;
+        border: 3px solid #2d7390;
+        border-radius: 8px;
+        background: #eef8fb;
+      }
+
+      .channel::after {
+        position: absolute;
+        right: -65px;
+        top: 50%;
+        width: 65px;
+        height: 5px;
+        background: #2d7390;
+        content: "";
+      }
+
+      .channel__header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+      }
+
+      .channel__title {
+        font-size: 26px;
+        font-weight: 900;
+      }
+
+      .channel__capacity {
+        color: #2d7390;
+        font-size: 17px;
+        font-weight: 800;
+      }
+
+      .slots {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+        margin-top: 30px;
+      }
+
+      .slot {
+        display: grid;
+        height: 94px;
+        place-items: center;
+        border: 2px solid #76a9bb;
+        border-radius: 6px;
+        background: #ffffff;
+        color: #2d7390;
+        font-size: 22px;
+        font-weight: 900;
+      }
+
+      .slot--empty {
+        border-style: dashed;
+        color: #8ca4ac;
+      }
+
+      .channel__rule {
+        position: absolute;
+        right: 30px;
+        bottom: 25px;
+        left: 30px;
+        color: #52645d;
+        font-size: 17px;
+        text-align: center;
+      }
+
+      .workers {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .worker {
+        position: relative;
+        display: flex;
+        height: 218px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #7556a3;
+        border-radius: 8px;
+        background: #f7f2fb;
+      }
+
+      .worker__mark {
+        display: grid;
+        width: 62px;
+        height: 62px;
+        place-items: center;
+        border-radius: 50%;
+        background: #7556a3;
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: 900;
+      }
+
+      .worker__title {
+        margin-top: 18px;
+        font-size: 21px;
+        font-weight: 900;
+      }
+
+      .worker__detail {
+        margin-top: 8px;
+        color: #67587b;
+        font-size: 15px;
+      }
+
+      .stop {
+        grid-column: 1 / -1;
+        display: flex;
+        height: 78px;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        border: 2px solid #cf8410;
+        border-radius: 8px;
+        background: #fff6e6;
+        color: #8b5500;
+        font-size: 19px;
+        font-weight: 900;
+      }
+
+      .stop__mark {
+        width: 22px;
+        height: 22px;
+        border: 5px solid #cf8410;
+        border-radius: 50%;
+      }
+
+      .exit-lines {
+        position: absolute;
+        right: 94px;
+        bottom: 56px;
+        left: 936px;
+        display: flex;
+        justify-content: space-around;
+        color: #52645d;
+        font-size: 16px;
+      }
+
+      .exit-lines__item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .exit-lines__arrow {
+        color: #cf8410;
+        font-size: 28px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="canvas">
+      <p class="eyebrow">并发所有权类比图</p>
+      <h1>一个协调者拥有通道，每个 Worker 都有退出条件</h1>
+      <p class="subtitle">有界队列提供背压；发送方完成后关闭通道，取消信号让阻塞中的工作者及时退出。</p>
+
+      <section class="workshop" aria-label="Go worker pool 所有权模型">
+        <article class="owner">
+          <span class="owner__mark">1</span>
+          <strong class="owner__title">协调者</strong>
+          <span class="owner__detail">创建 jobs<br />唯一负责 close</span>
+        </article>
+
+        <article class="channel">
+          <header class="channel__header">
+            <strong class="channel__title">有界任务通道</strong>
+            <span class="channel__capacity">capacity = 5</span>
+          </header>
+          <div class="slots" aria-label="通道缓冲槽">
+            <span class="slot">任务</span>
+            <span class="slot">任务</span>
+            <span class="slot">任务</span>
+            <span class="slot slot--empty">空</span>
+            <span class="slot slot--empty">空</span>
+          </div>
+          <p class="channel__rule">队列满时发送方等待，不让内存无限增长</p>
+        </article>
+
+        <section class="workers" aria-label="并发工作者">
+          <article class="worker">
+            <span class="worker__mark">W1</span>
+            <strong class="worker__title">Worker 1</strong>
+            <span class="worker__detail">任务 / 取消 / 关闭</span>
+          </article>
+          <article class="worker">
+            <span class="worker__mark">W2</span>
+            <strong class="worker__title">Worker 2</strong>
+            <span class="worker__detail">任务 / 取消 / 关闭</span>
+          </article>
+          <article class="worker">
+            <span class="worker__mark">W3</span>
+            <strong class="worker__title">Worker 3</strong>
+            <span class="worker__detail">任务 / 取消 / 关闭</span>
+          </article>
+          <div class="stop">
+            <i class="stop__mark"></i>
+            Context 取消信号：每个阻塞点都必须监听
+          </div>
+        </section>
+      </section>
+
+      <div class="exit-lines" aria-label="工作者退出结果">
+        <span class="exit-lines__item"><b class="exit-lines__arrow">↓</b>退出并 Done</span>
+        <span class="exit-lines__item"><b class="exit-lines__arrow">↓</b>退出并 Done</span>
+        <span class="exit-lines__item"><b class="exit-lines__arrow">↓</b>退出并 Done</span>
+      </div>
+    </main>
+  </body>
+</html>

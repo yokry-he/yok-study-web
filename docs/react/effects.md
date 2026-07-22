@@ -22,6 +22,18 @@ useEffect(() => {
 
 ## 请求数据
 
+搜索条件快速变化时，旧请求可能比新请求更晚返回。下面的时间线展示 cleanup 取消旧请求，并只允许最新响应写入当前页面。
+
+<DocFigure
+  src="/images/react/effect-request-race.webp"
+  alt="React 查询从 v 变为 vue 后清理旧 Effect，取消第一个请求并只接收第二个响应"
+  caption="Effect cleanup 会在依赖变化前执行上一轮清理，不只在组件卸载时执行。"
+  :width="1440"
+  :height="900"
+/>
+
+无法真正取消的异步操作也要使用请求序号或失效标记忽略旧结果，避免“后返回的数据覆盖当前条件”。
+
 ```tsx
 useEffect(() => {
   let ignore = false

@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>前端基础视觉演示</title>
+    <link rel="stylesheet" href="../shared/demo.css" />
+    <style>
+      .semantic-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 300px;
+        gap: 34px;
+        max-width: 1180px;
+        margin: 58px auto 0;
+      }
+
+      .semantic-article {
+        padding: 32px 38px;
+      }
+
+      .semantic-article__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        color: #64766f;
+        font-size: 14px;
+      }
+
+      .semantic-article__title {
+        margin: 18px 0;
+        font-size: 34px;
+        line-height: 1.25;
+      }
+
+      .semantic-article__lead {
+        margin: 0;
+        color: #3f514a;
+        font-size: 18px;
+        line-height: 1.75;
+      }
+
+      .semantic-article__section-title {
+        margin: 28px 0 10px;
+        font-size: 22px;
+      }
+
+      .semantic-article__text {
+        margin: 0;
+        color: #52645d;
+        line-height: 1.75;
+      }
+
+      .semantic-aside {
+        align-self: start;
+        padding: 26px;
+      }
+
+      .semantic-aside__title {
+        margin: 0 0 18px;
+        font-size: 19px;
+      }
+
+      .semantic-aside__nav {
+        display: grid;
+        gap: 12px;
+      }
+
+      .semantic-aside__link {
+        border-left: 3px solid #09a17f;
+        padding: 8px 12px;
+        color: #365148;
+        text-decoration: none;
+      }
+
+      .form-demo {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+        gap: 56px;
+        max-width: 1100px;
+        margin: 54px auto 0;
+        align-items: center;
+      }
+
+      .form-demo__context {
+        padding: 24px 0;
+      }
+
+      .form-demo__step {
+        display: grid;
+        width: 56px;
+        height: 56px;
+        place-items: center;
+        border-radius: 50%;
+        background: #087f68;
+        color: #ffffff;
+        font-size: 22px;
+        font-weight: 900;
+      }
+
+      .form-demo__title {
+        margin: 22px 0 10px;
+        font-size: 34px;
+      }
+
+      .form-demo__copy {
+        max-width: 520px;
+        color: #52645d;
+        font-size: 18px;
+        line-height: 1.75;
+      }
+
+      .form-card {
+        display: grid;
+        gap: 22px;
+        padding: 32px;
+      }
+
+      .form-card__head {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .form-card__alert {
+        border-left: 4px solid #b43a44;
+        padding: 12px 14px;
+        background: #fdecee;
+        color: #8f252e;
+        line-height: 1.5;
+      }
+
+      .responsive-shell {
+        max-width: 1260px;
+        margin: 44px auto 0;
+      }
+
+      .responsive-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 72px;
+        padding: 0 24px;
+      }
+
+      .responsive-header__brand {
+        font-size: 22px;
+        font-weight: 900;
+      }
+
+      .responsive-header__nav {
+        display: flex;
+        gap: 22px;
+      }
+
+      .responsive-header__link {
+        color: #41524c;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .responsive-content {
+        display: grid;
+        grid-template-columns: 250px minmax(0, 1fr);
+        gap: 24px;
+        margin-top: 24px;
+      }
+
+      .responsive-filter {
+        align-self: start;
+        padding: 22px;
+      }
+
+      .responsive-filter__title {
+        margin: 0 0 18px;
+        font-size: 18px;
+      }
+
+      .responsive-filter__list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .responsive-filter__item {
+        min-height: 42px;
+        border: 1px solid #c0d0ca;
+        border-radius: 6px;
+        padding: 10px 12px;
+        background: #ffffff;
+        color: #41524c;
+      }
+
+      .course-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .course-card {
+        min-width: 0;
+        overflow: hidden;
+      }
+
+      .course-card__visual {
+        display: grid;
+        aspect-ratio: 16 / 8;
+        place-items: center;
+        background: #e9f7f2;
+        color: #087f68;
+        font-size: 26px;
+        font-weight: 900;
+      }
+
+      .course-card:nth-child(2) .course-card__visual {
+        background: #edf7fb;
+        color: #2d7390;
+      }
+
+      .course-card:nth-child(3) .course-card__visual {
+        background: #f6f0fa;
+        color: #7556a3;
+      }
+
+      .course-card__body {
+        padding: 18px;
+      }
+
+      .course-card__title {
+        margin: 0;
+        font-size: 19px;
+      }
+
+      .course-card__meta {
+        margin: 11px 0 0;
+        color: #64766f;
+        font-size: 14px;
+      }
+
+      .focus-demo {
+        max-width: 1000px;
+        margin: 60px auto 0;
+        padding: 38px;
+      }
+
+      .focus-demo__title {
+        margin: 0;
+        font-size: 28px;
+      }
+
+      .focus-demo__copy {
+        margin: 12px 0 30px;
+        color: #52645d;
+        font-size: 17px;
+      }
+
+      .focus-demo__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+
+      .focus-demo__note {
+        margin: 34px 0 0;
+        border-left: 4px solid #f2a51f;
+        padding: 14px 18px;
+        background: #fff6e6;
+        color: #78501a;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 700px) {
+        .semantic-layout,
+        .form-demo,
+        .responsive-content {
+          grid-template-columns: 1fr;
+        }
+
+        .semantic-layout {
+          margin-top: 30px;
+        }
+
+        .semantic-article {
+          padding: 24px 20px;
+        }
+
+        .semantic-aside {
+          display: none;
+        }
+
+        .form-demo {
+          gap: 18px;
+          margin-top: 30px;
+        }
+
+        .form-demo__context {
+          display: none;
+        }
+
+        .form-card {
+          padding: 24px 18px;
+        }
+
+        .responsive-shell {
+          margin-top: 26px;
+        }
+
+        .responsive-header {
+          min-height: 58px;
+          padding: 0 16px;
+        }
+
+        .responsive-header__nav {
+          display: none;
+        }
+
+        .responsive-content {
+          gap: 16px;
+          margin-top: 16px;
+        }
+
+        .responsive-filter {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 14px;
+        }
+
+        .responsive-filter__title {
+          margin: 0;
+        }
+
+        .responsive-filter__list {
+          display: none;
+        }
+
+        .course-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .course-card:nth-child(n + 3) {
+          display: none;
+        }
+
+        .focus-demo {
+          margin-top: 34px;
+          padding: 24px 18px;
+        }
+
+        .focus-demo__actions {
+          display: grid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="demo-frame">
+      <section data-scene="semantic-article" hidden>
+        <p class="demo-kicker">语义化页面结构</p>
+        <h1 class="demo-title">不看 CSS，也能读懂内容层级</h1>
+        <p class="demo-subtitle">Header、Main、Article、Section、Aside 和 Footer 描述职责，样式只负责呈现。</p>
+        <div class="semantic-layout">
+          <article class="semantic-article demo-panel">
+            <div class="semantic-article__meta"><span>前端基础</span><time datetime="2026-07-21">2026-07-21</time><span>阅读 8 分钟</span></div>
+            <h2 class="semantic-article__title">为什么语义标签能让页面更可靠？</h2>
+            <p class="semantic-article__lead">语义不是为了少写 class，而是让浏览器、搜索引擎和辅助技术知道每块内容是什么。</p>
+            <section>
+              <h3 class="semantic-article__section-title">先按职责拆内容</h3>
+              <p class="semantic-article__text">主内容放进 article，补充信息放进 aside，标题级别保持连续。即使样式加载失败，阅读顺序仍然成立。</p>
+            </section>
+          </article>
+          <aside class="semantic-aside demo-panel">
+            <h2 class="semantic-aside__title">本页目录</h2>
+            <nav class="semantic-aside__nav" aria-label="文章目录">
+              <a class="semantic-aside__link" href="#structure">页面骨架</a>
+              <a class="semantic-aside__link" href="#heading">标题层级</a>
+              <a class="semantic-aside__link" href="#landmark">地标导航</a>
+            </nav>
+          </aside>
+        </div>
+      </section>
+
+      <section data-scene="form-valid" hidden>
+        <p class="demo-kicker">表单成功状态</p>
+        <h1 class="demo-title">标签、输入、提示和结果形成完整反馈</h1>
+        <div class="form-demo">
+          <div class="form-demo__context">
+            <span class="form-demo__step">✓</span>
+            <h2 class="form-demo__title">信息可以提交</h2>
+            <p class="form-demo__copy">成功状态也需要文字反馈。不要只把边框变绿，否则颜色识别受限的用户无法知道发生了什么。</p>
+          </div>
+          <form class="form-card demo-panel">
+            <h2 class="form-card__head">创建学习账号</h2>
+            <label class="demo-field">
+              <span class="demo-label">邮箱</span>
+              <input class="demo-input" type="email" value="learner@example.com" aria-describedby="email-ok" />
+              <span id="email-ok" class="demo-field__success">邮箱格式正确，可用于接收学习进度。</span>
+            </label>
+            <label class="demo-field">
+              <span class="demo-label">学习方向</span>
+              <select class="demo-select"><option>Vue 前端工程师</option></select>
+            </label>
+            <button class="demo-button demo-button--primary" type="button">创建账号</button>
+          </form>
+        </div>
+      </section>
+
+      <section data-scene="form-invalid" hidden>
+        <p class="demo-kicker">表单错误状态</p>
+        <h1 class="demo-title">错误必须贴近字段，并说明如何修正</h1>
+        <div class="form-demo">
+          <div class="form-demo__context">
+            <span class="form-demo__step">!</span>
+            <h2 class="form-demo__title">暂时不能提交</h2>
+            <p class="form-demo__copy">`aria-invalid` 表达输入无效，`aria-describedby` 把具体错误与字段关联，顶部摘要帮助快速定位。</p>
+          </div>
+          <form class="form-card demo-panel">
+            <h2 class="form-card__head">创建学习账号</h2>
+            <div class="form-card__alert" role="alert">有 2 个字段需要修改，请检查下面的具体提示。</div>
+            <label class="demo-field">
+              <span class="demo-label">邮箱</span>
+              <input class="demo-input" type="email" value="learner@" aria-invalid="true" aria-describedby="email-error" />
+              <span id="email-error" class="demo-field__error">请输入完整邮箱，例如 name@example.com</span>
+            </label>
+            <label class="demo-field">
+              <span class="demo-label">学习方向</span>
+              <select class="demo-select" aria-invalid="true" aria-describedby="track-error"><option>请选择</option></select>
+              <span id="track-error" class="demo-field__error">请选择一个学习方向</span>
+            </label>
+            <button class="demo-button demo-button--primary" type="button">重新检查</button>
+          </form>
+        </div>
+      </section>
+
+      <section data-scene="responsive-desktop" hidden>
+        <p class="demo-kicker">响应式桌面布局</p>
+        <h1 class="demo-title">宽屏利用空间，但不牺牲阅读顺序</h1>
+        <div class="responsive-shell">
+          <header class="responsive-header demo-panel">
+            <span class="responsive-header__brand">Yok 学习中心</span>
+            <nav class="responsive-header__nav" aria-label="主导航">
+              <a class="responsive-header__link" href="#courses">课程</a>
+              <a class="responsive-header__link" href="#roadmap">路线</a>
+              <a class="responsive-header__link" href="#progress">进度</a>
+            </nav>
+            <button class="demo-button demo-button--primary" type="button">继续学习</button>
+          </header>
+          <div class="responsive-content">
+            <aside class="responsive-filter demo-panel">
+              <h2 class="responsive-filter__title">筛选课程</h2>
+              <div class="responsive-filter__list">
+                <button class="responsive-filter__item" type="button">全部方向 · 24</button>
+                <button class="responsive-filter__item" type="button">前端 · 12</button>
+                <button class="responsive-filter__item" type="button">后端 · 8</button>
+              </div>
+            </aside>
+            <section class="course-grid" aria-label="课程列表">
+              <article class="course-card demo-panel"><div class="course-card__visual">HTML</div><div class="course-card__body"><h2 class="course-card__title">语义与无障碍</h2><p class="course-card__meta">10 章 · 基础</p></div></article>
+              <article class="course-card demo-panel"><div class="course-card__visual">CSS</div><div class="course-card__body"><h2 class="course-card__title">布局与响应式</h2><p class="course-card__meta">12 章 · 基础</p></div></article>
+              <article class="course-card demo-panel"><div class="course-card__visual">Vue</div><div class="course-card__body"><h2 class="course-card__title">Vue 3 项目实战</h2><p class="course-card__meta">35 章 · 进阶</p></div></article>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section data-scene="responsive-mobile" hidden>
+        <p class="demo-kicker">响应式移动布局</p>
+        <h1 class="demo-title">同一内容，在窄屏改为单列和紧凑操作</h1>
+        <div class="responsive-shell">
+          <header class="responsive-header demo-panel">
+            <span class="responsive-header__brand">Yok 学习中心</span>
+            <nav class="responsive-header__nav" aria-label="主导航"><a class="responsive-header__link" href="#courses">课程</a></nav>
+            <button class="demo-button demo-button--primary" type="button">继续</button>
+          </header>
+          <div class="responsive-content">
+            <aside class="responsive-filter demo-panel"><h2 class="responsive-filter__title">全部课程 · 24</h2><button class="demo-button" type="button">筛选</button><div class="responsive-filter__list"></div></aside>
+            <section class="course-grid" aria-label="课程列表">
+              <article class="course-card demo-panel"><div class="course-card__visual">HTML</div><div class="course-card__body"><h2 class="course-card__title">语义与无障碍</h2><p class="course-card__meta">10 章 · 基础</p></div></article>
+              <article class="course-card demo-panel"><div class="course-card__visual">CSS</div><div class="course-card__body"><h2 class="course-card__title">布局与响应式</h2><p class="course-card__meta">12 章 · 基础</p></div></article>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section data-scene="accessible-focus" hidden>
+        <p class="demo-kicker">键盘焦点状态</p>
+        <h1 class="demo-title">焦点不是装饰，而是键盘用户的位置指示器</h1>
+        <p class="demo-subtitle">高对比焦点环与组件边界保持间距，不被 `overflow: hidden` 裁切。</p>
+        <section class="focus-demo demo-panel">
+          <h2 class="focus-demo__title">选择下一步操作</h2>
+          <p class="focus-demo__copy">按 Tab 在交互元素间移动。当前焦点必须同时满足可见、唯一和顺序合理。</p>
+          <div class="focus-demo__actions">
+            <a class="demo-button" href="#outline">查看课程大纲</a>
+            <button class="demo-button demo-button--primary" data-focus-demo type="button">开始第一章</button>
+            <button class="demo-button demo-button--danger" type="button">退出路线</button>
+          </div>
+          <p class="focus-demo__note">当前橙色外环表示键盘焦点；颜色之外还保留明显轮廓和空间间隔。</p>
+        </section>
+      </section>
+    </main>
+    <script>
+      const params = new URLSearchParams(window.location.search)
+      const requestedScene = params.get('scene') || 'semantic-article'
+      const scene = document.querySelector(`[data-scene="${requestedScene}"]`) || document.querySelector('[data-scene="semantic-article"]')
+      scene.hidden = false
+      document.title = `${requestedScene} · 前端基础视觉演示`
+      if (requestedScene === 'accessible-focus') {
+        requestAnimationFrame(() => document.querySelector('[data-focus-demo]')?.focus())
+      }
+    </script>
+  </body>
+</html>

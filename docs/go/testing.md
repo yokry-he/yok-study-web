@@ -1,10 +1,16 @@
 # 测试、Benchmark 与 Fuzzing
 
-## 这个页面解决什么
+## 适合谁看
 
-Go 内置测试工具非常实用。你不需要先引入大型测试框架，就可以完成单元测试、表格测试、基准测试和模糊测试。
+适合只会写正常路径单元测试，还没有建立 Handler、Repository、race、Fuzz 和真实数据库验证层次的读者。
 
-## 最小测试
+## 先建立心智模型
+
+测试不是越接近生产越好，而是每层回答不同问题：纯 Service 测规则，`httptest` 测协议，Testcontainers 测真实 SQL，race 测并发访问，Fuzz 测输入空间。
+
+## 从最小示例开始
+
+### 最小测试
 
 文件名以 `_test.go` 结尾：
 
@@ -23,7 +29,7 @@ func TestAdd(t *testing.T) {
 go test ./...
 ```
 
-## 表格测试
+### 表格测试
 
 ```go
 func TestDiscount(t *testing.T) {
@@ -48,7 +54,7 @@ func TestDiscount(t *testing.T) {
 }
 ```
 
-## 测试分层
+### 测试分层
 
 ```mermaid
 flowchart TD
@@ -59,7 +65,7 @@ flowchart TD
   I[Fuzzing] --> J[边界输入和安全问题]
 ```
 
-## Benchmark
+### Benchmark
 
 ```go
 func BenchmarkEncodeUser(b *testing.B) {
@@ -76,7 +82,7 @@ func BenchmarkEncodeUser(b *testing.B) {
 go test -bench=. ./...
 ```
 
-## Fuzzing
+### Fuzzing
 
 Go 官方文档说明，Fuzzing 会持续改变输入来寻找 bug，尤其适合发现人工容易漏掉的边界和安全问题。
 
@@ -92,10 +98,28 @@ func FuzzParseUserID(f *testing.F) {
 运行：
 
 ```bash
-go test -fuzz=FuzzParseUserID
+go test -run '^$' -fuzz '^FuzzParseUserID$' -fuzztime 10s
 ```
 
-## 实际项目问题
+## 放进真实项目
+
+本站示例的最小验证集：
+
+```bash
+cd examples/go-task-api
+go test ./...
+go test -race ./...
+go vet ./...
+go test -tags=integration ./... -count=1 -v
+go test ./internal/platform/httpx -run '^$' \
+  -fuzz '^FuzzDecodeJSON$' -fuzztime 10s
+```
+
+集成测试必须真的启动 PostgreSQL 18.4，不能在 Docker 不可用时静默 `Skip`。每个测试独立准备数据，并用 `t.Cleanup` 关闭 server、连接池和容器。
+
+HTTP 测试至少断言状态、Content-Type、错误码、request ID、Location/Allow Header 和 204 空 body。Repository 测试不仅要测 CRUD，还要测约束映射、分页总数、取消、关闭连接池错误和两个并发写者只有一个成功。
+
+## 常见错误与根因
 
 ### 1. 测试依赖执行顺序
 
@@ -115,13 +139,23 @@ go test -fuzz=FuzzParseUserID
 
 性能测试要固定输入、减少外部依赖，并关注趋势，不要只看一次数字。
 
-## 最佳实践
+### 4. 集成测试其实用了 mock
 
-- 使用表格测试覆盖边界。
-- 对 HTTP handler 使用 `httptest`。
-- 对并发代码运行 `go test -race`。
-- 对解析器、校验器、编解码器使用 fuzzing。
-- CI 至少执行 `go test ./...`。
+mock 只能证明调用方式，不能证明 SQL 占位符、约束、索引和事务行为。数据库契约必须对支持的真实数据库版本执行。
+
+### 5. 测试偶发通过
+
+常见根因是共享全局状态、未等待 goroutine、依赖 wall clock 或并发子测试复用同一 fake。用注入时钟、独立夹具和 `-count=30 -shuffle=on` 放大问题。
+
+## 验证清单
+
+- [ ] 核心规则覆盖正常、边界、失败、取消和下游错误。
+- [ ] HTTP 协议断言不仅检查状态码，也检查 envelope 与 Header。
+- [ ] PostgreSQL 测试实际运行且清理容器，没有用 mock 代替数据库契约。
+- [ ] 并发路径通过 `-race` 和确定性竞争测试。
+- [ ] 解析器、校验器或编解码器有可限时执行的 Fuzz target。
+- [ ] 不稳定路径运行过 `-count=30 -shuffle=on`。
+- [ ] 测试失败信息包含 got/want 与必要上下文，不泄露密钥。
 
 ## 参考资料
 

@@ -42,6 +42,18 @@ B
 
 ## 任务和微任务
 
+先沿时间顺序观察同步脚本、Promise 微任务、渲染机会和定时器任务分别在哪个检查点执行。
+
+<DocFigure
+  src="/images/javascript/event-loop-devtools.webp"
+  alt="JavaScript 同步脚本执行后清空 Promise 微任务，浏览器获得渲染机会，随后执行 setTimeout"
+  caption="微任务在当前任务结束后批量清空；递归创建微任务也可能推迟渲染。"
+  :width="1440"
+  :height="900"
+/>
+
+图是一次典型执行路径，不代表浏览器每轮都一定渲染；准确顺序仍要结合调用栈、任务来源和 Performance 录制判断。
+
 常见分类：
 
 | 类型 | 常见来源 |

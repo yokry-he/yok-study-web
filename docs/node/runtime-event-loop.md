@@ -27,6 +27,18 @@ Node.js 提供：
 
 Node.js 官方文档说明，事件循环让 Node.js 可以在默认单线程 JavaScript 执行模型下处理非阻塞 I/O。
 
+下图把职责分开：事件循环在主线程执行 JavaScript 回调；文件、数据库和网络等待发生在系统、线程池或外部服务中；完成结果进入队列，等当前同步任务结束后再继续执行。
+
+<DocFigure
+  src="/images/node/event-loop-io-workshop.webp"
+  alt="Node.js 事件循环协调文件数据库和网络 I O，完成回调返回队列，而 CPU 长任务阻塞主线程"
+  caption="非阻塞指等待 I/O 时主线程可继续工作；回调本身和 CPU 计算仍会占用 JavaScript 主线程。"
+  :width="1440"
+  :height="900"
+/>
+
+判断一个 `await` 会不会拖慢其他请求，要看 Promise 背后的工作：等待数据库通常不会让主线程空转，但结果返回后的大数组转换仍是同步 CPU 工作；一个长循环即使写在 `async` 函数里也不会自动变成非阻塞。
+
 简单理解：
 
 ```text

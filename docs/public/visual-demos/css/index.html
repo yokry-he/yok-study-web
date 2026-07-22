@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS 视觉演示</title>
+    <link rel="stylesheet" href="../shared/demo.css" />
+    <style>
+      .css-stage {
+        max-width: 1180px;
+        margin: 56px auto 0;
+      }
+
+      .box-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin-bottom: 28px;
+      }
+
+      .box-legend__item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #52645d;
+        font-weight: 700;
+      }
+
+      .box-legend__swatch {
+        width: 22px;
+        height: 22px;
+        border: 2px solid #17221e;
+      }
+
+      .box-legend__swatch--margin { background: #fff0d2; }
+      .box-legend__swatch--border { background: #7556a3; }
+      .box-legend__swatch--padding { background: #d9f2ea; }
+      .box-legend__swatch--content { background: #dceff6; }
+
+      .box-model {
+        display: grid;
+        min-height: 460px;
+        place-items: center;
+        background: #fff0d2;
+      }
+
+      .box-model__margin {
+        width: min(820px, 84%);
+        padding: 42px;
+        background: #fff0d2;
+        color: #8b5a00;
+        font-weight: 800;
+        text-align: center;
+      }
+
+      .box-model__border {
+        margin-top: 12px;
+        border: 18px solid #7556a3;
+        background: #d9f2ea;
+      }
+
+      .box-model__padding {
+        padding: 54px;
+        color: #087f68;
+      }
+
+      .box-model__content {
+        display: grid;
+        min-height: 112px;
+        place-items: center;
+        background: #dceff6;
+        color: #235d72;
+        font-size: 24px;
+        font-weight: 900;
+      }
+
+      .collapse-demo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+      }
+
+      .collapse-column {
+        padding: 28px;
+      }
+
+      .collapse-column__title {
+        margin: 0 0 24px;
+        font-size: 22px;
+      }
+
+      .collapse-box {
+        min-height: 112px;
+        padding: 26px;
+        border: 2px solid #2d7390;
+        background: #eaf6fa;
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .collapse-box--first {
+        margin-bottom: 56px;
+      }
+
+      .collapse-box--second {
+        margin-top: 36px;
+      }
+
+      .collapse-column--blocked .collapse-stack {
+        display: flow-root;
+        padding: 1px 0;
+        background: #f4f8f6;
+      }
+
+      .collapse-gap {
+        display: grid;
+        height: 56px;
+        place-items: center;
+        margin: -56px 0 0;
+        color: #9a5c00;
+        font-weight: 800;
+      }
+
+      .axis-stage {
+        position: relative;
+        min-height: 430px;
+        padding: 86px 70px;
+      }
+
+      .axis-row {
+        display: flex;
+        min-height: 220px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 28px;
+        border: 2px dashed #9fb3ac;
+        padding: 30px;
+      }
+
+      .axis-item {
+        display: grid;
+        width: 180px;
+        height: 110px;
+        place-items: center;
+        border: 2px solid #087f68;
+        border-radius: 8px;
+        background: #e8f8f3;
+        font-size: 20px;
+        font-weight: 900;
+      }
+
+      .axis-main {
+        position: absolute;
+        right: 80px;
+        bottom: 42px;
+        left: 80px;
+        height: 4px;
+        background: #09a17f;
+      }
+
+      .axis-main::after {
+        position: absolute;
+        right: -2px;
+        top: -7px;
+        border-top: 9px solid transparent;
+        border-bottom: 9px solid transparent;
+        border-left: 14px solid #09a17f;
+        content: "";
+      }
+
+      .axis-main__label {
+        position: absolute;
+        right: 0;
+        bottom: 14px;
+        color: #087f68;
+        font-weight: 900;
+      }
+
+      .axis-cross {
+        position: absolute;
+        top: 70px;
+        bottom: 72px;
+        left: 32px;
+        width: 4px;
+        background: #e29b21;
+      }
+
+      .axis-cross::after {
+        position: absolute;
+        top: -2px;
+        left: -7px;
+        border-right: 9px solid transparent;
+        border-bottom: 14px solid #e29b21;
+        border-left: 9px solid transparent;
+        content: "";
+      }
+
+      .axis-cross__label {
+        position: absolute;
+        top: 0;
+        left: 16px;
+        color: #9a5c00;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+
+      .overflow-demo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+      }
+
+      .overflow-panel {
+        min-width: 0;
+        padding: 26px;
+      }
+
+      .overflow-panel__title {
+        margin: 0 0 20px;
+        font-size: 21px;
+      }
+
+      .overflow-row {
+        display: flex;
+        gap: 12px;
+        border: 2px dashed #aebfb9;
+        padding: 16px;
+        overflow: hidden;
+      }
+
+      .overflow-row--safe {
+        flex-wrap: wrap;
+        overflow: visible;
+      }
+
+      .overflow-chip {
+        flex: 0 0 150px;
+        border-radius: 6px;
+        padding: 14px;
+        background: #e9f7f2;
+        color: #087f68;
+        font-weight: 800;
+        text-align: center;
+      }
+
+      .overflow-warning {
+        margin: 18px 0 0;
+        color: #a32934;
+        font-weight: 750;
+      }
+
+      .overflow-success {
+        margin: 18px 0 0;
+        color: #087f68;
+        font-weight: 750;
+      }
+
+      .areas-grid {
+        display: grid;
+        grid-template-areas:
+          "header header header"
+          "sidebar main aside"
+          "footer footer footer";
+        grid-template-columns: 220px minmax(0, 1fr) 240px;
+        grid-template-rows: 88px 310px 74px;
+        gap: 14px;
+      }
+
+      .area-box {
+        display: grid;
+        place-items: center;
+        border: 2px solid #087f68;
+        border-radius: 8px;
+        background: #e9f7f2;
+        color: #087f68;
+        font-size: 20px;
+        font-weight: 900;
+      }
+
+      .area-box--header { grid-area: header; }
+      .area-box--sidebar { grid-area: sidebar; background: #edf7fb; border-color: #2d7390; color: #2d7390; }
+      .area-box--main { grid-area: main; background: #ffffff; border-color: #17221e; color: #17221e; }
+      .area-box--aside { grid-area: aside; background: #f6f0fa; border-color: #7556a3; color: #7556a3; }
+      .area-box--footer { grid-area: footer; background: #fff4dc; border-color: #cf8410; color: #8b5500; }
+
+      .minmax-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 18px;
+      }
+
+      .minmax-card {
+        min-width: 0;
+        min-height: 230px;
+        padding: 24px;
+      }
+
+      .minmax-card__index {
+        color: #087f68;
+        font-size: 34px;
+        font-weight: 900;
+      }
+
+      .minmax-card__title {
+        margin: 22px 0 8px;
+        font-size: 20px;
+      }
+
+      .minmax-card__text {
+        margin: 0;
+        color: #64766f;
+        line-height: 1.6;
+      }
+
+      .container-demo {
+        container-type: inline-size;
+        max-width: 1000px;
+        margin: 0 auto;
+        border: 4px solid #2d7390;
+        padding: 26px;
+        background: #edf7fb;
+      }
+
+      .container-demo__label {
+        margin: 0 0 18px;
+        color: #2d7390;
+        font-weight: 900;
+      }
+
+      .container-card {
+        display: grid;
+        grid-template-columns: 180px minmax(0, 1fr) auto;
+        gap: 24px;
+        align-items: center;
+        padding: 22px;
+        background: #ffffff;
+      }
+
+      .container-card__visual {
+        display: grid;
+        height: 118px;
+        place-items: center;
+        background: #e9f7f2;
+        color: #087f68;
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .container-card__title {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      .container-card__text {
+        margin: 9px 0 0;
+        color: #64766f;
+        line-height: 1.55;
+      }
+
+      .motion-demo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+      }
+
+      .motion-card {
+        padding: 30px;
+      }
+
+      .motion-card__title {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      .motion-track {
+        position: relative;
+        height: 116px;
+        margin-top: 26px;
+        border: 2px dashed #aebfb9;
+      }
+
+      .motion-dot {
+        position: absolute;
+        top: 30px;
+        left: 26px;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: #087f68;
+      }
+
+      .motion-track--reduced .motion-dot {
+        left: calc(100% - 78px);
+        border-radius: 6px;
+        background: #cf8410;
+      }
+
+      .motion-card__note {
+        margin: 18px 0 0;
+        color: #52645d;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 700px) {
+        .css-stage {
+          margin-top: 32px;
+        }
+
+        .collapse-demo,
+        .overflow-demo,
+        .motion-demo {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+
+        .collapse-column:nth-child(2),
+        .overflow-panel:nth-child(1),
+        .motion-card:nth-child(1) {
+          display: none;
+        }
+
+        .areas-grid {
+          grid-template-areas: "header" "main" "aside" "footer";
+          grid-template-columns: 1fr;
+          grid-template-rows: 64px 180px 90px 58px;
+        }
+
+        .area-box--sidebar {
+          display: none;
+        }
+
+        .container-card {
+          grid-template-columns: 1fr;
+        }
+
+        .container-card__visual {
+          height: 84px;
+        }
+
+        .axis-stage {
+          padding: 72px 28px 78px 54px;
+        }
+
+        .axis-row {
+          gap: 12px;
+          padding: 14px;
+        }
+
+        .axis-item {
+          width: auto;
+          flex: 1 1 0;
+          font-size: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="demo-frame">
+      <section data-scene="box-model" hidden>
+        <p class="demo-kicker">CSS 盒模型</p>
+        <h1 class="demo-title">元素尺寸由四层区域共同组成</h1>
+        <p class="demo-subtitle">从外到内观察 margin、border、padding 和 content；`box-sizing` 决定声明宽度覆盖哪些层。</p>
+        <div class="css-stage">
+          <div class="box-legend"><span class="box-legend__item"><i class="box-legend__swatch box-legend__swatch--margin"></i>margin</span><span class="box-legend__item"><i class="box-legend__swatch box-legend__swatch--border"></i>border</span><span class="box-legend__item"><i class="box-legend__swatch box-legend__swatch--padding"></i>padding</span><span class="box-legend__item"><i class="box-legend__swatch box-legend__swatch--content"></i>content</span></div>
+          <div class="box-model demo-panel"><div class="box-model__margin">margin：与相邻元素保持距离<div class="box-model__border"><div class="box-model__padding">padding：内容与边框之间的空间<div class="box-model__content">content：文字与媒体</div></div></div></div></div>
+        </div>
+      </section>
+
+      <section data-scene="margin-collapse" hidden>
+        <p class="demo-kicker">块级外边距折叠</p>
+        <h1 class="demo-title">相邻垂直 margin 不一定相加</h1>
+        <p class="demo-subtitle">普通块格式化上下文中取较大值；建立新的格式化上下文后，边界和间距行为变得明确。</p>
+        <div class="css-stage collapse-demo">
+          <section class="collapse-column demo-panel"><h2 class="collapse-column__title">发生折叠：56px 与 36px 取较大值</h2><div class="collapse-box collapse-box--first">上方区块 · margin-bottom: 56px</div><div class="collapse-gap">实际间距 56px</div><div class="collapse-box collapse-box--second">下方区块 · margin-top: 36px</div></section>
+          <section class="collapse-column collapse-column--blocked demo-panel"><h2 class="collapse-column__title">flow-root 隔离：边界按容器计算</h2><div class="collapse-stack"><div class="collapse-box collapse-box--first">独立格式化上下文</div><div class="collapse-box collapse-box--second">间距不再跨容器折叠</div></div></section>
+        </div>
+      </section>
+
+      <section data-scene="flex-main-cross-axis" hidden>
+        <p class="demo-kicker">Flex 轴线模型</p>
+        <h1 class="demo-title">先确定主轴，再选择对应的对齐属性</h1>
+        <p class="demo-subtitle">`justify-content` 沿主轴分配空间，`align-items` 沿交叉轴对齐项目。</p>
+        <div class="css-stage axis-stage demo-panel"><div class="axis-cross"><span class="axis-cross__label">交叉轴 · align-items</span></div><div class="axis-row"><span class="axis-item">项目 A</span><span class="axis-item">项目 B</span><span class="axis-item">项目 C</span></div><div class="axis-main"><span class="axis-main__label">主轴 · justify-content</span></div></div>
+      </section>
+
+      <section data-scene="flex-overflow" hidden>
+        <p class="demo-kicker">Flex 收缩与溢出</p>
+        <h1 class="demo-title">固定宽度项目不会自动适应狭窄容器</h1>
+        <p class="demo-subtitle">先决定项目能否收缩、是否换行，再把横向滚动限制在真正需要的区域。</p>
+        <div class="css-stage overflow-demo">
+          <section class="overflow-panel demo-panel"><h2 class="overflow-panel__title">错误：全部禁止收缩且不换行</h2><div class="overflow-row"><span class="overflow-chip">关键词输入</span><span class="overflow-chip">状态选择</span><span class="overflow-chip">创建时间</span><span class="overflow-chip">查询按钮</span></div><p class="overflow-warning">后续项目被容器裁切，操作不可达</p></section>
+          <section class="overflow-panel demo-panel"><h2 class="overflow-panel__title">正确：工具栏换行，控件保留可操作尺寸</h2><div class="overflow-row overflow-row--safe"><span class="overflow-chip">关键词输入</span><span class="overflow-chip">状态选择</span><span class="overflow-chip">创建时间</span><span class="overflow-chip">查询按钮</span></div><p class="overflow-success">布局增加高度，但页面不产生横向溢出</p></section>
+        </div>
+      </section>
+
+      <section data-scene="grid-template-areas" hidden>
+        <p class="demo-kicker">Grid 语义区域</p>
+        <h1 class="demo-title">用区域名称表达页面骨架</h1>
+        <p class="demo-subtitle">列宽、行高和 gap 由容器统一管理；移动端可以重排区域，不必改变 DOM 阅读顺序。</p>
+        <div class="css-stage areas-grid"><div class="area-box area-box--header">header</div><div class="area-box area-box--sidebar">sidebar</div><div class="area-box area-box--main">main</div><div class="area-box area-box--aside">aside</div><div class="area-box area-box--footer">footer</div></div>
+      </section>
+
+      <section data-scene="grid-minmax" hidden>
+        <p class="demo-kicker">Grid 自适应轨道</p>
+        <h1 class="demo-title">minmax 给卡片稳定下限，也允许填满剩余空间</h1>
+        <p class="demo-subtitle">容器变窄时自动减少列数，单张卡片不会被压到无法阅读。</p>
+        <div class="css-stage minmax-grid"><article class="minmax-card demo-panel"><span class="minmax-card__index">01</span><h2 class="minmax-card__title">语义结构</h2><p class="minmax-card__text">最小 210px，空间充足时平均扩展。</p></article><article class="minmax-card demo-panel"><span class="minmax-card__index">02</span><h2 class="minmax-card__title">响应式布局</h2><p class="minmax-card__text">无需为每个列数写一条媒体查询。</p></article><article class="minmax-card demo-panel"><span class="minmax-card__index">03</span><h2 class="minmax-card__title">内容稳定</h2><p class="minmax-card__text">长标题换行，不改变其他轨道定义。</p></article><article class="minmax-card demo-panel"><span class="minmax-card__index">04</span><h2 class="minmax-card__title">空间分配</h2><p class="minmax-card__text">每列使用 `1fr` 分享剩余宽度。</p></article></div>
+      </section>
+
+      <section data-scene="responsive-container" hidden>
+        <p class="demo-kicker">容器查询</p>
+        <h1 class="demo-title">组件根据自身容器变化，不猜测整个视口</h1>
+        <p class="demo-subtitle">同一个课程卡片放进主区或侧栏时，由可用容器宽度决定横排还是竖排。</p>
+        <div class="css-stage container-demo"><p class="container-demo__label">组件容器 · 当前宽度决定内部布局</p><article class="container-card demo-panel"><div class="container-card__visual">Vue</div><div><h2 class="container-card__title">Vue Admin 项目实战</h2><p class="container-card__text">在宽容器中媒体、内容和操作横向排列；窄容器中自动变成单列。</p></div><button class="demo-button demo-button--primary" type="button">继续学习</button></article></div>
+      </section>
+
+      <section data-scene="reduced-motion" hidden>
+        <p class="demo-kicker">减少动态效果</p>
+        <h1 class="demo-title">保留状态变化，不强迫所有用户观看动画</h1>
+        <p class="demo-subtitle">`prefers-reduced-motion` 下直接呈现结束状态，并关闭非必要平移、缩放和视差。</p>
+        <div class="css-stage motion-demo"><section class="motion-card demo-panel"><h2 class="motion-card__title">常规模式 · 平滑移动</h2><div class="motion-track"><span class="motion-dot"></span></div><p class="motion-card__note">状态变化可以动画，但时长和幅度保持克制。</p></section><section class="motion-card demo-panel"><h2 class="motion-card__title">减少动态 · 直接到达</h2><div class="motion-track motion-track--reduced"><span class="motion-dot"></span></div><p class="motion-card__note">信息和最终状态不丢失，只移除不必要运动。</p></section></div>
+      </section>
+    </main>
+    <script>
+      const params = new URLSearchParams(window.location.search)
+      const requestedScene = params.get('scene') || 'box-model'
+      const scene = document.querySelector(`[data-scene="${requestedScene}"]`) || document.querySelector('[data-scene="box-model"]')
+      scene.hidden = false
+      document.title = `${requestedScene} · CSS 视觉演示`
+    </script>
+  </body>
+</html>

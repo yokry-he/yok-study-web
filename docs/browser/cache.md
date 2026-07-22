@@ -27,6 +27,18 @@
 
 用户看到旧内容时，必须先判断是哪一层缓存。
 
+在 Network 面板里先观察 `Size` 或 `Transferred` 列：`memory cache` 表示当前浏览器进程直接复用内存资源，`disk cache` 表示从本地磁盘读取，`304` 表示浏览器已经向服务器验证过资源没有变化。
+
+<DocFigure
+  src="/images/browser/cache-memory-disk.webp"
+  alt="浏览器网络资源列表对比 memory cache、disk cache、304 协商缓存和正常网络响应"
+  caption="状态码只是证据的一部分；资源来源、Cache-Control 和带 hash 的文件名要一起判断。"
+  :width="1440"
+  :height="900"
+/>
+
+不依赖图片的读取路径：Network → 勾选 Disable cache 前后各刷新一次 → 记录 Status、Size/Transferred、Cache-Control、ETag 和文件名 hash；若请求未出现，再检查 Service Worker 和 Cache Storage。
+
 ## 强缓存
 
 强缓存表示浏览器在缓存有效期内可以直接复用本地资源，不必向服务器确认。

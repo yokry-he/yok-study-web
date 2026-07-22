@@ -16,6 +16,20 @@ Vue Admin 是最适合练习企业级 Vue 项目的实战类型。它能把 Vue 
 
 如果你想按阶段完成整个后台项目，先看 [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map)。如果你还不清楚后台项目怎么分层，先看 [图解 Vue Admin 项目架构](/vue/admin-architecture-visual-guide)。如果你已经完成基础页面，下一步优先看 [Vue Admin 权限路由闭环实战](/vue/admin-permission-route-flow)。它会把登录态、菜单、动态路由、按钮权限、接口 403、数据权限和刷新恢复串成一条完整链路。
 
+## 先看项目全貌
+
+先观察一个可交付管理台如何同时呈现业务指标、待办、列表、权限范围和异常提示。
+
+<DocFigure
+  src="/images/projects/vue-admin-overview.webp"
+  alt="Vue Admin 运营工作台同时展示指标卡、用户列表、待办任务、权限范围和异常状态"
+  caption="后台项目不是若干孤立页面；数据、权限、页面状态和操作反馈必须形成闭环。"
+  :width="1440"
+  :height="900"
+/>
+
+图中的指标卡、用户列表和今日待办分别拥有独立状态。真实实现时，不应让一个全局 `loading` 同时控制整页，否则一次按钮提交就可能遮住其他仍可使用的区域。
+
 ## 功能模块
 
 | 模块 | 学习重点 | 产出 |

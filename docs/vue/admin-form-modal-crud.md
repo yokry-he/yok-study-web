@@ -71,6 +71,24 @@ flowchart TD
 | 列表同步 | 保存成功后刷新或局部更新策略明确 |
 | 移动端可用 | 抽屉/弹窗在窄屏下不遮挡核心操作 |
 
+下面两张图使用同一个表单状态。第一张是可以提交的新增态，第二张展示前端规则和后端字段错误应如何落到具体字段。
+
+<DocFigure
+  src="/images/vue/admin-form-create.webp"
+  alt="Vue Admin 新增用户抽屉表单，包含基础信息、角色、状态和固定操作区"
+  caption="新增表单由独立 FormState 初始化，关闭后不应残留上一次编辑的数据和校验。"
+  :width="1440"
+  :height="900"
+/>
+
+<DocFigure
+  src="/images/vue/admin-form-validation.webp"
+  alt="Vue Admin 用户表单展示必填、格式和后端字段冲突三类校验错误"
+  caption="错误要尽量靠近字段显示；全局提示负责总结，不能代替字段级反馈。"
+  :width="1440"
+  :height="900"
+/>
+
 ## 推荐目录
 
 以用户模块为例：

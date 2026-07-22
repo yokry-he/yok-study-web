@@ -87,6 +87,26 @@ flowchart TD
 
 这张表也可以直接放进项目 README，作为权限模块的验收标准。
 
+刷新受保护页面时，应用必须先显示权限恢复态，等用户、菜单和动态路由准备完成后再决定去向。这样不会短暂闪现无权限页或业务数据。
+
+<DocFigure
+  src="/images/vue/admin-permission-loading.webp"
+  alt="Vue Admin 刷新页面时正在恢复用户信息、菜单权限和动态路由"
+  caption="权限恢复是启动阶段的真实状态，应使用专门的 loading 页面阻止路由过早判定。"
+  :width="1440"
+  :height="900"
+/>
+
+确认无权访问后，页面只展示拒绝原因和安全的返回入口，不能先渲染业务组件再用 CSS 隐藏。
+
+<DocFigure
+  src="/images/vue/admin-permission-denied.webp"
+  alt="Vue Admin 无权限页面展示 403 状态、原因说明和返回工作台操作"
+  caption="403 是授权结果，不是前端按钮是否可见的判断；后端接口仍必须执行相同的权限校验。"
+  :width="1440"
+  :height="900"
+/>
+
 ## 先分清五种权限
 
 后台项目里经常把“权限”说成一个词，但它实际包含五层：

@@ -8,6 +8,18 @@
 
 ## 常见性能问题
 
+性能优化要从一次真实 commit 的证据开始。图中 `OrderTable` 占用了大部分提交时间，Profiler 同时记录了每个组件重渲染的触发原因。
+
+<DocFigure
+  src="/images/react/performance-profiler.webp"
+  alt="React Profiler 报告显示一次 18.4 毫秒提交中 OrderTable 最慢，并列出 props state 和 context 变化"
+  caption="Profiler 证明哪里花了时间，组件数据流和业务代码分析才解释为什么。"
+  :width="1440"
+  :height="900"
+/>
+
+不要在没有测量的情况下给所有组件加 `memo`。先确认慢组件、交互路径和重渲染原因，再决定稳定 props、拆 Context 或减少工作量。
+
 | 类型 | 表现 | 常见原因 |
 | --- | --- | --- |
 | 首屏慢 | 页面白屏时间长 | 包体积大、接口慢 |

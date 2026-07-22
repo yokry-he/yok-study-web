@@ -33,6 +33,18 @@
 
 ## 总体类型流
 
+同一个“用户”在接口、页面和表单中并不是同一种数据。观察下面五个边界，重点看日期、空值和字段错误在哪一步被转换。
+
+<DocFigure
+  src="/images/typescript/type-boundary-error-state.webp"
+  alt="UserDTO 经过运行时校验和 mapper 转成 UserViewModel，表单错误使用独立状态保存"
+  caption="DTO、ViewModel、FormModel、Payload 和 FormError 各自表达不同阶段，不能用一个大接口贯穿项目。"
+  :width="1440"
+  :height="900"
+/>
+
+显式 mapper 看似多了一步，却让后端字段变化、日期转换和错误回显都有稳定落点，也让组件不再到处写兼容分支。
+
 先看完整链路：
 
 ```mermaid

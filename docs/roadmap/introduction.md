@@ -13,7 +13,7 @@
 | 想成为 Vue 前端工程师 | [Vue 前端工程师路线](/roadmap/vue-frontend) | 前端入门到项目交付 |
 | 想写后端 API 和服务 | [Node 后端工程师路线](/roadmap/node-backend) | 前端转后端、全栈入门 |
 | 想走企业后端 | [Java 学习导览](/java/introduction) | Spring Boot、事务、JVM |
-| 想走云原生后端 | [Go 学习导览](/go/introduction) | 高并发、服务端工具、云原生 |
+| 想走云原生后端 | [Go 学习导览](/go/introduction) | 26 组图解、任务 API、并发、数据库和容器交付 |
 | 想独立交付完整 Web 项目 | [全栈工程师路线](/roadmap/fullstack) | 已有前端基础 |
 | 想做 AI 应用和智能工具 | [AI 工程路线](/roadmap/ai-engineering) | 已有编程和项目基础 |
 
@@ -57,7 +57,8 @@ AI 工程
   { title: 'Vue 前端工程师路线', description: '从 HTML/CSS、JavaScript、TypeScript 到 Vue 3、权限、工程化和 Vue Admin 实战。', link: '/roadmap/vue-frontend', level: '前端' },
   { title: 'Node 后端工程师路线', description: '从 JavaScript、HTTP、Node.js 到数据库、接口设计、日志、部署和排错。', link: '/roadmap/node-backend', level: '后端' },
   { title: 'Java 后端学习入口', description: '从 JDK、面向对象、JVM、Spring Boot 到事务、测试、部署和线上排错。', link: '/java/introduction', level: '后端' },
-  { title: 'Go 后端学习入口', description: '从 Go Modules、接口组合、并发、Context、HTTP 到数据库、部署和性能诊断。', link: '/go/introduction', level: '后端' },
+  { title: 'Go 后端学习入口', description: '按导览、26 组图解、可运行 HTTP 项目、12 个练习和 16 类问题完成工程闭环。', link: '/go/introduction', level: '后端' },
+  { title: 'Go 专项实战练习', description: '通过版本、slice、错误、Fuzz、并发、Context、PostgreSQL、乐观锁和容器验收完成 12 个练习。', link: '/roadmap/go-practice', level: '练习' },
   { title: '全栈工程师路线', description: '串联前端、后端语言、数据库、DevOps 和项目实战，目标是独立交付完整应用。', link: '/roadmap/fullstack', level: '全栈' },
   { title: 'AI 工程路线', description: '从 LLM API、提示词、RAG、Agent 到评测、成本、安全和上线治理。', link: '/roadmap/ai-engineering', level: 'AI' },
   { title: '阶段任务清单', description: '把学习路线拆成可执行任务、阶段产出、验收标准和常见卡点。', link: '/roadmap/phase-tasks', level: '任务' },
@@ -67,6 +68,7 @@ AI 工程
   { title: 'React 专项练习', description: '用 React 管理台训练渲染模型、state、Effect、Data Router、请求竞态、表单、权限、测试和生产验收。', link: '/roadmap/react-practice', level: '练习' },
   { title: 'Nuxt / Next 专项练习', description: '用课程内容平台训练路由、SSR、数据边界、Cookie 会话、缓存、SEO、排错和部署。', link: '/roadmap/meta-framework-practice', level: '练习' },
   { title: 'Node.js 专项练习', description: '用 12 个运行时练习训练模块、事件循环、线程池、Stream、异步上下文、进程退出和多实例。', link: '/roadmap/node-practice', level: '练习' },
+  { title: 'Java 专项练习', description: '用 12 个工程练习训练版本、依赖、Bean、事务、JPA、连接池、线程、JVM 诊断和生产交付。', link: '/roadmap/java-practice', level: '练习' },
   { title: 'Vue Admin 学习地图', description: '把 Vue Admin 文档组织成从入门、项目、权限、问题库到交付验收的完整路线。', link: '/roadmap/vue-admin-learning-map', level: '地图' },
   { title: 'Vue Admin 专项练习', description: '用 14 天计划完成 Vue Admin 用户管理模块，覆盖路由、Pinia、请求、表单、权限、测试和复盘。', link: '/roadmap/vue-admin-practice', level: '练习' },
   { title: '项目里程碑', description: '用静态页面、Vue Admin、Node API、全栈后台、内容站和 AI 助手验证能力。', link: '/roadmap/project-milestones', level: '项目' },
@@ -102,4 +104,4 @@ AI 工程
 
 ## 下一步学习
 
-如果你是第一次使用本站，先看 [阅读顺序与使用方法](/roadmap/reading-guide)、[学习工作流与笔记模板](/roadmap/study-workflow) 和 [图解学习地图](/roadmap/visual-learning-map)。如果 HTML、表单、图片和键盘操作还不稳定，先完成 [前端基础专项练习](/roadmap/frontend-foundation-practice)。如果你以 Vue 为主线，继续进入 [Vue 前端工程师路线](/roadmap/vue-frontend)。如果你以 React 为主线，完成 [React 管理台从零到项目](/react/project-admin) 和 [React 专项练习](/roadmap/react-practice)。如果你目标是完成 Vue 后台项目，进入 [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map)。如果你已经有前端基础，可以直接进入 [全栈工程师路线](/roadmap/fullstack)。如果你想按任务推进，进入 [阶段任务清单](/roadmap/phase-tasks) 和 [学习路径练习包](/roadmap/practice-labs)；完成基础练习后，用 [前端综合实战练习](/roadmap/frontend-capstone-lab) 把 CSS、浏览器、工程化、Vue 和问题库串成一个可交付项目。如果你的项目需要 SSR、SEO 或全栈前端能力，进入 [Nuxt / Next 专项练习](/roadmap/meta-framework-practice)。
+如果你是第一次使用本站，先看 [阅读顺序与使用方法](/roadmap/reading-guide)、[学习工作流与笔记模板](/roadmap/study-workflow) 和 [图解学习地图](/roadmap/visual-learning-map)。如果 HTML、表单、图片和键盘操作还不稳定，先完成 [前端基础专项练习](/roadmap/frontend-foundation-practice)。如果你以 Vue 为主线，继续进入 [Vue 前端工程师路线](/roadmap/vue-frontend)。如果你以 React 为主线，完成 [React 管理台从零到项目](/react/project-admin) 和 [React 专项练习](/roadmap/react-practice)。如果你目标是完成 Vue 后台项目，进入 [Vue Admin 学习地图与交付清单](/roadmap/vue-admin-learning-map)。如果你目标是 Java 企业后端，完成 [Spring Boot 从零到项目](/java/spring-boot-project-from-zero) 后进入 [Java 专项练习](/roadmap/java-practice)。如果你目标是 Go 后端，按 [Go 学习导览](/go/introduction) → [Go 图解总览](/go/visual-guide) → [Go HTTP API 从零到项目](/go/http-api-project-from-zero) → [Go 专项实战练习](/roadmap/go-practice) → [Go 真实项目问题库](/projects/issues-go) 推进。如果你已经有前端基础，可以直接进入 [全栈工程师路线](/roadmap/fullstack)。如果你想按任务推进，进入 [阶段任务清单](/roadmap/phase-tasks) 和 [学习路径练习包](/roadmap/practice-labs)；完成基础练习后，用 [前端综合实战练习](/roadmap/frontend-capstone-lab) 把 CSS、浏览器、工程化、Vue 和问题库串成一个可交付项目。如果你的项目需要 SSR、SEO 或全栈前端能力，进入 [Nuxt / Next 专项练习](/roadmap/meta-framework-practice)。

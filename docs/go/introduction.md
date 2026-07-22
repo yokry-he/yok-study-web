@@ -40,6 +40,8 @@ flowchart TD
   J --> K[测试、benchmark、fuzzing]
   K --> L[项目结构、配置与部署]
   L --> M[性能分析与问题排查]
+  M --> N[12 个专项练习]
+  N --> O[16 个真实项目问题]
 ```
 
 ## Go 模块章节
@@ -59,6 +61,8 @@ flowchart TD
 | [测试、Benchmark 与 Fuzzing](/go/testing) | 如何写单测、表格测试、基准测试和模糊测试 |
 | [项目结构、构建与部署](/go/project-deployment) | 如何组织目录、构建二进制、容器化和上线 |
 | [性能分析与线上诊断](/go/performance) | 如何使用 pprof、trace、指标和日志排查 |
+| [Go 专项练习](/roadmap/go-practice) | 从模块、错误、并发、HTTP、数据库到容器交付的 12 个实验 |
+| [Go 真实项目问题库](/projects/issues-go) | 用证据处理 nil、race、泄漏、连接池、事务和关闭问题 |
 | [常见问题](/go/troubleshooting) | 如何排查 goroutine 泄漏、context 丢失、依赖和部署问题 |
 
 ## Go 在项目中的典型位置
@@ -89,9 +93,25 @@ Go 适合项目驱动学习。推荐从一个后台 API 开始：
 
 Go 的代码风格强调简单直接。不要一开始就照搬 Java 的多层抽象，也不要把所有逻辑都塞进一个文件。边界清楚、接口小、错误明确，比复杂架构更重要。如果你已经理解 context 和 HTTP 服务，直接进入 [Go HTTP API 从零到项目落地](/go/http-api-project-from-zero)，做一个可运行、可测试、可部署的任务 API；如果你已经完成 HTTP API，继续进入 [Go gRPC 与服务间通信项目](/go/grpc-service-communication)，补齐 Protobuf 契约、服务间调用、超时、错误码和联调排障。
 
+### 标准库还是框架
+
+本站主线先使用标准库，目的是让你看见协议边界，而不是否定框架：
+
+| 需求 | 推荐起点 | 何时升级 |
+| --- | --- | --- |
+| HTTP 路由、中间件、JSON | Go 1.22+ `net/http` ServeMux | 团队需要成熟路由分组时评估 Chi；已有 Gin 体系时沿用 Gin |
+| SQL 与事务 | `database/sql` + pgx | 查询很多且希望生成类型安全代码时评估 sqlc |
+| ORM | 先理解 SQL 与事务 | CRUD 模型复杂且团队接受 ORM 隐式行为时评估 GORM |
+| 日志 | `log/slog` | 已有统一观测 SDK 时接入适配层 |
+| 迁移 | 固定一种版本化迁移工具 | 不在同一项目混用多个迁移状态表 |
+
+选择依据应是当前系统的查询复杂度、团队经验、可观测性和迁移成本，不是下载量排名。
+
 ## 当前版本选择
 
-截至 2026 年 7 月，Go 1.26 已发布，Go 1.25 仍有维护版本。Go 官方保持 Go 1 兼容承诺，但新版本会持续改进工具链、运行时和标准库。项目中要以团队 CI 和生产镜像版本为准。
+本站在 **2026-07-21** 核对的稳定版本为 **Go 1.26.5**，官方发布历史记录其发布于 2026-07-07，并包含安全与工具链修复。示例 `go.mod` 使用 `go 1.26.0` 作为语言和模块语义基线，测试与容器使用 `golang:1.26.5-bookworm` 补丁工具链。两者不矛盾：前者声明模块语义，后者决定实际编译器和标准库补丁。
+
+版本会继续变化；新项目开始前应重新核对 [Go downloads](https://go.dev/dl/) 与 [Go Release History](https://go.dev/doc/devel/release)，并让本地、CI 和生产镜像一致。
 
 ## 参考资料
 

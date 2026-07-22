@@ -641,8 +641,13 @@ flowchart TD
 - [Node 权限 API 从零到项目](/node/permission-api-project)
 - [Java 学习导览](/java/introduction)
 - [Spring Boot 从零到项目落地](/java/spring-boot-project-from-zero)
+- [Java 专项练习](/roadmap/java-practice)
+- [Java 真实项目问题库](/projects/issues-java)
 - [Go 学习导览](/go/introduction)
+- [Go 图解总览](/go/visual-guide)
 - [Go HTTP API 从零到项目落地](/go/http-api-project-from-zero)
+- [Go 专项实战练习](/roadmap/go-practice)
+- [Go 真实项目问题库](/projects/issues-go)
 - [数据库项目落地实践](/database/project-practice)
 - [前后端联调排查](/projects/integration-debugging)
 - [后端接口与服务问题](/projects/issues-backend)
@@ -659,6 +664,10 @@ flowchart TD
 如果你是第一次做后端，建议只选一条路线。不要同一周同时写 Node、Java 和 Go，否则容易把语言差异误认为后端能力。
 
 选择 Node.js 时，完成通用 API 交付后继续进入 [Node.js 专项练习](/roadmap/node-practice)，再用 [Node.js 真实项目问题库](/projects/issues-node) 复盘运行时故障。接口契约、401/403 和事务问题仍保留在本练习和 [后端接口与服务问题](/projects/issues-backend) 中。
+
+选择 Java 时，完成通用 API 交付后继续进入 [Java 专项练习](/roadmap/java-practice)，再用 [Java 真实项目问题库](/projects/issues-java) 复盘字节码、Bean、事务代理、JPA、连接池、线程和 JVM 故障。语言无关的接口契约和幂等问题仍在本练习与后端问题库中处理。
+
+选择 Go 时，先用 [Go 图解总览](/go/visual-guide) 建立并发、Context、连接池和关闭模型，再运行 `examples/go-task-api`；完成通用 API 交付后进入 [Go 专项实战练习](/roadmap/go-practice)，最后用 [Go 真实项目问题库](/projects/issues-go) 复盘 typed nil、slice、map 竞态、goroutine、事务和容器故障。
 
 ### 后端能力闭环图
 

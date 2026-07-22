@@ -337,6 +337,18 @@ for (const route of routes) {
 - 必要时给业务关键节点加稳定 `data-testid`。
 - 不要使用 `.n-button > span > span` 这类内部结构选择器。
 
+定位失败时至少保留两份同一时刻的证据：测试日志说明脚本想找什么，DOM 快照或 Trace 说明页面实际上渲染了什么。下图中测试寻找“提交”，而真实按钮名称已经变成“保存”。
+
+<DocFigure
+  src="/images/browser/automation-locator-failure.webp"
+  alt="Playwright 定位失败日志寻找提交按钮，而同一时刻 DOM 快照只存在保存按钮"
+  caption="比较测试意图与真实 DOM 后修正文案契约；不要改成依赖按钮序号的脆弱选择器。"
+  :width="1440"
+  :height="900"
+/>
+
+不依赖图片的读取路径：打开 Playwright HTML Report 或 Trace Viewer → 找到失败步骤 → 复制 Locator 与错误文本 → 查看同一时间点的 DOM Snapshot → 按 role、可访问名称、label 和业务状态逐项比较。
+
 ## 最佳实践
 
 - 每个关键页面至少检查 HTTP 状态、标题、控制台错误和移动端溢出。

@@ -67,6 +67,32 @@ flowchart TD
 | 空态和错误明确 | loading、empty、error、forbidden 不混用 |
 | 导出条件一致 | 导出使用同一份查询参数，而不是重新拼 |
 
+列表页至少要设计默认、筛选结果和空结果三种可见状态。先对照图片观察状态变化，再阅读后面的查询参数与请求并发代码。
+
+<DocFigure
+  src="/images/vue/admin-list-default.webp"
+  alt="Vue Admin 用户列表默认状态，包含筛选表单、表格、状态标签和分页"
+  caption="默认状态需要同时交代当前条件、结果总数、行操作和分页位置。"
+  :width="1440"
+  :height="900"
+/>
+
+<DocFigure
+  src="/images/vue/admin-list-filtered.webp"
+  alt="Vue Admin 用户列表应用部门和状态筛选后的结果"
+  caption="筛选后，表格、总数、分页与导出必须使用同一份查询条件。"
+  :width="1440"
+  :height="900"
+/>
+
+<DocFigure
+  src="/images/vue/admin-list-empty.webp"
+  alt="Vue Admin 用户列表没有匹配结果时的空状态与清除筛选操作"
+  caption="筛选为空不是接口错误；空状态要说明原因，并提供清除筛选等恢复入口。"
+  :width="1440"
+  :height="900"
+/>
+
 ## 推荐页面结构
 
 一个中后台列表页建议按“页面、组合逻辑、业务组件、接口和类型”拆分：
